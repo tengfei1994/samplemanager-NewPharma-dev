@@ -1,0 +1,78 @@
+# Inspection Request lifecycle manifest
+
+lifecycle:
+  object: NPH_INSPECTION_REQUEST
+  status_field: STATUS
+  initial_status: Draft
+
+states:
+  - Draft
+  - Submitted
+  - UnderReview
+  - Approved
+  - Executing
+  - Executed
+  - Rejected
+  - Cancelled
+  - ExecutionFailed
+
+transitions:
+  - action: Submit
+    from: Draft
+    to: Submitted
+    role: RequestSubmitter
+    electronic_signature: configurable
+  - action: StartReview
+    from: Submitted
+    to: UnderReview
+    role: RequestApprover
+    electronic_signature: configurable
+  - action: Approve
+    from: UnderReview
+    to: Approved
+    role: RequestApprover
+    electronic_signature: configurable
+  - action: Reject
+    from: UnderReview
+    to: Rejected
+    role: RequestApprover
+    electronic_signature: configurable
+  - action: CancelDraft
+    from: Draft
+    to: Cancelled
+    role: RequestCreator
+    electronic_signature: configurable
+  - action: CancelSubmitted
+    from: Submitted
+    to: Cancelled
+    role: RequestSubmitter
+    electronic_signature: configurable
+  - action: Execute
+    from: Approved
+    to: Executing
+    role: RequestExecutor
+    electronic_signature: configurable
+    task: NewPharmaInspectionRequestExecutionTask
+  - action: MarkExecuted
+    from: Executing
+    to: Executed
+    role: system
+    electronic_signature: false
+  - action: MarkExecutionFailed
+    from: Executing
+    to: ExecutionFailed
+    role: system
+    electronic_signature: false
+  - action: RetryExecution
+    from: ExecutionFailed
+    to: Approved
+    role: RequestExecutor
+    electronic_signature: configurable
+
+execution_guards:
+  - Execute only when STATUS is Approved.
+  - Execute only when EXECUTION_STATUS is NotExecuted or Failed.
+  - Set EXECUTION_STATUS to Executing before calling Login Plan execution.
+  - Do not allow Execute when GENERATED_JOB_ID or GENERATED_OBJECT_SUMMARY already indicates prior success.
+  - On success, set STATUS to Executed and EXECUTION_STATUS to Executed.
+  - On failure, set STATUS to ExecutionFailed and EXECUTION_STATUS to Failed.
