@@ -1,0 +1,11 @@
+bin/
+obj/
+out/*
+!out/.gitkeep
+remote-snapshot/
+remote-logs/
+*.user
+*.suo
+*.zip
+*.log
+*.tmp
