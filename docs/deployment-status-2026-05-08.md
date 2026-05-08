@@ -13,6 +13,7 @@
 - `CreateEntityDefinition.exe` completed `SchemaBuildTask` successfully as `BATCH`.
 - Table Loader loaded `MASTER_MENU`, `ROLE_ENTRY`, and `MENU_TOOLBAR` configuration from `C:\Users\administrator\Desktop\codex-vgsm-export\NewPharma\menu-import`.
 - `SYSTEM` and `SIMPLE` menus now contain `NewPharma -> Inspection Requests...`, pointing to master menu procedure `199401`.
+- Procedure `199401` follows the standard SampleManager `BrowseTask` pattern: `TABLE_NAME`, `DATA_TYPE`, `ACTION_TYPE`, and `WINDOW_STYLE` are blank; `PARAMETERS` and `TASK_PARAMETERS` carry `NPH_INSPECTION_REQUEST`.
 - Deployment package created at `C:\Users\administrator\Desktop\codex-vgsm-export\NewPharma\NewPharma.InspectionRequest-package.zip`.
 
 ## Runtime behavior in the DLL
