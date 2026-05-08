@@ -1,0 +1,42 @@
+# Deployment manifest for Inspection Request P1 slice
+
+package:
+  name: NewPharma.InspectionRequest
+  type: custom-extension
+  target_instance: VGSM
+  target_version: SampleManager LIMS 21.3
+
+remote_paths:
+  instance_root: C:\Thermo\SampleManager\Server\VGSM
+  solution_root: C:\Thermo\SampleManager\Server\VGSM\Solution
+  runtime_bin: C:\Thermo\SampleManager\Server\VGSM\Exe
+  solution_assemblies: C:\Thermo\SampleManager\Server\VGSM\Exe\SolutionAssemblies
+  logfile: C:\Thermo\SampleManager\Server\VGSM\Logfile
+
+artifacts:
+  - source: src/NewPharma.InspectionRequest/bin/x86/Release/NewPharma.InspectionRequest.dll
+    target: C:\Thermo\SampleManager\Server\VGSM\Exe\SolutionAssemblies\NewPharma.InspectionRequest.dll
+    required: true
+  - source: samplemanager/manifests/inspection-request/table-definition.yaml
+    target: documentation-only
+    required: true
+  - source: samplemanager/manifests/inspection-request/lifecycle.yaml
+    target: documentation-only
+    required: true
+
+pre_deploy:
+  - Backup target DLL if present.
+  - Confirm no active validation run is in progress.
+  - Confirm deployment window.
+
+post_deploy:
+  - Restart affected SampleManager services only after explicit approval.
+  - Fetch recent VGSM logs.
+  - Confirm the custom task is visible/registered if SampleManager requires task registration.
+
+manual_steps:
+  - Import or configure NPH_INSPECTION_REQUEST table.
+  - Configure Lot-like numbering rule NPH_IR_LOT_STYLE.
+  - Configure workflow/status transitions.
+  - Map logical roles to actual VGSM security groups.
+  - Configure electronic signature actions according to electronic-signature.yaml.
