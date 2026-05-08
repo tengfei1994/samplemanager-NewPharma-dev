@@ -20,16 +20,16 @@ internal static class InspectionRequestConstants
     public const string FieldExecutionError = "EXECUTION_ERROR";
     public const string FieldEsigRequired = "ESIG_REQUIRED";
 
-    public const string StatusDraft = "Draft";
-    public const string StatusSubmitted = "Submitted";
-    public const string StatusUnderReview = "UnderReview";
-    public const string StatusApproved = "Approved";
-    public const string StatusExecuting = "Executing";
-    public const string StatusExecuted = "Executed";
-    public const string StatusExecutionFailed = "ExecutionFailed";
+    public const string StatusDraft = "DRAFT";
+    public const string StatusSubmitted = "SUBMITTED";
+    public const string StatusUnderReview = "UNDER_REVI";
+    public const string StatusApproved = "APPROVED";
+    public const string StatusExecuting = "EXECUTING";
+    public const string StatusExecuted = "EXECUTED";
+    public const string StatusExecutionFailed = "EXECUTION_";
 
-    public const string ExecutionNotExecuted = "NotExecuted";
-    public const string ExecutionExecuting = "Executing";
-    public const string ExecutionExecuted = "Executed";
-    public const string ExecutionFailed = "Failed";
+    public const string ExecutionNotExecuted = "NOT_STARTE";
+    public const string ExecutionExecuting = "EXECUTING";
+    public const string ExecutionExecuted = "EXECUTED";
+    public const string ExecutionFailed = "FAILED";
 }
