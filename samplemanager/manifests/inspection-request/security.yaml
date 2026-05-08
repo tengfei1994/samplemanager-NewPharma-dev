@@ -1,0 +1,70 @@
+# Inspection Request security manifest
+
+roles:
+  RequestCreator:
+    description: Create and edit Draft requests created by the user.
+    actions:
+      - Create
+      - EditDraft
+      - CancelDraft
+  RequestSubmitter:
+    description: Submit completed requests for review.
+    actions:
+      - Submit
+      - CancelSubmitted
+  RequestApprover:
+    description: Review, approve, or reject submitted requests.
+    actions:
+      - StartReview
+      - Approve
+      - Reject
+  RequestExecutor:
+    description: Execute approved requests and retry failed execution.
+    actions:
+      - Execute
+      - RetryExecution
+  RequestViewer:
+    description: Read-only access to request headers, status, and generated object links.
+    actions:
+      - View
+  TemplateMaintainer:
+    description: Maintain source Login Plans used as request templates.
+    actions:
+      - MaintainLoginPlanTemplate
+
+field_controls:
+  Draft:
+    editable_by:
+      - RequestCreator
+    read_only_fields:
+      - EXECUTION_STATUS
+      - GENERATED_JOB_ID
+      - GENERATED_OBJECT_SUMMARY
+      - EXECUTION_ERROR
+  Submitted:
+    editable_by: []
+    read_only: true
+  UnderReview:
+    editable_by:
+      - RequestApprover
+    read_only_fields:
+      - LOGIN_PLAN_ID
+      - LOGIN_PLAN_VERSION
+      - ROOT_CONTEXT_TABLE
+      - ROOT_CONTEXT_ID
+  Approved:
+    editable_by: []
+    read_only: true
+  Executed:
+    editable_by: []
+    read_only: true
+  ExecutionFailed:
+    editable_by:
+      - RequestExecutor
+    editable_fields:
+      - EXECUTION_ERROR
+
+implementation_notes:
+  - Map these logical roles to actual VGSM roles/groups before import.
+  - Do not allow direct user edits to generated object reference fields.
+  - Execution should run under a controlled role or service context that can create Job/Sample/Test records.
