@@ -23,8 +23,9 @@
 
 ## Remaining in-system configuration
 
-- Create phrase type `NPH_IR_STATUS` with the planned request lifecycle states.
-- Create phrase type `NPH_IR_EXEC_STATUS` with execution states.
+- Phrase type `NPH_IR_STA` has been created in VGSM for request lifecycle states.
+- Phrase type `NPH_IR_EXE` has been created in VGSM for execution states.
+- SampleManager identity fields are 10 characters, so long design names such as `NPH_IR_STATUS` and `NPH_IR_EXEC_STATUS` are represented by these 10-character identifiers in runtime configuration.
 - Register menu/task/form/workflow bindings for `NPH_INSPECTION_REQUEST`.
 - Configure the e-signature requirement per site policy before enabling production use.
 
