@@ -1,0 +1,112 @@
+{NewPharma Inspection Request Schema Fragment}
+{Target instance: VGSM / SampleManager LIMS 21.3}
+{Purpose: P1 Inspection Request runtime object.}
+{Apply through SampleManager structure/admin import after review.}
+
+table nph_inspection_request
+      prompt_description 'NPH Inspection Request';
+
+	field request_id
+	      datatype identity (32)
+	      used_for unique_key, primary_browse;
+
+	field id_text
+	      datatype identity (40)
+	      prompt_description 'Inspection Request Number'
+	      used_for display_browse (1);
+
+	field status
+	      datatype text (30)
+	      prompt_type choose
+	            choose_type NPH_IR_STATUS
+	      used_for display_browse (2);
+
+	field login_plan_id
+	      links_to login_plan . identity as login_plan;
+
+	field login_plan_version
+	      links_to login_plan . version as login_plan;
+
+	field use_last_active_version
+	      datatype boolean;
+
+	field root_context_table
+	      datatype text (40);
+
+	field root_context_id
+	      datatype text (80);
+
+	field requested_by
+	      links_to personnel . identity;
+
+	field requested_on
+	      datatype date;
+
+	field submitted_by
+	      links_to personnel . identity;
+
+	field submitted_on
+	      datatype date;
+
+	field approved_by
+	      links_to personnel . identity;
+
+	field approved_on
+	      datatype date;
+
+	field execution_status
+	      datatype text (30)
+	      prompt_type choose
+	            choose_type NPH_IR_EXEC_STATUS
+	      used_for display_browse (3);
+
+	field execution_started_on
+	      datatype date;
+
+	field execution_completed_on
+	      datatype date;
+
+	field generated_job_id
+	      links_to job_header . job_name;
+
+	field generated_object_summary
+	      datatype text (2000);
+
+	field execution_error
+	      datatype text (2000);
+
+	field esig_required
+	      datatype boolean;
+
+	field created_by
+	      links_to personnel . identity
+	      used_for created_by;
+
+	field created_on
+	      datatype date
+	      used_for created_on;
+
+	field modified_by
+	      links_to personnel . identity
+	      used_for modified_by;
+
+	field modified_on
+	      datatype date
+	      used_for modified_on;
+
+	field removeflag
+	      datatype boolean
+	      used_for remove_flag;
+
+	field name
+	      datatype text (100)
+	      used_for name;
+
+	field has_attachments
+	      datatype boolean
+	      used_for has_attachments;
+
+index nph_ir_id_text_index unique on id_text;
+index nph_ir_status_index on status;
+index nph_ir_login_plan_index on login_plan_id, login_plan_version;
+index nph_ir_execution_status_index on execution_status;
