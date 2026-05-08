@@ -18,7 +18,7 @@ table nph_inspection_request
 	field status
 	      datatype text (30)
 	      prompt_type choose
-	            choose_type NPH_IR_STATUS
+	            choose_type NPH_IR_STA
 	      used_for display_browse (2);
 
 	field login_plan_id
@@ -57,7 +57,7 @@ table nph_inspection_request
 	field execution_status
 	      datatype text (30)
 	      prompt_type choose
-	            choose_type NPH_IR_EXEC_STATUS
+	            choose_type NPH_IR_EXE
 	      used_for display_browse (3);
 
 	field execution_started_on
