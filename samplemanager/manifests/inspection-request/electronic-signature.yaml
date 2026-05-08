@@ -1,0 +1,41 @@
+# Electronic signature configuration manifest
+# User decision: electronic signature must be configurable, not hard-coded.
+
+configuration:
+  name: NPH_INSPECTION_REQUEST_ESIG
+  default_enabled: false
+  resolution_order:
+    - action_override
+    - request_field_ESIG_REQUIRED
+    - global_default
+
+actions:
+  Submit:
+    enabled: false
+    reason_required: false
+  StartReview:
+    enabled: false
+    reason_required: false
+  Approve:
+    enabled: true
+    reason_required: true
+  Reject:
+    enabled: true
+    reason_required: true
+  Execute:
+    enabled: true
+    reason_required: true
+  RetryExecution:
+    enabled: true
+    reason_required: true
+  CancelDraft:
+    enabled: false
+    reason_required: true
+  CancelSubmitted:
+    enabled: true
+    reason_required: true
+
+implementation_notes:
+  - The execution wrapper must query effective electronic signature requirements before performing Execute.
+  - Keep the configuration outside compiled code so QA can switch requirements without rebuilding the DLL.
+  - If SampleManager native e-signature configuration is available for workflow actions, prefer native configuration and use this manifest as the design source.
