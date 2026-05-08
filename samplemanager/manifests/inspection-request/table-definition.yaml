@@ -1,0 +1,146 @@
+# Inspection Request table manifest
+# This is a design/import manifest for the new P1 request object.
+# Final import format must be mapped to the VGSM administration/import tool before execution.
+
+object:
+  table_name: NPH_INSPECTION_REQUEST
+  display_name: Inspection Request
+  description: Runtime request instance created from a Login Plan template.
+  owner_module: NewPharma
+  source_template_object: LOGIN_PLAN
+  id_style: lot-like
+
+identity:
+  primary_key: REQUEST_ID
+  display_key: ID_TEXT
+  numbering_rule: NPH_IR_LOT_STYLE
+  example: IR-2026-000001
+
+fields:
+  - name: REQUEST_ID
+    type: string
+    length: 32
+    required: true
+    unique: true
+    description: Internal request identity.
+  - name: ID_TEXT
+    type: string
+    length: 40
+    required: true
+    unique: true
+    description: User-facing request number, following a Lot-like controlled sequence pattern.
+  - name: STATUS
+    type: string
+    length: 30
+    required: true
+    default: Draft
+    description: Lifecycle status.
+  - name: LOGIN_PLAN_ID
+    type: string
+    length: 80
+    required: true
+    description: Source Login Plan identity.
+  - name: LOGIN_PLAN_VERSION
+    type: string
+    length: 20
+    required: false
+    description: Source Login Plan version snapshot. Empty when Last Active Version is used.
+  - name: USE_LAST_ACTIVE_VERSION
+    type: boolean
+    required: true
+    default: true
+    description: Resolve Login Plan at execution using the last active version.
+  - name: ROOT_CONTEXT_TABLE
+    type: string
+    length: 40
+    required: false
+    description: Optional source context table, such as LOT_DETAILS or JOB_HEADER.
+  - name: ROOT_CONTEXT_ID
+    type: string
+    length: 80
+    required: false
+    description: Optional source context identity.
+  - name: REQUESTED_BY
+    type: string
+    length: 80
+    required: false
+  - name: REQUESTED_ON
+    type: datetime
+    required: false
+  - name: SUBMITTED_BY
+    type: string
+    length: 80
+    required: false
+  - name: SUBMITTED_ON
+    type: datetime
+    required: false
+  - name: APPROVED_BY
+    type: string
+    length: 80
+    required: false
+  - name: APPROVED_ON
+    type: datetime
+    required: false
+  - name: EXECUTION_STATUS
+    type: string
+    length: 30
+    required: true
+    default: NotExecuted
+    allowed_values:
+      - NotExecuted
+      - Executing
+      - Executed
+      - Failed
+  - name: EXECUTION_STARTED_ON
+    type: datetime
+    required: false
+  - name: EXECUTION_COMPLETED_ON
+    type: datetime
+    required: false
+  - name: GENERATED_JOB_ID
+    type: string
+    length: 80
+    required: false
+    description: Primary generated Job identity when applicable.
+  - name: GENERATED_OBJECT_SUMMARY
+    type: text
+    required: false
+    description: JSON/text summary of generated jobs, samples, and tests.
+  - name: EXECUTION_ERROR
+    type: text
+    required: false
+  - name: ESIG_REQUIRED
+    type: boolean
+    required: true
+    default: false
+    description: Per-request override; effective value is resolved with electronic-signature.yaml.
+  - name: CREATED_BY
+    type: string
+    length: 80
+    required: false
+  - name: CREATED_ON
+    type: datetime
+    required: false
+  - name: MODIFIED_BY
+    type: string
+    length: 80
+    required: false
+  - name: MODIFIED_ON
+    type: datetime
+    required: false
+
+indexes:
+  - name: IX_NPH_IR_ID_TEXT
+    fields: [ID_TEXT]
+    unique: true
+  - name: IX_NPH_IR_STATUS
+    fields: [STATUS]
+  - name: IX_NPH_IR_LOGIN_PLAN
+    fields: [LOGIN_PLAN_ID, LOGIN_PLAN_VERSION]
+  - name: IX_NPH_IR_EXECUTION_STATUS
+    fields: [EXECUTION_STATUS]
+
+child_objects:
+  - table_name: NPH_INSPECTION_REQUEST_LINE
+    required_for_p1: false
+    description: Optional line-level request parameters. Add only if header-level context is not enough.
