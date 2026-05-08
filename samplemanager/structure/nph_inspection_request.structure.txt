@@ -79,12 +79,10 @@ table nph_inspection_request
 	      datatype boolean;
 
 	field created_by
-	      links_to personnel . identity
-	      used_for created_by;
+	      links_to personnel . identity;
 
 	field created_on
-	      datatype date
-	      used_for created_on;
+	      datatype date;
 
 	field modified_by
 	      links_to personnel . identity
