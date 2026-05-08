@@ -1,0 +1,27 @@
+# Inspection Request numbering manifest
+# User decision: request numbering should follow the Lot-style controlled identity pattern.
+
+numbering:
+  rule_name: NPH_IR_LOT_STYLE
+  target_table: NPH_INSPECTION_REQUEST
+  target_field: ID_TEXT
+  style: lot-like
+  default_format: IR-{yyyy}-{seq:000000}
+  examples:
+    - IR-2026-000001
+    - IR-2026-000002
+
+sequence:
+  name: NPH_IR_SEQUENCE
+  reset_policy: yearly
+  padding: 6
+  concurrency: server-side
+  uniqueness_scope:
+    - year
+
+implementation_notes:
+  - Keep a separate internal REQUEST_ID and user-facing ID_TEXT.
+  - Generate ID_TEXT at request creation time, not at execution time.
+  - Do not reuse generated numbers after cancellation.
+  - If the VGSM instance has a standard Lot numbering administration screen, configure this rule there instead of hard-coding it.
+  - The C# execution wrapper must treat ID_TEXT as immutable after submission.
