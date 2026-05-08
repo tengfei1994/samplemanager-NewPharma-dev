@@ -1,19 +1,25 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
+using LoginPlan.ObjectModel;
 using Thermo.SampleManager.Common.Data;
-using Thermo.SampleManager.Library;
+using Thermo.SampleManager.Internal.ObjectModel;
+using Thermo.SampleManager.ObjectModel;
 using Thermo.SampleManager.Server;
 
 namespace NewPharma.InspectionRequest;
 
 internal sealed class InspectionRequestExecutionService
 {
-    private readonly Library _library;
+    private const string LoginPlanEntityName = "LOGIN_PLAN";
+    private const string LotDetailsEntityName = "LOT_DETAILS";
+    private const string JobHeaderEntityName = "JOB_HEADER";
+
     private readonly IEntityManager _entityManager;
 
-    public InspectionRequestExecutionService(Library library, IEntityManager entityManager)
+    public InspectionRequestExecutionService(IEntityManager entityManager)
     {
-        _library = library ?? throw new ArgumentNullException(nameof(library));
         _entityManager = entityManager ?? throw new ArgumentNullException(nameof(entityManager));
     }
 
@@ -79,16 +85,87 @@ internal sealed class InspectionRequestExecutionService
             throw new InvalidOperationException("Inspection Request does not specify a Login Plan.");
         }
 
-        // Integration point:
-        // 1. Resolve LoginPlan.ObjectModel.ExtendedLoginPlan by loginPlanId/loginPlanVersion.
-        // 2. Resolve optional Lot/Job context from rootContextTable/rootContextId.
-        // 3. Prefer the same supported execution path used by LP_CREATE_ENTITY rather than modifying vendor code.
-        // 4. Return generated Job/Sample/Test references.
-        //
-        // This skeleton deliberately does not hard-code the vendor call until the VGSM table names,
-        // context object, and supported API call are confirmed during the first compile/test cycle.
-        throw new NotImplementedException(
-            $"Login Plan execution hook pending. LoginPlan={loginPlanId}, Version={loginPlanVersion}, LastActive={useLastActiveVersion}, Context={rootContextTable}:{rootContextId}");
+        ExtendedLoginPlan loginPlan = ResolveLoginPlan(loginPlanId, loginPlanVersion, useLastActiveVersion);
+
+        var jobs = new List<JobHeaderInternal>();
+        var samples = new List<SampleInternal>();
+
+        if (IsLotContext(rootContextTable))
+        {
+            LotDetailsInternal lot = ResolveRootEntity<LotDetailsInternal>(LotDetailsEntityName, rootContextId, "Lot");
+            string rootTableName = GetString((IEntity)loginPlan, "ROOT_TABLE_NAME");
+            if (!string.Equals(rootTableName, LotDetailsEntityName, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new InvalidOperationException($"Login Plan root table is {rootTableName}; expected {LotDetailsEntityName} for Lot context.");
+            }
+
+            loginPlan.JobCreationProcess(lot, ref jobs, ref samples);
+        }
+        else if (IsJobContext(rootContextTable))
+        {
+            JobHeaderInternal job = ResolveRootEntity<JobHeaderInternal>(JobHeaderEntityName, rootContextId, "Job");
+            string rootTableName = GetString((IEntity)loginPlan, "ROOT_TABLE_NAME");
+            if (!string.Equals(rootTableName, JobHeaderEntityName, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new InvalidOperationException($"Login Plan root table is {rootTableName}; expected {JobHeaderEntityName} for Job context.");
+            }
+
+            loginPlan.SampleCreationProcess(job, ref samples);
+            jobs.Add(job);
+        }
+        else
+        {
+            throw new InvalidOperationException("Inspection Request root context must be LOT_DETAILS or JOB_HEADER.");
+        }
+
+        _entityManager.Commit();
+
+        return new ExecutionResult
+        {
+            PrimaryJobId = ToIdentityText((IEntity)jobs.FirstOrDefault()),
+            JobIds = jobs.Select(x => ToIdentityText((IEntity)x)).Where(x => x.Length > 0).ToArray(),
+            SampleIds = samples.Select(x => ToIdentityText((IEntity)x)).Where(x => x.Length > 0).ToArray(),
+            TestIds = Array.Empty<string>()
+        };
+    }
+
+    private ExtendedLoginPlan ResolveLoginPlan(string loginPlanId, string loginPlanVersion, bool useLastActiveVersion)
+    {
+        object entity;
+
+        if (useLastActiveVersion || string.IsNullOrWhiteSpace(loginPlanVersion))
+        {
+            entity = _entityManager.SelectLatestVersion(LoginPlanEntityName, loginPlanId);
+        }
+        else
+        {
+            entity = _entityManager.Select(LoginPlanEntityName, new Identity(loginPlanId, loginPlanVersion));
+        }
+
+        var loginPlan = entity as ExtendedLoginPlan;
+        if (!(loginPlan?.IsValid() ?? false))
+        {
+            throw new InvalidOperationException($"Login Plan was not found or is invalid: {loginPlanId} {loginPlanVersion}".Trim());
+        }
+
+        return loginPlan;
+    }
+
+    private T ResolveRootEntity<T>(string entityName, string identity, string label)
+        where T : class, IEntity
+    {
+        if (string.IsNullOrWhiteSpace(identity))
+        {
+            throw new InvalidOperationException($"{label} context id is required.");
+        }
+
+        var entity = _entityManager.Select(entityName, new Identity(identity)) as T;
+        if (!(entity?.IsValid() ?? false))
+        {
+            throw new InvalidOperationException($"{label} context was not found: {identity}");
+        }
+
+        return entity;
     }
 
     private void MarkExecuted(IEntity request, ExecutionResult result)
@@ -132,9 +209,26 @@ internal sealed class InspectionRequestExecutionService
         return bool.TryParse(value.ToString(), out bool parsed) ? parsed : defaultValue;
     }
 
+    private static bool IsLotContext(string tableName)
+    {
+        return string.Equals(tableName, LotDetailsEntityName, StringComparison.OrdinalIgnoreCase) ||
+               string.Equals(tableName, "LOT", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsJobContext(string tableName)
+    {
+        return string.Equals(tableName, JobHeaderEntityName, StringComparison.OrdinalIgnoreCase) ||
+               string.Equals(tableName, "JOB", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static string ToIdentityText(IEntity entity)
+    {
+        return entity?.Identity?.ToString() ?? string.Empty;
+    }
+
     private sealed class ExecutionResult
     {
-        public string? PrimaryJobId { get; init; }
+        public string PrimaryJobId { get; init; }
         public string[] JobIds { get; init; } = Array.Empty<string>();
         public string[] SampleIds { get; init; } = Array.Empty<string>();
         public string[] TestIds { get; init; } = Array.Empty<string>();
