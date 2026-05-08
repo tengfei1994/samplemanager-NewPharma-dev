@@ -6,6 +6,8 @@
 - Custom assembly compiled successfully with zero warnings and zero errors.
 - Assembly deployed to `C:\Thermo\SampleManager\Server\VGSM\Exe\SolutionAssemblies\NewPharma.InspectionRequest.dll`.
 - PDB deployed beside the DLL for troubleshooting.
+- Standard LabTable task entry `NewPharmaInspectionRequestTask` was added and deployed for `NPH_INSPECTION_REQUEST`.
+- Workflow execution task entry `NewPharmaInspectionRequestExecutionTask` remains available for approved request execution.
 - New table structure appended to `C:\Thermo\SampleManager\Server\VGSM\Data\structure.txt`.
 - Structure backup created under `C:\Thermo\SampleManager\Server\VGSM\Data\codex-backup`.
 - `CreateEntityDefinition.exe` completed `SchemaBuildTask` successfully as `BATCH`.
@@ -14,6 +16,7 @@
 ## Runtime behavior in the DLL
 
 - The task entry point is `NewPharmaInspectionRequestExecutionTask`.
+- The maintenance task entry point is `NewPharmaInspectionRequestTask`.
 - It validates that the request is approved and has not already executed.
 - It resolves the configured Login Plan by latest active version or explicit version.
 - It supports root contexts `LOT_DETAILS`, `LOT`, `JOB_HEADER`, and `JOB`.
@@ -28,6 +31,7 @@
 - SampleManager identity fields are 10 characters, so long design names such as `NPH_IR_STATUS` and `NPH_IR_EXEC_STATUS` are represented by these 10-character identifiers in runtime configuration.
 - Register menu/task/form/workflow bindings for `NPH_INSPECTION_REQUEST`.
 - Configure the e-signature requirement per site policy before enabling production use.
+- Menu CSV files were prepared under `samplemanager/config`, but `EntityImportTask` rejected CSV input directly. Load these files through the SampleManager Deployment Package table loader or create equivalent menu records in the client.
 
 ## Notes
 
