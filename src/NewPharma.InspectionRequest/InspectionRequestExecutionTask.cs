@@ -29,7 +29,7 @@ public class InspectionRequestExecutionTask : SampleManagerTask
 
         try
         {
-            var service = new InspectionRequestExecutionService(Library, EntityManager);
+            var service = new InspectionRequestExecutionService(EntityManager);
             service.Execute(request);
             Exit(true);
         }
