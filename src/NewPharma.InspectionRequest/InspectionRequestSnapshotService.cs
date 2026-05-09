@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using Thermo.SampleManager.Common.Data;
 using Thermo.SampleManager.Server;
 
@@ -82,11 +83,12 @@ namespace NewPharma.InspectionRequest
 
             foreach (IEntity sourceEntry in _entityManager.Select(entryQuery))
             {
-                decimal orderNumber = GetDecimal(sourceEntry, "ORDER_NUMBER");
+                object orderNumber = GetValue(sourceEntry, "ORDER_NUMBER");
+                object parentOrderNumber = GetValue(sourceEntry, "PARENT_ENTRY_ORDER_NUMBER");
                 IEntity targetEntry = _entityManager.CreateEntity(InspectionRequestConstants.TableIrLoginPlanEntry);
                 targetEntry.Set("REQUEST_ID", requestId);
                 targetEntry.Set("ORDER_NUMBER", orderNumber);
-                targetEntry.Set("PARENT_ORDER_NUMBER", GetDecimal(sourceEntry, "PARENT_ENTRY_ORDER_NUMBER"));
+                targetEntry.Set("PARENT_ORDER_NUMBER", parentOrderNumber);
                 targetEntry.Set("SOURCE_LOGIN_PLAN_ID", loginPlanId);
                 targetEntry.Set("SOURCE_LOGIN_PLAN_VERSION", GetValue(sourceEntry, "VERSION"));
                 targetEntry.Set("SOURCE_ORDER_NUMBER", orderNumber);
@@ -108,7 +110,7 @@ namespace NewPharma.InspectionRequest
             }
         }
 
-        private void CopyEntryFields(string requestId, string loginPlanId, IEntity sourceEntry, decimal parentOrderNumber)
+        private void CopyEntryFields(string requestId, string loginPlanId, IEntity sourceEntry, object parentOrderNumber)
         {
             IQuery query = _entityManager.CreateQuery(InspectionRequestConstants.TableLoginPlanField);
             query.AddEquals("IDENTITY", loginPlanId);
@@ -120,7 +122,7 @@ namespace NewPharma.InspectionRequest
                 IEntity targetField = _entityManager.CreateEntity(InspectionRequestConstants.TableIrLoginPlanField);
                 targetField.Set("REQUEST_ID", requestId);
                 targetField.Set("PARENT_ORDER_NUMBER", parentOrderNumber);
-                targetField.Set("ORDER_NUMBER", GetDecimal(sourceField, "ORDER_NUMBER"));
+                targetField.Set("ORDER_NUMBER", GetValue(sourceField, "ORDER_NUMBER"));
                 targetField.Set("PROPERTY", GetValue(sourceField, "PROPERTY"));
                 targetField.Set("VALUE", GetValue(sourceField, "VALUE"));
                 targetField.Set("OVERRIDE_VALUE", GetValue(sourceField, "VALUE"));
@@ -129,7 +131,7 @@ namespace NewPharma.InspectionRequest
             }
         }
 
-        private void CopyEntryTests(string requestId, string loginPlanId, IEntity sourceEntry, decimal parentOrderNumber)
+        private void CopyEntryTests(string requestId, string loginPlanId, IEntity sourceEntry, object parentOrderNumber)
         {
             IQuery query = _entityManager.CreateQuery(InspectionRequestConstants.TableLoginPlanTest);
             query.AddEquals("IDENTITY", loginPlanId);
@@ -138,7 +140,7 @@ namespace NewPharma.InspectionRequest
 
             foreach (IEntity sourceTest in _entityManager.Select(query))
             {
-                decimal orderNumber = GetDecimal(sourceTest, "ORDER_NUMBER");
+                object orderNumber = GetValue(sourceTest, "ORDER_NUMBER");
                 IEntity targetTest = _entityManager.CreateEntity(InspectionRequestConstants.TableIrLoginPlanTest);
                 targetTest.Set("REQUEST_ID", requestId);
                 targetTest.Set("PARENT_ORDER_NUMBER", parentOrderNumber);
@@ -159,7 +161,7 @@ namespace NewPharma.InspectionRequest
             }
         }
 
-        private void CopyTestFields(string requestId, string loginPlanId, IEntity sourceEntry, IEntity sourceTest, decimal entryOrderNumber, decimal testOrderNumber)
+        private void CopyTestFields(string requestId, string loginPlanId, IEntity sourceEntry, IEntity sourceTest, object entryOrderNumber, object testOrderNumber)
         {
             IQuery query = _entityManager.CreateQuery(InspectionRequestConstants.TableLoginPlanTestField);
             query.AddEquals("IDENTITY", loginPlanId);
@@ -173,7 +175,7 @@ namespace NewPharma.InspectionRequest
                 targetField.Set("REQUEST_ID", requestId);
                 targetField.Set("PARENT_PARENT_ORDER_NUMBER", entryOrderNumber);
                 targetField.Set("PARENT_ORDER_NUMBER", testOrderNumber);
-                targetField.Set("ORDER_NUMBER", GetDecimal(sourceField, "ORDER_NUMBER"));
+                targetField.Set("ORDER_NUMBER", GetValue(sourceField, "ORDER_NUMBER"));
                 targetField.Set("PROPERTY", GetValue(sourceField, "PROPERTY"));
                 targetField.Set("VALUE", GetValue(sourceField, "VALUE"));
                 targetField.Set("OVERRIDE_VALUE", GetValue(sourceField, "VALUE"));
@@ -191,12 +193,13 @@ namespace NewPharma.InspectionRequest
                 query.AddEquals("LOGIN_PLAN_VERSION", loginPlanVersion);
             }
 
-            decimal orderNumber = 1;
+            int orderNumber = 1;
             foreach (IEntity product in _entityManager.Select(query))
             {
                 IEntity targetProduct = _entityManager.CreateEntity(InspectionRequestConstants.TableIrProduct);
                 targetProduct.Set("REQUEST_ID", requestId);
-                targetProduct.Set("ORDER_NUMBER", orderNumber++);
+                targetProduct.Set("ORDER_NUMBER", orderNumber.ToString(CultureInfo.InvariantCulture));
+                orderNumber++;
                 targetProduct.Set("PRODUCT_ID", GetValue(product, "IDENTITY"));
                 targetProduct.Set("PRODUCT_VERSION", GetValue(product, "PRODUCT_VERSION"));
                 targetProduct.Set("PRODUCT_CODE", GetValue(product, "PRODUCT_CODE"));
@@ -220,15 +223,5 @@ namespace NewPharma.InspectionRequest
             return value?.ToString() ?? string.Empty;
         }
 
-        private static decimal GetDecimal(IEntity entity, string fieldName)
-        {
-            object value = entity.Get(fieldName);
-            if (value == null)
-            {
-                return 0;
-            }
-
-            return decimal.TryParse(value.ToString(), out decimal parsed) ? parsed : 0;
-        }
     }
 }
