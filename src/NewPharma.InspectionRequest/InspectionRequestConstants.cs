@@ -28,6 +28,8 @@ namespace NewPharma.InspectionRequest
         public const string FieldLifecycleWorkflowVersion = "LIFECYCLE_WORKFLOW_VERSION";
         public const string FieldLifecycleNodeId = "LIFECYCLE_NODE_ID";
         public const string FieldLifecycleEvent = "LIFECYCLE_EVENT";
+        public const string FieldEntityTemplateId = "ENTITY_TEMPLATE_ID";
+        public const string FieldEntityTemplateVersion = "ENTITY_TEMPLATE_VERSION";
 
         public const string TableLoginPlanEntry = "LOGIN_PLAN_ENTRY";
         public const string TableLoginPlanField = "LOGIN_PLAN_FIELD";
@@ -40,6 +42,11 @@ namespace NewPharma.InspectionRequest
         public const string TableIrLoginPlanTest = "NPH_IR_LP_TEST";
         public const string TableIrLoginPlanTestField = "NPH_IR_LP_TEST_FIELD";
         public const string TableIrProduct = "NPH_IR_PRODUCT";
+        public const string TableWorkflow = "WORKFLOW";
+        public const string TableWorkflowNode = "WORKFLOW_NODE";
+        public const string TableWorkflowLink = "WORKFLOW_LINK";
+        public const string TableWorkflowJournal = "WORKFLOW_JOURNAL";
+        public const string TableEntityTemplate = "ENTITY_TEMPLATE";
 
         public const string StatusDraft = "DRAFT";
         public const string StatusSubmitted = "SUBMITTED";

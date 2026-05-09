@@ -104,5 +104,13 @@ The current phrase IDs remain valid, but the transition authority moves into wor
 - `InspectionRequestSnapshotService` currently creates the initial snapshot on
   save when no snapshot rows exist. It deliberately does not overwrite existing
   IR snapshot rows, so user adjustments are preserved.
-- The next implementation step is workflow action/menu configuration for submit,
-  review, approve, reject, and execute transitions.
+- `InspectionRequestLifecycleService` initializes the IR header with a default
+  entity template and workflow, creates the default workflow configuration when
+  the IR task opens or saves, and writes the current request to `WORKFLOW_LINK`.
+- Default lifecycle configuration:
+  - Entity Template: `NPH_IR`
+  - Workflow: `19940000-0000-0000-0000-000000000001`
+  - Nodes: Draft, Submitted, Under Review, Approved, Executed
+- The next implementation step is exposing submit, review, approve, reject, and
+  execute actions as RMB/menu items and replacing the placeholder tree with
+  Task Code populated nodes.

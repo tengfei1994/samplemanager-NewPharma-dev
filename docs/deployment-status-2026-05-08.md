@@ -38,6 +38,10 @@
 - `InspectionRequestSnapshotService` was added to copy Login Plan Data
   Assignment, Test Assignment, and Product Spec records into IR-owned snapshot
   tables.
+- `InspectionRequestLifecycleService` was added to initialize default entity
+  template/workflow metadata and maintain `WORKFLOW_LINK` for the current IR.
+- `NPH_INSPECTION_REQUEST` now includes `ENTITY_TEMPLATE_ID` and
+  `ENTITY_TEMPLATE_VERSION` header fields.
 - `NPH_INSPECTION_REQUEST.xml` now contains `Data Assignment` and `Product Spec`
   pages. The pages use explicit Form Designer data collection components to
   avoid null grid data sources.

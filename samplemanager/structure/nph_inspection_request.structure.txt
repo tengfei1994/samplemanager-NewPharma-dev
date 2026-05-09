@@ -87,6 +87,12 @@ table nph_inspection_request
 	field lifecycle_event
 	      datatype text (50);
 
+	field entity_template_id
+	      links_to entity_template . identity as entity_template;
+
+	field entity_template_version
+	      links_to entity_template . entity_template_version as entity_template;
+
 	field esig_required
 	      datatype boolean;
 
@@ -121,6 +127,7 @@ index nph_ir_status_index on status;
 index nph_ir_login_plan_index on login_plan_id, login_plan_version;
 index nph_ir_execution_status_index on execution_status;
 index nph_ir_lifecycle_index on lifecycle_workflow_id, lifecycle_workflow_version, lifecycle_node_id;
+index nph_ir_entity_template_index on entity_template_id, entity_template_version;
 
 table nph_ir_lp_entry
       prompt_description 'NPH IR Login Plan Data Assignment';

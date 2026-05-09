@@ -27,6 +27,9 @@ namespace NewPharma.InspectionRequest
                 return;
             }
 
+            var lifecycleService = new InspectionRequestLifecycleService(EntityManager);
+            lifecycleService.EnsureConfiguration();
+
             string requestId = GenerateRequestId();
 
             SetIfEmpty(request, InspectionRequestConstants.FieldRequestId, requestId);
@@ -36,6 +39,7 @@ namespace NewPharma.InspectionRequest
             SetIfEmpty(request, InspectionRequestConstants.FieldUseLastActiveVersion, true);
             SetIfEmpty(request, InspectionRequestConstants.FieldEsigRequired, false);
             SetIfEmpty(request, InspectionRequestConstants.FieldRequestedOn, DateTime.Now);
+            lifecycleService.Initialize(request);
 
             if (Library.Environment.CurrentUser != null)
             {
@@ -59,8 +63,11 @@ namespace NewPharma.InspectionRequest
         {
             if (MainForm?.Entity is IEntity request)
             {
+                var lifecycleService = new InspectionRequestLifecycleService(EntityManager);
+                lifecycleService.EnsureConfiguration();
                 EnsureRequestDefaults(request);
                 SyncLoginPlanSelection(request);
+                lifecycleService.Initialize(request);
                 ValidateRequest(request);
             }
 
@@ -76,6 +83,8 @@ namespace NewPharma.InspectionRequest
             {
                 var snapshotService = new InspectionRequestSnapshotService(EntityManager);
                 snapshotService.EnsureSnapshot(request, _snapshotRefreshRequested);
+                new InspectionRequestLifecycleService(EntityManager).LinkCurrentNode(request);
+                EntityManager.Commit();
                 _snapshotRefreshRequested = false;
             }
         }

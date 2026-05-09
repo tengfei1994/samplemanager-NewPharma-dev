@@ -176,6 +176,9 @@ internal sealed class InspectionRequestExecutionService
         request.Set(InspectionRequestConstants.FieldExecutionCompletedOn, DateTime.Now);
         request.Set(InspectionRequestConstants.FieldGeneratedJobId, result.PrimaryJobId ?? string.Empty);
         request.Set(InspectionRequestConstants.FieldGeneratedObjectSummary, JsonSerializer.Serialize(result));
+        request.Set(InspectionRequestConstants.FieldLifecycleNodeId, InspectionRequestLifecycleService.ExecutedNodeGuid);
+        request.Set(InspectionRequestConstants.FieldLifecycleEvent, "EXECUTED");
+        new InspectionRequestLifecycleService(_entityManager).LinkCurrentNode(request);
         _entityManager.Commit();
     }
 
