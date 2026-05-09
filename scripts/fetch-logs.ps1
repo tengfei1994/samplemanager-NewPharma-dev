@@ -19,3 +19,4 @@ Get-ChildItem -Path '$RemoteLogDir' -File -ErrorAction SilentlyContinue |
 $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($remoteScript))
 & C:\Windows\System32\OpenSSH\ssh.exe -F $SshConfig $HostAlias "powershell -NoProfile -EncodedCommand $encoded" |
   Set-Content -Path (Join-Path $LocalLogDir "latest-log-index.json") -Encoding UTF8
+

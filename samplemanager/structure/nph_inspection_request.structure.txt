@@ -75,6 +75,18 @@ table nph_inspection_request
 	field execution_error
 	      datatype text (2000);
 
+	field lifecycle_workflow_id
+	      links_to workflow . workflow_guid as lifecycle_workflow;
+
+	field lifecycle_workflow_version
+	      links_to workflow . workflow_version as lifecycle_workflow;
+
+	field lifecycle_node_id
+	      links_to workflow_node . workflow_node_guid as lifecycle_node;
+
+	field lifecycle_event
+	      datatype text (50);
+
 	field esig_required
 	      datatype boolean;
 
@@ -108,3 +120,210 @@ index nph_ir_id_text_index unique on id_text;
 index nph_ir_status_index on status;
 index nph_ir_login_plan_index on login_plan_id, login_plan_version;
 index nph_ir_execution_status_index on execution_status;
+index nph_ir_lifecycle_index on lifecycle_workflow_id, lifecycle_workflow_version, lifecycle_node_id;
+
+table nph_ir_lp_entry
+      prompt_description 'NPH IR Login Plan Data Assignment';
+
+	field request_id
+	      links_to parent nph_inspection_request . request_id as inspection_request
+	      used_for unique_key;
+
+	field order_number
+	      datatype packed_decimal
+	      used_for ordering, unique_key;
+
+	field parent_order_number
+	      datatype packed_decimal;
+
+	field source_login_plan_id
+	      links_to login_plan . identity as source_login_plan;
+
+	field source_login_plan_version
+	      links_to login_plan . version as source_login_plan;
+
+	field source_order_number
+	      datatype packed_decimal;
+
+	field table_name
+	      datatype text (30);
+
+	field node_name
+	      datatype text (50)
+	      used_for display_browse (1);
+
+	field login_workflow_id
+	      links_to workflow . workflow_guid as login_workflow;
+
+	field login_workflow_version
+	      links_to workflow . workflow_version as login_workflow;
+
+	field use_last_active_login_workflow
+	      datatype boolean;
+
+	field entity_template_id
+	      links_to entity_template . identity as entity_template;
+
+	field entity_template_version
+	      links_to entity_template . entity_template_version as entity_template;
+
+	field login_condition
+	      datatype text (500);
+
+	field count_expression
+	      datatype text (500);
+
+	field modifiable
+	      datatype boolean;
+
+	field removeflag
+	      datatype boolean
+	      used_for remove_flag;
+
+index nph_ir_lp_entry_source on source_login_plan_id, source_login_plan_version, source_order_number;
+
+table nph_ir_lp_field
+      prompt_description 'NPH IR Login Plan Data Field';
+
+	field request_id
+	      links_to parent nph_ir_lp_entry . request_id as inspection_request_entry
+	      used_for unique_key;
+
+	field parent_order_number
+	      links_to parent nph_ir_lp_entry . order_number as inspection_request_entry
+	      used_for unique_key;
+
+	field order_number
+	      datatype packed_decimal
+	      used_for ordering, unique_key;
+
+	field property
+	      datatype text (100)
+	      used_for display_browse (1);
+
+	field value
+	      datatype text (255);
+
+	field override_value
+	      datatype text (255);
+
+	field modifiable
+	      datatype boolean;
+
+table nph_ir_lp_test
+      prompt_description 'NPH IR Login Plan Test Assignment';
+
+	field request_id
+	      links_to parent nph_ir_lp_entry . request_id as inspection_request_entry
+	      used_for unique_key;
+
+	field parent_order_number
+	      links_to parent nph_ir_lp_entry . order_number as inspection_request_entry
+	      used_for unique_key;
+
+	field order_number
+	      datatype packed_decimal
+	      used_for ordering, unique_key;
+
+	field analysis_identity
+	      links_to versioned_analysis . identity as analysis;
+
+	field analysis_version
+	      links_to versioned_analysis . analysis_version as analysis;
+
+	field comp_list_analysis
+	      links_to versioned_c_l_header . analysis as component_list;
+
+	field comp_list_analysis_version
+	      links_to versioned_c_l_header . analysis_version as component_list;
+
+	field comp_list_identity
+	      links_to versioned_c_l_header . comp_list as component_list;
+
+	field test_schedule_id
+	      links_to test_sched_header . identity as test_schedule;
+
+	field red_test_id
+	      links_to red_test_header . identity as red_test_header;
+
+	field red_test_version
+	      links_to red_test_header . version as red_test_header;
+
+	field last_active_version
+	      datatype boolean;
+
+	field modifiable
+	      datatype boolean;
+
+table nph_ir_lp_test_field
+      prompt_description 'NPH IR Login Plan Test Field';
+
+	field request_id
+	      links_to parent nph_ir_lp_test . request_id as inspection_request_test
+	      used_for unique_key;
+
+	field parent_parent_order_number
+	      links_to parent nph_ir_lp_test . parent_order_number as inspection_request_test
+	      used_for unique_key;
+
+	field parent_order_number
+	      links_to parent nph_ir_lp_test . order_number as inspection_request_test
+	      used_for unique_key;
+
+	field order_number
+	      datatype packed_decimal
+	      used_for ordering, unique_key;
+
+	field property
+	      datatype text (100)
+	      used_for display_browse (1);
+
+	field value
+	      datatype text (255);
+
+	field override_value
+	      datatype text (255);
+
+	field modifiable
+	      datatype boolean;
+
+table nph_ir_product
+      prompt_description 'NPH IR Product Specification Selection';
+
+	field request_id
+	      links_to parent nph_inspection_request . request_id as inspection_request
+	      used_for unique_key;
+
+	field order_number
+	      datatype packed_decimal
+	      used_for ordering, unique_key;
+
+	field product_id
+	      links_to mlp_header . identity as product
+	      used_for display_browse (1);
+
+	field product_version
+	      links_to mlp_header . product_version as product
+	      used_for display_browse (2);
+
+	field product_code
+	      datatype text (50)
+	      used_for display_browse (3);
+
+	field product_description
+	      datatype text (234);
+
+	field test_schedule_id
+	      links_to test_sched_header . identity as test_schedule;
+
+	field inspection_plan
+	      links_to inspection_header . identity;
+
+	field modifiable
+	      datatype boolean;
+
+	field removeflag
+	      datatype boolean
+	      used_for remove_flag;
+
+index nph_ir_product_product on product_id, product_version;

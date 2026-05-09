@@ -8,7 +8,8 @@ using Thermo.SampleManager.Internal.ObjectModel;
 using Thermo.SampleManager.ObjectModel;
 using Thermo.SampleManager.Server;
 
-namespace NewPharma.InspectionRequest;
+namespace NewPharma.InspectionRequest
+{
 
 internal sealed class InspectionRequestExecutionService
 {
@@ -233,4 +234,5 @@ internal sealed class InspectionRequestExecutionService
         public string[] SampleIds { get; init; } = Array.Empty<string>();
         public string[] TestIds { get; init; } = Array.Empty<string>();
     }
+}
 }

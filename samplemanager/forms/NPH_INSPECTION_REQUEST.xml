@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.thermo.com/informatics/xmlns/interface/1.0">
+  <forms>
+    <form name="Page_General">
+      <height>520</height>
+      <width>620</width>
+      <caption>General</caption>
+      <components>
+        <entityBrowseDefinition name="LoginPlanBrowse">
+          <entity>LOGIN_PLAN</entity>
+          <returnProperty />
+          <ShowColumnHeaders>true</ShowColumnHeaders>
+          <ExplorerColumns />
+          <ShowAllVersions>No</ShowAllVersions>
+          <ShowRemoved>No</ShowRemoved>
+        </entityBrowseDefinition>
+      </components>
+      <minimumsize>
+        <height>520</height>
+        <width>620</width>
+      </minimumsize>
+      <controls>
+        <TextEdit name="RequestId">
+          <location>
+            <x>160</x>
+            <y>24</y>
+          </location>
+          <height>20</height>
+          <width>420</width>
+          <anchor>Top Left Right</anchor>
+          <property>RequestId</property>
+          <propertylength>30</propertylength>
+          <captionwidth>0</captionwidth>
+          <defaultvalue xsi:type="xsd:string" />
+          <readonly>true</readonly>
+          <IgnoreMaskBlank>true</IgnoreMaskBlank>
+          <showplaceholders>false</showplaceholders>
+          <useregularexpression>false</useregularexpression>
+          <showbutton>false</showbutton>
+        </TextEdit>
+        <EntityImage name="EntityImage1">
+          <location>
+            <x>16</x>
+            <y>16</y>
+          </location>
+          <height>32</height>
+          <width>32</width>
+        </EntityImage>
+        <line name="LineUnderIdentity">
+          <location>
+            <x>16</x>
+            <y>64</y>
+          </location>
+          <height>12</height>
+          <width>564</width>
+          <anchor>Top Left Right</anchor>
+        </line>
+        <prompt name="IdText">
+          <location>
+            <x>16</x>
+            <y>88</y>
+          </location>
+          <height>21</height>
+          <width>564</width>
+          <tabindex>1</tabindex>
+          <anchor>Top Left Right</anchor>
+          <caption>Description</caption>
+          <property>IdText</property>
+          <propertylength>100</propertylength>
+          <mandatory>true</mandatory>
+          <viewname />
+        </prompt>
+        <prompt name="Status">
+          <location>
+            <x>16</x>
+            <y>118</y>
+          </location>
+          <height>21</height>
+          <width>280</width>
+          <tabindex>2</tabindex>
+          <caption>Status</caption>
+          <property>Status</property>
+          <propertylength>10</propertylength>
+          <viewname />
+        </prompt>
+        <prompt name="ExecutionStatus">
+          <location>
+            <x>316</x>
+            <y>118</y>
+          </location>
+          <height>21</height>
+          <width>264</width>
+          <tabindex>3</tabindex>
+          <anchor>Top Left Right</anchor>
+          <caption>Execution Status</caption>
+          <property>ExecutionStatus</property>
+          <propertylength>10</propertylength>
+          <viewname />
+        </prompt>
+        <PromptEntityBrowseDefinition name="LoginPlan">
+          <location>
+            <x>16</x>
+            <y>150</y>
+          </location>
+          <height>20</height>
+          <width>420</width>
+          <tabindex>4</tabindex>
+          <anchor>Top Left Right</anchor>
+          <caption>Login Plan</caption>
+          <property>LoginPlan</property>
+          <propertylength>30</propertylength>
+          <mandatory>true</mandatory>
+          <Browse>LoginPlanBrowse</Browse>
+        </PromptEntityBrowseDefinition>
+        <prompt name="LoginPlanVersion">
+          <location>
+            <x>456</x>
+            <y>150</y>
+          </location>
+          <height>21</height>
+          <width>124</width>
+          <tabindex>5</tabindex>
+          <anchor>Top Right</anchor>
+          <caption>Version</caption>
+          <property>LoginPlanVersion</property>
+          <propertylength>10</propertylength>
+          <viewname />
+        </prompt>
+        <prompt name="UseLastActiveVersion">
+          <location>
+            <x>16</x>
+            <y>182</y>
+          </location>
+          <height>21</height>
+          <width>280</width>
+          <tabindex>6</tabindex>
+          <caption>Use Last Active Version</caption>
+          <property>UseLastActiveVersion</property>
+          <viewname />
+        </prompt>
+        <prompt name="EsigRequired">
+          <location>
+            <x>316</x>
+            <y>182</y>
+          </location>
+          <height>21</height>
+          <width>264</width>
+          <tabindex>7</tabindex>
+          <anchor>Top Left Right</anchor>
+          <caption>E-signature Required</caption>
+          <property>EsigRequired</property>
+          <viewname />
+        </prompt>
+        <prompt name="RootContextTable">
+          <location>
+            <x>16</x>
+            <y>214</y>
+          </location>
+          <height>21</height>
+          <width>280</width>
+          <tabindex>8</tabindex>
+          <caption>Root Context Table</caption>
+          <property>RootContextTable</property>
+          <propertylength>30</propertylength>
+          <viewname />
+        </prompt>
+        <prompt name="RootContextId">
+          <location>
+            <x>316</x>
+            <y>214</y>
+          </location>
+          <height>21</height>
+          <width>264</width>
+          <tabindex>9</tabindex>
+          <anchor>Top Left Right</anchor>
+          <caption>Root Context ID</caption>
+          <property>RootContextId</property>
+          <propertylength>60</propertylength>
+          <viewname />
+        </prompt>
+        <prompt name="RequestedBy">
+          <location>
+            <x>16</x>
+            <y>246</y>
+          </location>
+          <height>21</height>
+          <width>280</width>
+          <tabindex>10</tabindex>
+          <caption>Requested By</caption>
+          <property>RequestedBy</property>
+          <propertylength>10</propertylength>
+          <readonly>true</readonly>
+          <viewname />
+        </prompt>
+        <prompt name="RequestedOn">
+          <location>
+            <x>316</x>
+            <y>246</y>
+          </location>
+          <height>21</height>
+          <width>264</width>
+          <tabindex>11</tabindex>
+          <anchor>Top Left Right</anchor>
+          <caption>Requested On</caption>
+          <property>RequestedOn</property>
+          <readonly>true</readonly>
+          <viewname />
+        </prompt>
+        <prompt name="GeneratedJobId">
+          <location>
+            <x>16</x>
+            <y>278</y>
+          </location>
+          <height>21</height>
+          <width>564</width>
+          <tabindex>12</tabindex>
+          <anchor>Top Left Right</anchor>
+          <caption>Generated Job</caption>
+          <property>GeneratedJobId</property>
+          <propertylength>20</propertylength>
+          <readonly>true</readonly>
+          <viewname />
+        </prompt>
+        <prompt name="GeneratedObjectSummary">
+          <location>
+            <x>16</x>
+            <y>310</y>
+          </location>
+          <height>72</height>
+          <width>564</width>
+          <tabindex>13</tabindex>
+          <anchor>Top Left Right</anchor>
+          <caption>Generated Objects</caption>
+          <property>GeneratedObjectSummary</property>
+          <propertylength>500</propertylength>
+          <readonly>true</readonly>
+          <viewname />
+        </prompt>
+        <prompt name="ExecutionError">
+          <location>
+            <x>16</x>
+            <y>394</y>
+          </location>
+          <height>72</height>
+          <width>564</width>
+          <tabindex>14</tabindex>
+          <anchor>Top Left Right Bottom</anchor>
+          <caption>Execution Error</caption>
+          <property>ExecutionError</property>
+          <propertylength>1000</propertylength>
+          <readonly>true</readonly>
+          <viewname />
+        </prompt>
+      </controls>
+    </form>
+    <form name="Page_DataAssignment">
+      <height>520</height>
+      <width>760</width>
+      <caption>Data Assignment</caption>
+      <components>
+        <dataqueryentitycollection name="DataAssignmentEntries">
+          <entity>NPH_IR_LP_ENTRY</entity>
+          <query />
+        </dataqueryentitycollection>
+        <dataqueryentitycollection name="DataAssignmentTests">
+          <entity>NPH_IR_LP_TEST</entity>
+          <query />
+        </dataqueryentitycollection>
+      </components>
+      <minimumsize>
+        <height>520</height>
+        <width>760</width>
+      </minimumsize>
+      <controls>
+        <datagridcontrol name="DataAssignmentGrid">
+          <location>
+            <x>8</x>
+            <y>8</y>
+          </location>
+          <height>244</height>
+          <width>744</width>
+          <dock>Top</dock>
+          <showbuttons>true</showbuttons>
+          <gridcolumns>
+            <GridColumnDefinition name="EntryOrder">
+              <width>70</width>
+              <caption>Order</caption>
+              <readonly>true</readonly>
+              <datatype>Text</datatype>
+              <Property>OrderNumber</Property>
+            </GridColumnDefinition>
+            <GridColumnDefinition name="EntryTable">
+              <width>110</width>
+              <caption>Table</caption>
+              <readonly>false</readonly>
+              <datatype>Text</datatype>
+              <Property>TableName</Property>
+            </GridColumnDefinition>
+            <GridColumnDefinition name="EntryNode">
+              <width>160</width>
+              <caption>Node</caption>
+              <readonly>false</readonly>
+              <datatype>Text</datatype>
+              <Property>NodeName</Property>
+            </GridColumnDefinition>
+            <GridColumnDefinition name="EntryTemplate">
+              <width>160</width>
+              <caption>Entity Template</caption>
+              <readonly>false</readonly>
+              <datatype>Text</datatype>
+              <Property>EntityTemplateId</Property>
+            </GridColumnDefinition>
+            <GridColumnDefinition name="EntryWorkflow">
+              <width>160</width>
+              <caption>Login Workflow</caption>
+              <readonly>false</readonly>
+              <datatype>Text</datatype>
+              <Property>LoginWorkflowId</Property>
+            </GridColumnDefinition>
+            <GridColumnDefinition name="EntryCondition">
+              <width>220</width>
+              <caption>Login Condition</caption>
+              <readonly>false</readonly>
+              <datatype>Text</datatype>
+              <Property>LoginCondition</Property>
+            </GridColumnDefinition>
+          </gridcolumns>
+          <readonly>false</readonly>
+          <supportedoperations>Add Delete</supportedoperations>
+          <defaultview>Horizontal</defaultview>
+          <alwaysshowsearch>false</alwaysshowsearch>
+          <searchcolumns>false</searchcolumns>
+          <datasource>DataAssignmentEntries</datasource>
+        </datagridcontrol>
+        <datagridcontrol name="DataAssignmentTestsGrid">
+          <location>
+            <x>8</x>
+            <y>260</y>
+          </location>
+          <height>244</height>
+          <width>744</width>
+          <anchor>Top Left Right Bottom</anchor>
+          <showbuttons>true</showbuttons>
+          <gridcolumns>
+            <GridColumnDefinition name="TestParentOrder">
+              <width>90</width>
+              <caption>Entry</caption>
+              <readonly>true</readonly>
+              <datatype>Text</datatype>
+              <Property>ParentOrderNumber</Property>
+            </GridColumnDefinition>
+            <GridColumnDefinition name="TestOrder">
+              <width>70</width>
+              <caption>Order</caption>
+              <readonly>true</readonly>
+              <datatype>Text</datatype>
+              <Property>OrderNumber</Property>
+            </GridColumnDefinition>
+            <GridColumnDefinition name="TestAnalysis">
+              <width>160</width>
+              <caption>Analysis</caption>
+              <readonly>false</readonly>
+              <datatype>Text</datatype>
+              <Property>AnalysisIdentity</Property>
+            </GridColumnDefinition>
+            <GridColumnDefinition name="TestComponentList">
+              <width>160</width>
+              <caption>Component List</caption>
+              <readonly>false</readonly>
+              <datatype>Text</datatype>
+              <Property>CompListIdentity</Property>
+            </GridColumnDefinition>
+            <GridColumnDefinition name="TestSchedule">
+              <width>160</width>
+              <caption>Test Schedule</caption>
+              <readonly>false</readonly>
+              <datatype>Text</datatype>
+              <Property>TestScheduleId</Property>
+            </GridColumnDefinition>
+            <GridColumnDefinition name="TestPlan">
+              <width>160</width>
+              <caption>Test Plan</caption>
+              <readonly>false</readonly>
+              <datatype>Text</datatype>
+              <Property>RedTestId</Property>
+            </GridColumnDefinition>
+          </gridcolumns>
+          <readonly>false</readonly>
+          <supportedoperations>Add Delete</supportedoperations>
+          <defaultview>Horizontal</defaultview>
+          <alwaysshowsearch>false</alwaysshowsearch>
+          <searchcolumns>false</searchcolumns>
+          <datasource>DataAssignmentTests</datasource>
+        </datagridcontrol>
+      </controls>
+    </form>
+    <form name="Page_ProductSpec">
+      <height>520</height>
+      <width>760</width>
+      <caption>Product Spec</caption>
+      <components>
+        <dataqueryentitycollection name="ProductSpecRows">
+          <entity>NPH_IR_PRODUCT</entity>
+          <query />
+        </dataqueryentitycollection>
+      </components>
+      <minimumsize>
+        <height>520</height>
+        <width>760</width>
+      </minimumsize>
+      <controls>
+        <datagridcontrol name="ProductSpecGrid">
+          <location>
+            <x>8</x>
+            <y>8</y>
+          </location>
+          <height>504</height>
+          <width>744</width>
+          <dock>Fill</dock>
+          <showbuttons>true</showbuttons>
+          <gridcolumns>
+            <GridColumnDefinition name="ProductOrder">
+              <width>70</width>
+              <caption>Order</caption>
+              <readonly>true</readonly>
+              <datatype>Text</datatype>
+              <Property>OrderNumber</Property>
+            </GridColumnDefinition>
+            <GridColumnDefinition name="ProductId">
+              <width>150</width>
+              <caption>Product</caption>
+              <readonly>false</readonly>
+              <datatype>Text</datatype>
+              <Property>ProductId</Property>
+            </GridColumnDefinition>
+            <GridColumnDefinition name="ProductVersion">
+              <width>80</width>
+              <caption>Version</caption>
+              <readonly>false</readonly>
+              <datatype>Text</datatype>
+              <Property>ProductVersion</Property>
+            </GridColumnDefinition>
+            <GridColumnDefinition name="ProductCode">
+              <width>140</width>
+              <caption>Product Code</caption>
+              <readonly>false</readonly>
+              <datatype>Text</datatype>
+              <Property>ProductCode</Property>
+            </GridColumnDefinition>
+            <GridColumnDefinition name="ProductDescription">
+              <width>240</width>
+              <caption>Description</caption>
+              <readonly>false</readonly>
+              <datatype>Text</datatype>
+              <Property>ProductDescription</Property>
+            </GridColumnDefinition>
+            <GridColumnDefinition name="ProductTestSchedule">
+              <width>160</width>
+              <caption>Test Schedule</caption>
+              <readonly>false</readonly>
+              <datatype>Text</datatype>
+              <Property>TestScheduleId</Property>
+            </GridColumnDefinition>
+          </gridcolumns>
+          <readonly>false</readonly>
+          <supportedoperations>Add Delete</supportedoperations>
+          <defaultview>Horizontal</defaultview>
+          <alwaysshowsearch>false</alwaysshowsearch>
+          <searchcolumns>false</searchcolumns>
+          <datasource>ProductSpecRows</datasource>
+        </datagridcontrol>
+      </controls>
+    </form>
+  </forms>
+</interface>

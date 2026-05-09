@@ -16,3 +16,4 @@ dotnet publish $ProjectPath -c Release -o $OutDir
 Compress-Archive -Path (Join-Path $OutDir "*") -DestinationPath $PackagePath -Force
 
 Write-Host "Package created: $PackagePath"
+

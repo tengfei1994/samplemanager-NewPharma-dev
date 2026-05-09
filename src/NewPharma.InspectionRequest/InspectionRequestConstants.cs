@@ -1,8 +1,8 @@
-namespace NewPharma.InspectionRequest;
-
-internal static class InspectionRequestConstants
+namespace NewPharma.InspectionRequest
 {
-    public const string EntityName = "NPH_INSPECTION_REQUEST";
+    internal static class InspectionRequestConstants
+    {
+        public const string EntityName = "NPH_INSPECTION_REQUEST";
 
     public const string FieldRequestId = "REQUEST_ID";
     public const string FieldIdText = "ID_TEXT";
@@ -12,15 +12,33 @@ internal static class InspectionRequestConstants
     public const string FieldUseLastActiveVersion = "USE_LAST_ACTIVE_VERSION";
     public const string FieldRootContextTable = "ROOT_CONTEXT_TABLE";
     public const string FieldRootContextId = "ROOT_CONTEXT_ID";
+    public const string FieldRequestedBy = "REQUESTED_BY";
+    public const string FieldRequestedOn = "REQUESTED_ON";
     public const string FieldExecutionStatus = "EXECUTION_STATUS";
     public const string FieldExecutionStartedOn = "EXECUTION_STARTED_ON";
     public const string FieldExecutionCompletedOn = "EXECUTION_COMPLETED_ON";
     public const string FieldGeneratedJobId = "GENERATED_JOB_ID";
     public const string FieldGeneratedObjectSummary = "GENERATED_OBJECT_SUMMARY";
-    public const string FieldExecutionError = "EXECUTION_ERROR";
-    public const string FieldEsigRequired = "ESIG_REQUIRED";
+        public const string FieldExecutionError = "EXECUTION_ERROR";
+        public const string FieldEsigRequired = "ESIG_REQUIRED";
+        public const string FieldLifecycleWorkflowId = "LIFECYCLE_WORKFLOW_ID";
+        public const string FieldLifecycleWorkflowVersion = "LIFECYCLE_WORKFLOW_VERSION";
+        public const string FieldLifecycleNodeId = "LIFECYCLE_NODE_ID";
+        public const string FieldLifecycleEvent = "LIFECYCLE_EVENT";
 
-    public const string StatusDraft = "DRAFT";
+        public const string TableLoginPlanEntry = "LOGIN_PLAN_ENTRY";
+        public const string TableLoginPlanField = "LOGIN_PLAN_FIELD";
+        public const string TableLoginPlanTest = "LOGIN_PLAN_TEST";
+        public const string TableLoginPlanTestField = "LOGIN_PLAN_TEST_FIELD";
+        public const string TableMlpHeader = "MLP_HEADER";
+
+        public const string TableIrLoginPlanEntry = "NPH_IR_LP_ENTRY";
+        public const string TableIrLoginPlanField = "NPH_IR_LP_FIELD";
+        public const string TableIrLoginPlanTest = "NPH_IR_LP_TEST";
+        public const string TableIrLoginPlanTestField = "NPH_IR_LP_TEST_FIELD";
+        public const string TableIrProduct = "NPH_IR_PRODUCT";
+
+        public const string StatusDraft = "DRAFT";
     public const string StatusSubmitted = "SUBMITTED";
     public const string StatusUnderReview = "UNDER_REVI";
     public const string StatusApproved = "APPROVED";
@@ -31,5 +49,6 @@ internal static class InspectionRequestConstants
     public const string ExecutionNotExecuted = "NOT_STARTE";
     public const string ExecutionExecuting = "EXECUTING";
     public const string ExecutionExecuted = "EXECUTED";
-    public const string ExecutionFailed = "FAILED";
+        public const string ExecutionFailed = "FAILED";
+    }
 }

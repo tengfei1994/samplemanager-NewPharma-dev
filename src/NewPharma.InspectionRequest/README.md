@@ -1,18 +1,28 @@
 # NewPharma.InspectionRequest
 
-Custom extension skeleton for the P1 Inspection Request implementation.
+Custom SampleManager task assembly for the NewPharma Inspection Request
+implementation.
 
 ## Purpose
 
-This assembly is intended to provide the controlled execution wrapper around Login Plan based sample generation. It does not modify or include vendor Pharma Solution source code.
+This assembly provides the controlled wrapper around Login Plan based inspection
+request creation and execution. It does not modify or include vendor Pharma
+Solution source code.
 
 ## Current State
 
-The current version is a skeleton:
+Current task/service responsibilities:
 
-- `InspectionRequestExecutionTask` is the SampleManager task entry point.
-- `InspectionRequestExecutionService` validates status, marks Executing, and records success/failure.
-- The actual Login Plan execution hook is intentionally left as a guarded integration point until the VGSM object/table configuration and supported call path are confirmed.
+- `InspectionRequestLabTableTask` sets initial request defaults and triggers
+  snapshot creation during save.
+- `InspectionRequestSnapshotService` copies Login Plan Data Assignment, Test
+  Assignment, and Product Spec data into IR-owned snapshot tables.
+- `InspectionRequestExecutionTask` is the execution task entry point.
+- `InspectionRequestExecutionService` validates status, marks execution
+  progress, calls the Login Plan execution path, and records generated objects
+  or execution errors.
+- `ConfigureInspectionRequestPhrasesTask` creates the phrase types used by the
+  request and execution status fields.
 
 ## Build Assumptions
 
@@ -20,13 +30,14 @@ The current version is a skeleton:
 - Platform: `x86`
 - References are resolved from the VGSM `Exe` and `Exe\SolutionAssemblies` folders using `VGSM_EXE`.
 
-Example local build command once references are available:
+Example remote build command once references are available:
 
 ```powershell
 $env:VGSM_EXE = 'C:\Thermo\SampleManager\Server\VGSM\Exe'
-dotnet build .\src\NewPharma.InspectionRequest\NewPharma.InspectionRequest.csproj -c Release -p:Platform=x86
+dotnet build C:\Thermo\SampleManager\Server\VGSM\Solution\NewPharma\InspectionRequest\NewPharma.InspectionRequest.csproj -c Release -p:Platform=x86
 ```
 
 ## Next Engineering Step
 
-Compile this skeleton against the remote VGSM assemblies, fix API signature differences, then wire `ExecuteLoginPlan` to the supported Login Plan execution path.
+Add workflow action/menu configuration for submit, review, approve, reject, and
+execute transitions.

@@ -4,7 +4,8 @@ using Thermo.SampleManager.Common.Data;
 using Thermo.SampleManager.Library;
 using Thermo.SampleManager.Tasks;
 
-namespace NewPharma.InspectionRequest;
+namespace NewPharma.InspectionRequest
+{
 
 /// <summary>
 /// One-shot background task that creates the phrase types used by NPH_INSPECTION_REQUEST.
@@ -84,4 +85,5 @@ public class ConfigureInspectionRequestPhrasesTask : SampleManagerTask
         phrase.Set("PHRASE_TEXT", phraseText);
         EntityManager.Transaction.Add(phrase);
     }
+}
 }

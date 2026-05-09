@@ -3,7 +3,8 @@ using Thermo.SampleManager.Common.Data;
 using Thermo.SampleManager.Library;
 using Thermo.SampleManager.Tasks;
 
-namespace NewPharma.InspectionRequest;
+namespace NewPharma.InspectionRequest
+{
 
 /// <summary>
 /// Workflow/task entry point for executing an approved Inspection Request.
@@ -39,4 +40,5 @@ public class InspectionRequestExecutionTask : SampleManagerTask
             Exit(false);
         }
     }
+}
 }

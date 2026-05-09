@@ -18,3 +18,4 @@ Get-ChildItem -Path '$RemoteRoot\Solution' -Directory -ErrorAction SilentlyConti
 $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($remoteScript))
 & C:\Windows\System32\OpenSSH\ssh.exe -F $SshConfig $HostAlias "powershell -NoProfile -EncodedCommand $encoded" |
   Set-Content -Path (Join-Path $LocalOut "solution-folders.json") -Encoding UTF8
+
