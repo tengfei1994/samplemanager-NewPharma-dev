@@ -365,71 +365,113 @@
               <dock>Fill</dock>
               <caption>Data Assignment Details</caption>
               <controls>
-                <datagridcontrol name="DataAssignmentEntriesGrid">
+                <panel name="DataAssignmentEntryHeaderPanel">
                   <location />
                   <height>128</height>
                   <width>665</width>
                   <dock>Top</dock>
-                  <showbuttons>false</showbuttons>
-                  <autosizecolumns>true</autosizecolumns>
-                  <MultiSelect>false</MultiSelect>
-                  <showiconcolumn>false</showiconcolumn>
-                  <showindicator>true</showindicator>
-                  <showhorzlines>true</showhorzlines>
-                  <showvertlines>true</showvertlines>
-                  <allowsort>false</allowsort>
-                  <fixedcolumns>0</fixedcolumns>
-                  <gridcolumns>
-                    <GridColumnDefinition name="EntryNodeName">
-                      <width>180</width>
+                  <caption>Entry Header</caption>
+                  <controls>
+                    <prompt name="DataAssignmentEntryName">
+                      <location>
+                        <x>78</x>
+                        <y>8</y>
+                      </location>
+                      <height>21</height>
+                      <width>250</width>
                       <caption>Name</caption>
+                      <captionwidth>70</captionwidth>
+                      <property>NodeName</property>
+                      <datasource>DataAssignmentEntries</datasource>
                       <readonly>true</readonly>
-                      <datatype>Text</datatype>
-                      <Property>NodeName</Property>
-                    </GridColumnDefinition>
-                    <GridColumnDefinition name="EntryLoginWorkflow">
-                      <width>180</width>
+                      <viewname />
+                    </prompt>
+                    <prompt name="DataAssignmentLoginWorkflow">
+                      <location>
+                        <x>78</x>
+                        <y>38</y>
+                      </location>
+                      <height>21</height>
+                      <width>250</width>
                       <caption>Login Workflow</caption>
+                      <captionwidth>70</captionwidth>
+                      <property>LoginWorkflow</property>
+                      <datasource>DataAssignmentEntries</datasource>
                       <readonly>true</readonly>
-                      <datatype>Text</datatype>
-                      <Property>LoginWorkflowId</Property>
-                    </GridColumnDefinition>
-                    <GridColumnDefinition name="EntryLastActiveWorkflow">
-                      <width>120</width>
+                      <viewname />
+                    </prompt>
+                    <prompt name="DataAssignmentLastActiveWorkflow">
+                      <location>
+                        <x>350</x>
+                        <y>38</y>
+                      </location>
+                      <height>21</height>
+                      <width>150</width>
                       <caption>Last Active Version</caption>
+                      <captionwidth>122</captionwidth>
+                      <property>UseLastActiveLoginWorkflow</property>
+                      <datasource>DataAssignmentEntries</datasource>
                       <readonly>true</readonly>
-                      <datatype>Boolean</datatype>
-                      <Property>UseLastActiveLoginWorkflow</Property>
-                    </GridColumnDefinition>
-                    <GridColumnDefinition name="EntryEntityTemplate">
-                      <width>180</width>
+                      <viewname />
+                    </prompt>
+                    <prompt name="DataAssignmentEntityTemplate">
+                      <location>
+                        <x>78</x>
+                        <y>68</y>
+                      </location>
+                      <height>21</height>
+                      <width>250</width>
                       <caption>Entity Template</caption>
+                      <captionwidth>70</captionwidth>
+                      <property>EntityTemplate</property>
+                      <datasource>DataAssignmentEntries</datasource>
                       <readonly>true</readonly>
-                      <datatype>Text</datatype>
-                      <Property>EntityTemplateId</Property>
-                    </GridColumnDefinition>
-                    <GridColumnDefinition name="EntryLoginCondition">
-                      <width>240</width>
+                      <viewname />
+                    </prompt>
+                    <prompt name="DataAssignmentEntryTable">
+                      <location>
+                        <x>430</x>
+                        <y>68</y>
+                      </location>
+                      <height>21</height>
+                      <width>160</width>
+                      <caption>Entity</caption>
+                      <captionwidth>55</captionwidth>
+                      <property>TableName</property>
+                      <datasource>DataAssignmentEntries</datasource>
+                      <readonly>true</readonly>
+                      <viewname />
+                    </prompt>
+                    <prompt name="DataAssignmentLoginCondition">
+                      <location>
+                        <x>78</x>
+                        <y>98</y>
+                      </location>
+                      <height>21</height>
+                      <width>250</width>
                       <caption>Login Condition</caption>
+                      <captionwidth>70</captionwidth>
+                      <property>LoginCondition</property>
+                      <datasource>DataAssignmentEntries</datasource>
                       <readonly>true</readonly>
-                      <datatype>Text</datatype>
-                      <Property>LoginCondition</Property>
-                    </GridColumnDefinition>
-                    <GridColumnDefinition name="EntryCountExpression">
-                      <width>120</width>
+                      <viewname />
+                    </prompt>
+                    <prompt name="DataAssignmentCountExpression">
+                      <location>
+                        <x>430</x>
+                        <y>98</y>
+                      </location>
+                      <height>21</height>
+                      <width>160</width>
                       <caption>Count Expression</caption>
+                      <captionwidth>90</captionwidth>
+                      <property>CountExpression</property>
+                      <datasource>DataAssignmentEntries</datasource>
                       <readonly>true</readonly>
-                      <datatype>Text</datatype>
-                      <Property>CountExpression</Property>
-                    </GridColumnDefinition>
-                  </gridcolumns>
-                  <readonly>true</readonly>
-                  <supportedoperations>None</supportedoperations>
-                  <defaultview>Horizontal</defaultview>
-                  <alwaysshowsearch>false</alwaysshowsearch>
-                  <searchcolumns>false</searchcolumns>
-                  <datasource>DataAssignmentEntries</datasource>
-                </datagridcontrol>
+                      <viewname />
+                    </prompt>
+                  </controls>
+                </panel>
                 <splitter name="DataAssignmentHeaderSplitter">
                   <location>
                     <y>128</y>
