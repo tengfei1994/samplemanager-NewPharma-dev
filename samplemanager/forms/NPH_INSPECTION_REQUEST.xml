@@ -544,32 +544,22 @@
               <dock>Left</dock>
               <caption>Data Assignment</caption>
               <controls>
-                <treelist name="DataAssignmentTree">
+                <simpletreelist name="DataAssignmentTree">
                   <location />
                   <height>504</height>
                   <width>220</width>
                   <dock>Fill</dock>
                   <caption>Data Assignment</caption>
-                  <showhierarchy>true</showhierarchy>
                   <readonly>false</readonly>
-                  <useentityhierarchy>false</useentityhierarchy>
-                  <treeoperations>CanAdd CanDelete CanMoveUpDown CanMoveLevels CanExpandCollapseAll</treeoperations>
+                  <treeoperations>None</treeoperations>
                   <openexpanded>true</openexpanded>
                   <showroot>true</showroot>
                   <autofocusnewnode>true</autofocusnewnode>
-                  <rootleveldefinition name="">
-                    <property>DataAssignmentEntries</property>
-                    <displayfield>NodeName</displayfield>
-                    <iconfield />
-                    <nodedialog />
-                    <customlinks>
-                      <FromParent>OrderNumber</FromParent>
-                      <FromChild>ParentOrderNumber</FromChild>
-                      <Name>DataAssignmentTreeLink</Name>
-                    </customlinks>
-                    <entity>NPH_IR_LP_ENTRY</entity>
-                  </rootleveldefinition>
-                </treelist>
+                  <showimages>true</showimages>
+                  <nodes />
+                  <showheader>true</showheader>
+                  <allowdragdrop>false</allowdragdrop>
+                </simpletreelist>
               </controls>
             </panel>
           </controls>
