@@ -374,13 +374,13 @@
                   <controls>
                     <prompt name="DataAssignmentEntryName">
                       <location>
-                        <x>78</x>
+                        <x>16</x>
                         <y>8</y>
                       </location>
                       <height>21</height>
-                      <width>250</width>
+                      <width>420</width>
                       <caption>Name</caption>
-                      <captionwidth>70</captionwidth>
+                      <captionwidth>140</captionwidth>
                       <property>NodeName</property>
                       <datasource>DataAssignmentEntries</datasource>
                       <readonly>true</readonly>
@@ -388,13 +388,13 @@
                     </prompt>
                     <prompt name="DataAssignmentLoginWorkflow">
                       <location>
-                        <x>78</x>
+                        <x>16</x>
                         <y>38</y>
                       </location>
                       <height>21</height>
-                      <width>250</width>
+                      <width>420</width>
                       <caption>Login Workflow</caption>
-                      <captionwidth>70</captionwidth>
+                      <captionwidth>140</captionwidth>
                       <property>LoginWorkflow</property>
                       <datasource>DataAssignmentEntries</datasource>
                       <readonly>true</readonly>
@@ -402,13 +402,13 @@
                     </prompt>
                     <prompt name="DataAssignmentLastActiveWorkflow">
                       <location>
-                        <x>350</x>
+                        <x>456</x>
                         <y>38</y>
                       </location>
                       <height>21</height>
-                      <width>150</width>
+                      <width>190</width>
                       <caption>Last Active Version</caption>
-                      <captionwidth>122</captionwidth>
+                      <captionwidth>150</captionwidth>
                       <property>UseLastActiveLoginWorkflow</property>
                       <datasource>DataAssignmentEntries</datasource>
                       <readonly>true</readonly>
@@ -416,13 +416,13 @@
                     </prompt>
                     <prompt name="DataAssignmentEntityTemplate">
                       <location>
-                        <x>78</x>
+                        <x>16</x>
                         <y>68</y>
                       </location>
                       <height>21</height>
-                      <width>250</width>
+                      <width>420</width>
                       <caption>Entity Template</caption>
-                      <captionwidth>70</captionwidth>
+                      <captionwidth>140</captionwidth>
                       <property>EntityTemplate</property>
                       <datasource>DataAssignmentEntries</datasource>
                       <readonly>true</readonly>
@@ -430,13 +430,13 @@
                     </prompt>
                     <prompt name="DataAssignmentEntryTable">
                       <location>
-                        <x>430</x>
+                        <x>456</x>
                         <y>68</y>
                       </location>
                       <height>21</height>
-                      <width>160</width>
+                      <width>190</width>
                       <caption>Entity</caption>
-                      <captionwidth>55</captionwidth>
+                      <captionwidth>60</captionwidth>
                       <property>TableName</property>
                       <datasource>DataAssignmentEntries</datasource>
                       <readonly>true</readonly>
@@ -444,13 +444,13 @@
                     </prompt>
                     <prompt name="DataAssignmentLoginCondition">
                       <location>
-                        <x>78</x>
+                        <x>16</x>
                         <y>98</y>
                       </location>
                       <height>21</height>
-                      <width>250</width>
+                      <width>420</width>
                       <caption>Login Condition</caption>
-                      <captionwidth>70</captionwidth>
+                      <captionwidth>140</captionwidth>
                       <property>LoginCondition</property>
                       <datasource>DataAssignmentEntries</datasource>
                       <readonly>true</readonly>
@@ -458,13 +458,13 @@
                     </prompt>
                     <prompt name="DataAssignmentCountExpression">
                       <location>
-                        <x>430</x>
+                        <x>456</x>
                         <y>98</y>
                       </location>
                       <height>21</height>
-                      <width>160</width>
+                      <width>190</width>
                       <caption>Count Expression</caption>
-                      <captionwidth>90</captionwidth>
+                      <captionwidth>120</captionwidth>
                       <property>CountExpression</property>
                       <datasource>DataAssignmentEntries</datasource>
                       <readonly>true</readonly>
