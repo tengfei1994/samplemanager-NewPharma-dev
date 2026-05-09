@@ -255,143 +255,378 @@
     </form>
     <form name="Page_DataAssignment">
       <height>520</height>
-      <width>760</width>
+      <width>901</width>
       <caption>Data Assignment</caption>
       <components>
         <dataqueryentitycollection name="DataAssignmentEntries">
           <entity>NPH_IR_LP_ENTRY</entity>
           <query />
         </dataqueryentitycollection>
+        <dataqueryentitycollection name="DataAssignmentFields">
+          <entity>NPH_IR_LP_FIELD</entity>
+          <query />
+        </dataqueryentitycollection>
         <dataqueryentitycollection name="DataAssignmentTests">
           <entity>NPH_IR_LP_TEST</entity>
+          <query />
+        </dataqueryentitycollection>
+        <dataqueryentitycollection name="DataAssignmentTestFields">
+          <entity>NPH_IR_LP_TEST_FIELD</entity>
           <query />
         </dataqueryentitycollection>
       </components>
       <minimumsize>
         <height>520</height>
-        <width>760</width>
+        <width>901</width>
       </minimumsize>
       <controls>
-        <datagridcontrol name="DataAssignmentGrid">
+        <panel name="DataAssignmentRootPanel">
           <location>
             <x>8</x>
             <y>8</y>
           </location>
-          <height>244</height>
-          <width>744</width>
-          <dock>Top</dock>
-          <showbuttons>true</showbuttons>
-          <gridcolumns>
-            <GridColumnDefinition name="EntryOrder">
-              <width>70</width>
-              <caption>Order</caption>
-              <readonly>true</readonly>
-              <datatype>Text</datatype>
-              <Property>OrderNumber</Property>
-            </GridColumnDefinition>
-            <GridColumnDefinition name="EntryTable">
-              <width>110</width>
-              <caption>Table</caption>
-              <readonly>false</readonly>
-              <datatype>Text</datatype>
-              <Property>TableName</Property>
-            </GridColumnDefinition>
-            <GridColumnDefinition name="EntryNode">
-              <width>160</width>
-              <caption>Node</caption>
-              <readonly>false</readonly>
-              <datatype>Text</datatype>
-              <Property>NodeName</Property>
-            </GridColumnDefinition>
-            <GridColumnDefinition name="EntryTemplate">
-              <width>160</width>
-              <caption>Entity Template</caption>
-              <readonly>false</readonly>
-              <datatype>Text</datatype>
-              <Property>EntityTemplateId</Property>
-            </GridColumnDefinition>
-            <GridColumnDefinition name="EntryWorkflow">
-              <width>160</width>
-              <caption>Login Workflow</caption>
-              <readonly>false</readonly>
-              <datatype>Text</datatype>
-              <Property>LoginWorkflowId</Property>
-            </GridColumnDefinition>
-            <GridColumnDefinition name="EntryCondition">
+          <height>504</height>
+          <width>885</width>
+          <dock>Fill</dock>
+          <caption>Data Assignment</caption>
+          <controls>
+            <splitter name="DataAssignmentSplitter">
+              <location>
+                <x>220</x>
+              </location>
+              <height>504</height>
+              <width>4</width>
+              <dock>Left</dock>
+              <anchor>None</anchor>
+              <position>220</position>
+            </splitter>
+            <panel name="DataAssignmentDetailPanel">
+              <location>
+                <x>220</x>
+              </location>
+              <height>504</height>
+              <width>665</width>
+              <dock>Fill</dock>
+              <caption>Data Assignment Details</caption>
+              <controls>
+                <tabcontrol name="DataAssignmentTabs">
+                  <location />
+                  <height>504</height>
+                  <width>665</width>
+                  <dock>Fill</dock>
+                  <caption>Data Assignment Tabs</caption>
+                  <pageborderstyle>Default</pageborderstyle>
+                  <headerlocation>Bottom</headerlocation>
+                  <multiline>false</multiline>
+                  <tabpages>
+                    <tabpage name="DataPropertiesTab">
+                      <location>
+                        <x>4</x>
+                        <y>4</y>
+                      </location>
+                      <height>478</height>
+                      <width>657</width>
+                      <visible>false</visible>
+                      <caption>Data Properties</caption>
+                      <controls>
+                        <datagridcontrol name="DataAssignmentFieldsGrid">
+                          <location />
+                          <height>478</height>
+                          <width>657</width>
+                          <dock>Fill</dock>
+                          <showbuttons>true</showbuttons>
+                          <autosizecolumns>true</autosizecolumns>
+                          <MultiSelect>false</MultiSelect>
+                          <showiconcolumn>false</showiconcolumn>
+                          <showindicator>true</showindicator>
+                          <showhorzlines>true</showhorzlines>
+                          <showvertlines>true</showvertlines>
+                          <allowsort>false</allowsort>
+                          <fixedcolumns>0</fixedcolumns>
+                          <gridcolumns>
+                            <GridColumnDefinition name="FieldParentOrder">
+                              <width>90</width>
+                              <caption>Entry</caption>
+                              <readonly>true</readonly>
+                              <datatype>Text</datatype>
+                              <Property>ParentOrderNumber</Property>
+                            </GridColumnDefinition>
+                            <GridColumnDefinition name="FieldProperty">
+                              <width>180</width>
+                              <caption>Property</caption>
+                              <readonly>true</readonly>
+                              <IsGreyBackground>true</IsGreyBackground>
+                              <datatype>Text</datatype>
+                              <Property>Property</Property>
+                            </GridColumnDefinition>
+                            <GridColumnDefinition name="FieldDefaultValue">
+                              <width>180</width>
+                              <caption>Default Value</caption>
+                              <readonly>true</readonly>
+                              <IsGreyBackground>true</IsGreyBackground>
+                              <datatype>Text</datatype>
+                              <Property>Value</Property>
+                            </GridColumnDefinition>
+                            <GridColumnDefinition name="FieldNewValue">
+                              <width>220</width>
+                              <caption>New Value</caption>
+                              <readonly>false</readonly>
+                              <datatype>Text</datatype>
+                              <Property>OverrideValue</Property>
+                            </GridColumnDefinition>
+                          </gridcolumns>
+                          <readonly>false</readonly>
+                          <supportedoperations>Add Delete</supportedoperations>
+                          <defaultview>Horizontal</defaultview>
+                          <alwaysshowsearch>false</alwaysshowsearch>
+                          <searchcolumns>false</searchcolumns>
+                          <datasource>DataAssignmentFields</datasource>
+                        </datagridcontrol>
+                      </controls>
+                    </tabpage>
+                    <tabpage name="TestAssignmentTab">
+                      <location>
+                        <x>4</x>
+                        <y>4</y>
+                      </location>
+                      <height>478</height>
+                      <width>657</width>
+                      <visible>false</visible>
+                      <caption>Test Assignment</caption>
+                      <controls>
+                        <splitter name="TestAssignmentSplitter">
+                          <location>
+                            <y>200</y>
+                          </location>
+                          <height>5</height>
+                          <width>657</width>
+                          <dock>Top</dock>
+                          <anchor>None</anchor>
+                          <position>200</position>
+                        </splitter>
+                        <datagridcontrol name="DataAssignmentTestFieldsGrid">
+                          <location>
+                            <y>205</y>
+                          </location>
+                          <height>273</height>
+                          <width>657</width>
+                          <dock>Fill</dock>
+                          <showbuttons>true</showbuttons>
+                          <autosizecolumns>true</autosizecolumns>
+                          <MultiSelect>false</MultiSelect>
+                          <showiconcolumn>false</showiconcolumn>
+                          <showindicator>true</showindicator>
+                          <showhorzlines>true</showhorzlines>
+                          <showvertlines>true</showvertlines>
+                          <allowsort>false</allowsort>
+                          <fixedcolumns>0</fixedcolumns>
+                          <gridcolumns>
+                            <GridColumnDefinition name="TestFieldEntry">
+                              <width>80</width>
+                              <caption>Entry</caption>
+                              <readonly>true</readonly>
+                              <datatype>Text</datatype>
+                              <Property>ParentParentOrderNumber</Property>
+                            </GridColumnDefinition>
+                            <GridColumnDefinition name="TestFieldTest">
+                              <width>80</width>
+                              <caption>Test</caption>
+                              <readonly>true</readonly>
+                              <datatype>Text</datatype>
+                              <Property>ParentOrderNumber</Property>
+                            </GridColumnDefinition>
+                            <GridColumnDefinition name="TestFieldProperty">
+                              <width>180</width>
+                              <caption>Property</caption>
+                              <readonly>true</readonly>
+                              <IsGreyBackground>true</IsGreyBackground>
+                              <datatype>Text</datatype>
+                              <Property>Property</Property>
+                            </GridColumnDefinition>
+                            <GridColumnDefinition name="TestFieldDefaultValue">
+                              <width>180</width>
+                              <caption>Default Value</caption>
+                              <readonly>true</readonly>
+                              <IsGreyBackground>true</IsGreyBackground>
+                              <datatype>Text</datatype>
+                              <Property>Value</Property>
+                            </GridColumnDefinition>
+                            <GridColumnDefinition name="TestFieldNewValue">
+                              <width>220</width>
+                              <caption>New Value</caption>
+                              <readonly>false</readonly>
+                              <datatype>Text</datatype>
+                              <Property>OverrideValue</Property>
+                            </GridColumnDefinition>
+                          </gridcolumns>
+                          <readonly>false</readonly>
+                          <supportedoperations>Add Delete</supportedoperations>
+                          <defaultview>Horizontal</defaultview>
+                          <alwaysshowsearch>false</alwaysshowsearch>
+                          <searchcolumns>false</searchcolumns>
+                          <datasource>DataAssignmentTestFields</datasource>
+                        </datagridcontrol>
+                        <datagridcontrol name="DataAssignmentTestsGrid">
+                          <location />
+                          <height>200</height>
+                          <width>657</width>
+                          <dock>Top</dock>
+                          <showbuttons>true</showbuttons>
+                          <autosizecolumns>true</autosizecolumns>
+                          <MultiSelect>false</MultiSelect>
+                          <showiconcolumn>false</showiconcolumn>
+                          <showindicator>true</showindicator>
+                          <showhorzlines>true</showhorzlines>
+                          <showvertlines>true</showvertlines>
+                          <allowsort>false</allowsort>
+                          <fixedcolumns>0</fixedcolumns>
+                          <gridcolumns>
+                            <GridColumnDefinition name="TestParentOrder">
+                              <width>80</width>
+                              <caption>Entry</caption>
+                              <readonly>true</readonly>
+                              <datatype>Text</datatype>
+                              <Property>ParentOrderNumber</Property>
+                            </GridColumnDefinition>
+                            <GridColumnDefinition name="TestAnalysis">
+                              <width>160</width>
+                              <caption>Analysis</caption>
+                              <readonly>false</readonly>
+                              <datatype>Text</datatype>
+                              <Property>AnalysisIdentity</Property>
+                            </GridColumnDefinition>
+                            <GridColumnDefinition name="TestComponentList">
+                              <width>160</width>
+                              <caption>Component List</caption>
+                              <readonly>false</readonly>
+                              <datatype>Text</datatype>
+                              <Property>CompListIdentity</Property>
+                            </GridColumnDefinition>
+                            <GridColumnDefinition name="TestSchedule">
+                              <width>160</width>
+                              <caption>Test Schedule</caption>
+                              <readonly>false</readonly>
+                              <datatype>Text</datatype>
+                              <Property>TestScheduleId</Property>
+                            </GridColumnDefinition>
+                            <GridColumnDefinition name="TestPlan">
+                              <width>160</width>
+                              <caption>Test Plan</caption>
+                              <readonly>false</readonly>
+                              <datatype>Text</datatype>
+                              <Property>RedTestId</Property>
+                            </GridColumnDefinition>
+                            <GridColumnDefinition name="TestLastActiveVersion">
+                              <width>130</width>
+                              <caption>Last Active Version</caption>
+                              <readonly>false</readonly>
+                              <datatype>Text</datatype>
+                              <Property>LastActiveVersion</Property>
+                            </GridColumnDefinition>
+                          </gridcolumns>
+                          <readonly>false</readonly>
+                          <supportedoperations>Add Delete</supportedoperations>
+                          <defaultview>Horizontal</defaultview>
+                          <alwaysshowsearch>false</alwaysshowsearch>
+                          <searchcolumns>false</searchcolumns>
+                          <datasource>DataAssignmentTests</datasource>
+                        </datagridcontrol>
+                      </controls>
+                    </tabpage>
+                  </tabpages>
+                </tabcontrol>
+              </controls>
+            </panel>
+            <panel name="DataAssignmentTreePanel">
+              <location />
+              <height>504</height>
               <width>220</width>
-              <caption>Login Condition</caption>
-              <readonly>false</readonly>
-              <datatype>Text</datatype>
-              <Property>LoginCondition</Property>
-            </GridColumnDefinition>
-          </gridcolumns>
-          <readonly>false</readonly>
-          <supportedoperations>Add Delete</supportedoperations>
-          <defaultview>Horizontal</defaultview>
-          <alwaysshowsearch>false</alwaysshowsearch>
-          <searchcolumns>false</searchcolumns>
-          <datasource>DataAssignmentEntries</datasource>
-        </datagridcontrol>
-        <datagridcontrol name="DataAssignmentTestsGrid">
-          <location>
-            <x>8</x>
-            <y>260</y>
-          </location>
-          <height>244</height>
-          <width>744</width>
-          <anchor>Top Left Right Bottom</anchor>
-          <showbuttons>true</showbuttons>
-          <gridcolumns>
-            <GridColumnDefinition name="TestParentOrder">
-              <width>90</width>
-              <caption>Entry</caption>
-              <readonly>true</readonly>
-              <datatype>Text</datatype>
-              <Property>ParentOrderNumber</Property>
-            </GridColumnDefinition>
-            <GridColumnDefinition name="TestOrder">
-              <width>70</width>
-              <caption>Order</caption>
-              <readonly>true</readonly>
-              <datatype>Text</datatype>
-              <Property>OrderNumber</Property>
-            </GridColumnDefinition>
-            <GridColumnDefinition name="TestAnalysis">
-              <width>160</width>
-              <caption>Analysis</caption>
-              <readonly>false</readonly>
-              <datatype>Text</datatype>
-              <Property>AnalysisIdentity</Property>
-            </GridColumnDefinition>
-            <GridColumnDefinition name="TestComponentList">
-              <width>160</width>
-              <caption>Component List</caption>
-              <readonly>false</readonly>
-              <datatype>Text</datatype>
-              <Property>CompListIdentity</Property>
-            </GridColumnDefinition>
-            <GridColumnDefinition name="TestSchedule">
-              <width>160</width>
-              <caption>Test Schedule</caption>
-              <readonly>false</readonly>
-              <datatype>Text</datatype>
-              <Property>TestScheduleId</Property>
-            </GridColumnDefinition>
-            <GridColumnDefinition name="TestPlan">
-              <width>160</width>
-              <caption>Test Plan</caption>
-              <readonly>false</readonly>
-              <datatype>Text</datatype>
-              <Property>RedTestId</Property>
-            </GridColumnDefinition>
-          </gridcolumns>
-          <readonly>false</readonly>
-          <supportedoperations>Add Delete</supportedoperations>
-          <defaultview>Horizontal</defaultview>
-          <alwaysshowsearch>false</alwaysshowsearch>
-          <searchcolumns>false</searchcolumns>
-          <datasource>DataAssignmentTests</datasource>
-        </datagridcontrol>
+              <dock>Left</dock>
+              <caption>Data Assignment</caption>
+              <controls>
+                <datagridcontrol name="DataAssignmentGrid">
+                  <location />
+                  <height>504</height>
+                  <width>220</width>
+                  <dock>Fill</dock>
+                  <showbuttons>true</showbuttons>
+                  <autosizecolumns>true</autosizecolumns>
+                  <MultiSelect>false</MultiSelect>
+                  <showiconcolumn>false</showiconcolumn>
+                  <showindicator>true</showindicator>
+                  <showhorzlines>true</showhorzlines>
+                  <showvertlines>true</showvertlines>
+                  <allowsort>false</allowsort>
+                  <fixedcolumns>0</fixedcolumns>
+                  <gridcolumns>
+                    <GridColumnDefinition name="EntryNode">
+                      <width>140</width>
+                      <caption>Name</caption>
+                      <readonly>false</readonly>
+                      <datatype>Text</datatype>
+                      <Property>NodeName</Property>
+                    </GridColumnDefinition>
+                    <GridColumnDefinition name="EntryTable">
+                      <width>90</width>
+                      <caption>Table</caption>
+                      <readonly>false</readonly>
+                      <datatype>Text</datatype>
+                      <Property>TableName</Property>
+                    </GridColumnDefinition>
+                    <GridColumnDefinition name="EntryOrder">
+                      <width>60</width>
+                      <caption>Order</caption>
+                      <readonly>true</readonly>
+                      <datatype>Text</datatype>
+                      <Property>OrderNumber</Property>
+                    </GridColumnDefinition>
+                    <GridColumnDefinition name="EntryTemplate">
+                      <width>150</width>
+                      <caption>Entity Template</caption>
+                      <readonly>false</readonly>
+                      <datatype>Text</datatype>
+                      <Property>EntityTemplateId</Property>
+                    </GridColumnDefinition>
+                    <GridColumnDefinition name="EntryWorkflow">
+                      <width>150</width>
+                      <caption>Login Workflow</caption>
+                      <readonly>false</readonly>
+                      <datatype>Text</datatype>
+                      <Property>LoginWorkflowId</Property>
+                    </GridColumnDefinition>
+                    <GridColumnDefinition name="EntryLastActiveVersion">
+                      <width>130</width>
+                      <caption>Last Active Version</caption>
+                      <readonly>false</readonly>
+                      <datatype>Text</datatype>
+                      <Property>UseLastActiveLoginWorkflow</Property>
+                    </GridColumnDefinition>
+                    <GridColumnDefinition name="EntryCondition">
+                      <width>220</width>
+                      <caption>Login Condition</caption>
+                      <readonly>false</readonly>
+                      <datatype>Text</datatype>
+                      <Property>LoginCondition</Property>
+                    </GridColumnDefinition>
+                    <GridColumnDefinition name="EntryCountExpression">
+                      <width>220</width>
+                      <caption>Count Expression</caption>
+                      <readonly>false</readonly>
+                      <datatype>Text</datatype>
+                      <Property>CountExpression</Property>
+                    </GridColumnDefinition>
+                  </gridcolumns>
+                  <readonly>false</readonly>
+                  <supportedoperations>Add Delete</supportedoperations>
+                  <defaultview>Horizontal</defaultview>
+                  <alwaysshowsearch>false</alwaysshowsearch>
+                  <searchcolumns>false</searchcolumns>
+                  <datasource>DataAssignmentEntries</datasource>
+                </datagridcontrol>
+              </controls>
+            </panel>
+          </controls>
+        </panel>
       </controls>
     </form>
     <form name="Page_ProductSpec">
