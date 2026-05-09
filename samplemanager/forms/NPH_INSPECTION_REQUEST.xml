@@ -260,20 +260,76 @@
       <components>
         <dataqueryentitycollection name="DataAssignmentEntries">
           <entity>NPH_IR_LP_ENTRY</entity>
-          <query />
+          <query>DataAssignmentEntriesQuery</query>
         </dataqueryentitycollection>
         <dataqueryentitycollection name="DataAssignmentFields">
           <entity>NPH_IR_LP_FIELD</entity>
-          <query />
+          <query>DataAssignmentFieldsQuery</query>
         </dataqueryentitycollection>
         <dataqueryentitycollection name="DataAssignmentTests">
           <entity>NPH_IR_LP_TEST</entity>
-          <query />
+          <query>DataAssignmentTestsQuery</query>
         </dataqueryentitycollection>
         <dataqueryentitycollection name="DataAssignmentTestFields">
           <entity>NPH_IR_LP_TEST_FIELD</entity>
-          <query />
+          <query>DataAssignmentTestFieldsQuery</query>
         </dataqueryentitycollection>
+        <dataquery name="DataAssignmentEntriesQuery">
+          <entity>NPH_IR_LP_ENTRY</entity>
+          <conditions>
+            <entityoperandquery name="">
+              <join>And</join>
+              <ascending>true</ascending>
+              <property>RequestId</property>
+              <operand>Equals</operand>
+              <value />
+              <propertyvalue>RequestId</propertyvalue>
+              <controlvalue />
+            </entityoperandquery>
+          </conditions>
+        </dataquery>
+        <dataquery name="DataAssignmentFieldsQuery">
+          <entity>NPH_IR_LP_FIELD</entity>
+          <conditions>
+            <entityoperandquery name="">
+              <join>And</join>
+              <ascending>true</ascending>
+              <property>RequestId</property>
+              <operand>Equals</operand>
+              <value />
+              <propertyvalue>RequestId</propertyvalue>
+              <controlvalue />
+            </entityoperandquery>
+          </conditions>
+        </dataquery>
+        <dataquery name="DataAssignmentTestsQuery">
+          <entity>NPH_IR_LP_TEST</entity>
+          <conditions>
+            <entityoperandquery name="">
+              <join>And</join>
+              <ascending>true</ascending>
+              <property>RequestId</property>
+              <operand>Equals</operand>
+              <value />
+              <propertyvalue>RequestId</propertyvalue>
+              <controlvalue />
+            </entityoperandquery>
+          </conditions>
+        </dataquery>
+        <dataquery name="DataAssignmentTestFieldsQuery">
+          <entity>NPH_IR_LP_TEST_FIELD</entity>
+          <conditions>
+            <entityoperandquery name="">
+              <join>And</join>
+              <ascending>true</ascending>
+              <property>RequestId</property>
+              <operand>Equals</operand>
+              <value />
+              <propertyvalue>RequestId</propertyvalue>
+              <controlvalue />
+            </entityoperandquery>
+          </conditions>
+        </dataquery>
       </components>
       <minimumsize>
         <height>520</height>
@@ -573,8 +629,22 @@
       <components>
         <dataqueryentitycollection name="ProductSpecRows">
           <entity>NPH_IR_PRODUCT</entity>
-          <query />
+          <query>ProductSpecRowsQuery</query>
         </dataqueryentitycollection>
+        <dataquery name="ProductSpecRowsQuery">
+          <entity>NPH_IR_PRODUCT</entity>
+          <conditions>
+            <entityoperandquery name="">
+              <join>And</join>
+              <ascending>true</ascending>
+              <property>RequestId</property>
+              <operand>Equals</operand>
+              <value />
+              <propertyvalue>RequestId</propertyvalue>
+              <controlvalue />
+            </entityoperandquery>
+          </conditions>
+        </dataquery>
       </components>
       <minimumsize>
         <height>520</height>

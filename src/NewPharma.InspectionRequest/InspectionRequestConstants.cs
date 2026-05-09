@@ -48,6 +48,7 @@ namespace NewPharma.InspectionRequest
         public const string TableWorkflowLink = "WORKFLOW_LINK";
         public const string TableWorkflowJournal = "WORKFLOW_JOURNAL";
         public const string TableEntityTemplate = "ENTITY_TEMPLATE";
+        public const string TableEntityTemplateProperty = "ENTITY_TEMPLATE_PROPERTY";
 
         public const string StatusDraft = "DRAFT";
         public const string StatusSubmitted = "SUBMITTED";

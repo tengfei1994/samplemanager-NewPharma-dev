@@ -32,11 +32,14 @@ namespace NewPharma.InspectionRequest
 
             loginPlanVersion = ResolveLoginPlanVersion(loginPlanId, loginPlanVersion);
 
-            if (rebuild)
+            bool hasSnapshotRows = HasSnapshotRows(requestId);
+            bool needsTemplateFieldBackfill = hasSnapshotRows && NeedsTemplateFieldBackfill(requestId);
+
+            if (rebuild || needsTemplateFieldBackfill)
             {
                 DeleteSnapshotRows(requestId);
             }
-            else if (HasSnapshotRows(requestId))
+            else if (hasSnapshotRows)
             {
                 return;
             }
@@ -90,6 +93,30 @@ namespace NewPharma.InspectionRequest
             return _entityManager.Select(query).Count > 0;
         }
 
+        private bool NeedsTemplateFieldBackfill(string requestId)
+        {
+            IQuery entryQuery = _entityManager.CreateQuery(InspectionRequestConstants.TableIrLoginPlanEntry);
+            entryQuery.AddEquals("REQUEST_ID", requestId);
+
+            foreach (IEntity entry in _entityManager.Select(entryQuery))
+            {
+                if (string.IsNullOrWhiteSpace(GetString(entry, "ENTITY_TEMPLATE_ID")))
+                {
+                    continue;
+                }
+
+                IQuery fieldQuery = _entityManager.CreateQuery(InspectionRequestConstants.TableIrLoginPlanField);
+                fieldQuery.AddEquals("REQUEST_ID", requestId);
+                fieldQuery.AddEquals("PARENT_ORDER_NUMBER", GetValue(entry, "ORDER_NUMBER"));
+                if (_entityManager.Select(fieldQuery).Count == 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private void CopyDataAssignment(string requestId, string loginPlanId, string loginPlanVersion)
         {
             IQuery entryQuery = _entityManager.CreateQuery(InspectionRequestConstants.TableLoginPlanEntry);
@@ -124,6 +151,7 @@ namespace NewPharma.InspectionRequest
                 _entityManager.Transaction.Add(targetEntry);
 
                 CopyEntryFields(requestId, loginPlanId, sourceEntry, orderNumber);
+                CopyEntityTemplateFields(requestId, sourceEntry, orderNumber);
                 CopyEntryTests(requestId, loginPlanId, sourceEntry, orderNumber);
             }
         }
@@ -147,6 +175,68 @@ namespace NewPharma.InspectionRequest
                 targetField.Set("MODIFIABLE", true);
                 _entityManager.Transaction.Add(targetField);
             }
+        }
+
+        private void CopyEntityTemplateFields(string requestId, IEntity sourceEntry, object parentOrderNumber)
+        {
+            string entityTemplateId = GetString(sourceEntry, "ENTITY_TEMPLATE_ID");
+            string entityTemplateVersion = GetString(sourceEntry, "ENTITY_TEMPLATE_VERSION");
+            if (string.IsNullOrWhiteSpace(entityTemplateId))
+            {
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(entityTemplateVersion))
+            {
+                entityTemplateVersion = ResolveEntityTemplateVersion(entityTemplateId);
+            }
+
+            IQuery propertyQuery = _entityManager.CreateQuery(InspectionRequestConstants.TableEntityTemplateProperty);
+            propertyQuery.AddEquals("ENTITY_TEMPLATE_ID", entityTemplateId);
+            if (!string.IsNullOrWhiteSpace(entityTemplateVersion))
+            {
+                propertyQuery.AddEquals("ENTITY_TEMPLATE_VERSION", entityTemplateVersion);
+            }
+
+            foreach (IEntity templateProperty in _entityManager.Select(propertyQuery))
+            {
+                string propertyName = GetString(templateProperty, "PROPERTY_NAME");
+                if (string.IsNullOrWhiteSpace(propertyName) ||
+                    SnapshotFieldExists(requestId, parentOrderNumber, propertyName))
+                {
+                    continue;
+                }
+
+                IEntity targetField = _entityManager.CreateEntity(InspectionRequestConstants.TableIrLoginPlanField);
+                targetField.Set("REQUEST_ID", requestId);
+                targetField.Set("PARENT_ORDER_NUMBER", parentOrderNumber);
+                targetField.Set("ORDER_NUMBER", GetValue(templateProperty, "ORDER_NUM"));
+                targetField.Set("PROPERTY", propertyName);
+                targetField.Set("VALUE", NormalizeTemplateValue(GetValue(templateProperty, "DEFAULT_VALUE")));
+                targetField.Set("OVERRIDE_VALUE", NormalizeTemplateValue(GetValue(templateProperty, "DEFAULT_VALUE")));
+                targetField.Set("MODIFIABLE", true);
+                _entityManager.Transaction.Add(targetField);
+            }
+        }
+
+        private bool SnapshotFieldExists(string requestId, object parentOrderNumber, string propertyName)
+        {
+            IQuery query = _entityManager.CreateQuery(InspectionRequestConstants.TableIrLoginPlanField);
+            query.AddEquals("REQUEST_ID", requestId);
+            query.AddEquals("PARENT_ORDER_NUMBER", parentOrderNumber);
+            query.AddEquals("PROPERTY", propertyName);
+            return _entityManager.Select(query).Count > 0;
+        }
+
+        private string ResolveEntityTemplateVersion(string entityTemplateId)
+        {
+            IEntity entityTemplate = _entityManager.SelectLatestVersion(
+                InspectionRequestConstants.TableEntityTemplate,
+                entityTemplateId) as IEntity;
+
+            return entityTemplate == null || !entityTemplate.IsValid()
+                ? string.Empty
+                : GetString(entityTemplate, "ENTITY_TEMPLATE_VERSION");
         }
 
         private void CopyEntryTests(string requestId, string loginPlanId, IEntity sourceEntry, object parentOrderNumber)
@@ -233,6 +323,21 @@ namespace NewPharma.InspectionRequest
         private static object GetValue(IEntity entity, string fieldName)
         {
             return entity.Get(fieldName);
+        }
+
+        private static object NormalizeTemplateValue(object value)
+        {
+            if (value == null)
+            {
+                return string.Empty;
+            }
+
+            string text = value.ToString();
+            return string.Equals(text, "T", StringComparison.OrdinalIgnoreCase)
+                ? "True"
+                : string.Equals(text, "F", StringComparison.OrdinalIgnoreCase)
+                    ? "False"
+                    : text;
         }
 
         private static string GetString(IEntity entity, string fieldName)

@@ -57,6 +57,9 @@ namespace NewPharma.InspectionRequest
             if (MainForm?.Entity is IEntity request)
             {
                 request.PropertyChanged += Request_PropertyChanged;
+                new InspectionRequestSnapshotService(EntityManager).EnsureSnapshot(request, false);
+                EntityManager.Commit();
+                RefreshSnapshotCollections();
             }
         }
 
