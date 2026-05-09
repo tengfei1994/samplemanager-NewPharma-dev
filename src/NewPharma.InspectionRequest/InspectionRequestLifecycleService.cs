@@ -40,8 +40,6 @@ namespace NewPharma.InspectionRequest
                 return;
             }
 
-            SetIfEmpty(request, InspectionRequestConstants.FieldEntityTemplateId, DefaultEntityTemplateId);
-            SetIfEmpty(request, InspectionRequestConstants.FieldEntityTemplateVersion, WorkflowVersion);
             SetIfEmpty(request, InspectionRequestConstants.FieldLifecycleWorkflowId, DefaultWorkflowGuid);
             SetIfEmpty(request, InspectionRequestConstants.FieldLifecycleWorkflowVersion, WorkflowVersion);
             SetIfEmpty(request, InspectionRequestConstants.FieldLifecycleNodeId, DraftNodeGuid);
