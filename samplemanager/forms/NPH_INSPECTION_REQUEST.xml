@@ -365,9 +365,86 @@
               <dock>Fill</dock>
               <caption>Data Assignment Details</caption>
               <controls>
-                <tabcontrol name="DataAssignmentTabs">
+                <datagridcontrol name="DataAssignmentEntriesGrid">
                   <location />
-                  <height>504</height>
+                  <height>128</height>
+                  <width>665</width>
+                  <dock>Top</dock>
+                  <showbuttons>false</showbuttons>
+                  <autosizecolumns>true</autosizecolumns>
+                  <MultiSelect>false</MultiSelect>
+                  <showiconcolumn>false</showiconcolumn>
+                  <showindicator>true</showindicator>
+                  <showhorzlines>true</showhorzlines>
+                  <showvertlines>true</showvertlines>
+                  <allowsort>false</allowsort>
+                  <fixedcolumns>0</fixedcolumns>
+                  <gridcolumns>
+                    <GridColumnDefinition name="EntryNodeName">
+                      <width>180</width>
+                      <caption>Name</caption>
+                      <readonly>true</readonly>
+                      <datatype>Text</datatype>
+                      <Property>NodeName</Property>
+                    </GridColumnDefinition>
+                    <GridColumnDefinition name="EntryLoginWorkflow">
+                      <width>180</width>
+                      <caption>Login Workflow</caption>
+                      <readonly>true</readonly>
+                      <datatype>Text</datatype>
+                      <Property>LoginWorkflowId</Property>
+                    </GridColumnDefinition>
+                    <GridColumnDefinition name="EntryLastActiveWorkflow">
+                      <width>120</width>
+                      <caption>Last Active Version</caption>
+                      <readonly>true</readonly>
+                      <datatype>Boolean</datatype>
+                      <Property>UseLastActiveLoginWorkflow</Property>
+                    </GridColumnDefinition>
+                    <GridColumnDefinition name="EntryEntityTemplate">
+                      <width>180</width>
+                      <caption>Entity Template</caption>
+                      <readonly>true</readonly>
+                      <datatype>Text</datatype>
+                      <Property>EntityTemplateId</Property>
+                    </GridColumnDefinition>
+                    <GridColumnDefinition name="EntryLoginCondition">
+                      <width>240</width>
+                      <caption>Login Condition</caption>
+                      <readonly>true</readonly>
+                      <datatype>Text</datatype>
+                      <Property>LoginCondition</Property>
+                    </GridColumnDefinition>
+                    <GridColumnDefinition name="EntryCountExpression">
+                      <width>120</width>
+                      <caption>Count Expression</caption>
+                      <readonly>true</readonly>
+                      <datatype>Text</datatype>
+                      <Property>CountExpression</Property>
+                    </GridColumnDefinition>
+                  </gridcolumns>
+                  <readonly>true</readonly>
+                  <supportedoperations>None</supportedoperations>
+                  <defaultview>Horizontal</defaultview>
+                  <alwaysshowsearch>false</alwaysshowsearch>
+                  <searchcolumns>false</searchcolumns>
+                  <datasource>DataAssignmentEntries</datasource>
+                </datagridcontrol>
+                <splitter name="DataAssignmentHeaderSplitter">
+                  <location>
+                    <y>128</y>
+                  </location>
+                  <height>5</height>
+                  <width>665</width>
+                  <dock>Top</dock>
+                  <anchor>None</anchor>
+                  <position>128</position>
+                </splitter>
+                <tabcontrol name="DataAssignmentTabs">
+                  <location>
+                    <y>133</y>
+                  </location>
+                  <height>371</height>
                   <width>665</width>
                   <dock>Fill</dock>
                   <caption>Data Assignment Tabs</caption>
