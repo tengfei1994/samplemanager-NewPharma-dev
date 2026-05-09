@@ -75,8 +75,8 @@ internal sealed class InspectionRequestExecutionService
 
     private ExecutionResult ExecuteLoginPlan(IEntity request)
     {
-        string loginPlanId = GetString(request, InspectionRequestConstants.FieldLoginPlanId);
-        string loginPlanVersion = GetString(request, InspectionRequestConstants.FieldLoginPlanVersion);
+        string loginPlanId = InspectionRequestLabTableTask.GetLoginPlanIdentity(request);
+        string loginPlanVersion = InspectionRequestLabTableTask.GetLoginPlanVersion(request);
         bool useLastActiveVersion = GetBoolean(request, InspectionRequestConstants.FieldUseLastActiveVersion, true);
         string rootContextTable = GetString(request, InspectionRequestConstants.FieldRootContextTable);
         string rootContextId = GetString(request, InspectionRequestConstants.FieldRootContextId);

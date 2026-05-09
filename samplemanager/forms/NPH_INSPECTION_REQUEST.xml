@@ -544,85 +544,32 @@
               <dock>Left</dock>
               <caption>Data Assignment</caption>
               <controls>
-                <datagridcontrol name="DataAssignmentGrid">
+                <treelist name="DataAssignmentTree">
                   <location />
                   <height>504</height>
                   <width>220</width>
                   <dock>Fill</dock>
-                  <showbuttons>true</showbuttons>
-                  <autosizecolumns>true</autosizecolumns>
-                  <MultiSelect>false</MultiSelect>
-                  <showiconcolumn>false</showiconcolumn>
-                  <showindicator>true</showindicator>
-                  <showhorzlines>true</showhorzlines>
-                  <showvertlines>true</showvertlines>
-                  <allowsort>false</allowsort>
-                  <fixedcolumns>0</fixedcolumns>
-                  <gridcolumns>
-                    <GridColumnDefinition name="EntryNode">
-                      <width>140</width>
-                      <caption>Name</caption>
-                      <readonly>false</readonly>
-                      <datatype>Text</datatype>
-                      <Property>NodeName</Property>
-                    </GridColumnDefinition>
-                    <GridColumnDefinition name="EntryTable">
-                      <width>90</width>
-                      <caption>Table</caption>
-                      <readonly>false</readonly>
-                      <datatype>Text</datatype>
-                      <Property>TableName</Property>
-                    </GridColumnDefinition>
-                    <GridColumnDefinition name="EntryOrder">
-                      <width>60</width>
-                      <caption>Order</caption>
-                      <readonly>true</readonly>
-                      <datatype>Text</datatype>
-                      <Property>OrderNumber</Property>
-                    </GridColumnDefinition>
-                    <GridColumnDefinition name="EntryTemplate">
-                      <width>150</width>
-                      <caption>Entity Template</caption>
-                      <readonly>false</readonly>
-                      <datatype>Text</datatype>
-                      <Property>EntityTemplateId</Property>
-                    </GridColumnDefinition>
-                    <GridColumnDefinition name="EntryWorkflow">
-                      <width>150</width>
-                      <caption>Login Workflow</caption>
-                      <readonly>false</readonly>
-                      <datatype>Text</datatype>
-                      <Property>LoginWorkflowId</Property>
-                    </GridColumnDefinition>
-                    <GridColumnDefinition name="EntryLastActiveVersion">
-                      <width>130</width>
-                      <caption>Last Active Version</caption>
-                      <readonly>false</readonly>
-                      <datatype>Text</datatype>
-                      <Property>UseLastActiveLoginWorkflow</Property>
-                    </GridColumnDefinition>
-                    <GridColumnDefinition name="EntryCondition">
-                      <width>220</width>
-                      <caption>Login Condition</caption>
-                      <readonly>false</readonly>
-                      <datatype>Text</datatype>
-                      <Property>LoginCondition</Property>
-                    </GridColumnDefinition>
-                    <GridColumnDefinition name="EntryCountExpression">
-                      <width>220</width>
-                      <caption>Count Expression</caption>
-                      <readonly>false</readonly>
-                      <datatype>Text</datatype>
-                      <Property>CountExpression</Property>
-                    </GridColumnDefinition>
-                  </gridcolumns>
+                  <caption>Data Assignment</caption>
+                  <showhierarchy>true</showhierarchy>
                   <readonly>false</readonly>
-                  <supportedoperations>Add Delete</supportedoperations>
-                  <defaultview>Horizontal</defaultview>
-                  <alwaysshowsearch>false</alwaysshowsearch>
-                  <searchcolumns>false</searchcolumns>
-                  <datasource>DataAssignmentEntries</datasource>
-                </datagridcontrol>
+                  <useentityhierarchy>false</useentityhierarchy>
+                  <treeoperations>CanAdd CanDelete CanMoveUpDown CanMoveLevels CanExpandCollapseAll</treeoperations>
+                  <openexpanded>true</openexpanded>
+                  <showroot>true</showroot>
+                  <autofocusnewnode>true</autofocusnewnode>
+                  <rootleveldefinition name="">
+                    <property>DataAssignmentEntries</property>
+                    <displayfield>NodeName</displayfield>
+                    <iconfield />
+                    <nodedialog />
+                    <customlinks>
+                      <FromParent>OrderNumber</FromParent>
+                      <FromChild>ParentOrderNumber</FromChild>
+                      <Name>DataAssignmentTreeLink</Name>
+                    </customlinks>
+                    <entity>NPH_IR_LP_ENTRY</entity>
+                  </rootleveldefinition>
+                </treelist>
               </controls>
             </panel>
           </controls>

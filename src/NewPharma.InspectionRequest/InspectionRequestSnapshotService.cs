@@ -13,7 +13,7 @@ namespace NewPharma.InspectionRequest
             _entityManager = entityManager ?? throw new ArgumentNullException(nameof(entityManager));
         }
 
-        public void EnsureSnapshot(IEntity request)
+        public void EnsureSnapshot(IEntity request, bool rebuild)
         {
             if (request == null)
             {
@@ -21,15 +21,19 @@ namespace NewPharma.InspectionRequest
             }
 
             string requestId = GetString(request, InspectionRequestConstants.FieldRequestId);
-            string loginPlanId = GetString(request, InspectionRequestConstants.FieldLoginPlanId);
-            string loginPlanVersion = GetString(request, InspectionRequestConstants.FieldLoginPlanVersion);
+            string loginPlanId = InspectionRequestLabTableTask.GetLoginPlanIdentity(request);
+            string loginPlanVersion = InspectionRequestLabTableTask.GetLoginPlanVersion(request);
 
             if (string.IsNullOrWhiteSpace(requestId) || string.IsNullOrWhiteSpace(loginPlanId))
             {
                 return;
             }
 
-            if (HasSnapshotRows(requestId))
+            if (rebuild)
+            {
+                DeleteSnapshotRows(requestId);
+            }
+            else if (HasSnapshotRows(requestId))
             {
                 return;
             }
@@ -37,6 +41,27 @@ namespace NewPharma.InspectionRequest
             CopyDataAssignment(requestId, loginPlanId, loginPlanVersion);
             CopyProductSpec(requestId, loginPlanId, loginPlanVersion);
             _entityManager.Commit();
+        }
+
+        private void DeleteSnapshotRows(string requestId)
+        {
+            DeleteRows(InspectionRequestConstants.TableIrLoginPlanTestField, requestId);
+            DeleteRows(InspectionRequestConstants.TableIrLoginPlanTest, requestId);
+            DeleteRows(InspectionRequestConstants.TableIrLoginPlanField, requestId);
+            DeleteRows(InspectionRequestConstants.TableIrLoginPlanEntry, requestId);
+            DeleteRows(InspectionRequestConstants.TableIrProduct, requestId);
+            _entityManager.Commit();
+        }
+
+        private void DeleteRows(string tableName, string requestId)
+        {
+            IQuery query = _entityManager.CreateQuery(tableName);
+            query.AddEquals("REQUEST_ID", requestId);
+
+            foreach (IEntity entity in _entityManager.Select(query))
+            {
+                _entityManager.Transaction.Remove(entity);
+            }
         }
 
         private bool HasSnapshotRows(string requestId)
