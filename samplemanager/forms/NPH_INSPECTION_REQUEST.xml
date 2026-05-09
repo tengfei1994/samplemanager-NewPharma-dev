@@ -488,7 +488,8 @@
                   </location>
                   <height>371</height>
                   <width>665</width>
-                  <dock>Fill</dock>
+                  <dock>None</dock>
+                  <anchor>Top Left Right Bottom</anchor>
                   <caption>Data Assignment Tabs</caption>
                   <pageborderstyle>Default</pageborderstyle>
                   <headerlocation>Bottom</headerlocation>
@@ -499,14 +500,14 @@
                         <x>4</x>
                         <y>4</y>
                       </location>
-                      <height>478</height>
+                      <height>345</height>
                       <width>657</width>
                       <visible>false</visible>
                       <caption>Data Properties</caption>
                       <controls>
                         <datagridcontrol name="DataAssignmentFieldsGrid">
                           <location />
-                          <height>478</height>
+                          <height>345</height>
                           <width>657</width>
                           <dock>Fill</dock>
                           <showbuttons>true</showbuttons>
@@ -564,7 +565,7 @@
                         <x>4</x>
                         <y>4</y>
                       </location>
-                      <height>478</height>
+                      <height>345</height>
                       <width>657</width>
                       <visible>false</visible>
                       <caption>Test Assignment</caption>
