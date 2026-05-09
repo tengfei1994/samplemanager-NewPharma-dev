@@ -171,10 +171,10 @@ namespace NewPharma.InspectionRequest
             node.Set("ORDER_NUMBER", order.ToString(System.Globalization.CultureInfo.InvariantCulture));
             node.Set("NAME", name);
             node.Set("DESCRIPTION", name);
-            node.Set("NODE_TYPE", "STATE");
+            node.Set("NODE_TYPE", "DEFAULT_LIFECYCLE");
             node.Set("ENTITY_TEMPLATE_ID", DefaultEntityTemplateId);
             node.Set("ENABLED", true);
-            node.Set("PARAMETERS_EXT", status);
+            node.Set("PARAMETERS_EXT", "<item><key><string>ENTITY_NAME</string></key><value><string>NPH_INSPECTION_REQUEST</string></value></item>");
             _entityManager.Transaction.Add(node);
         }
 

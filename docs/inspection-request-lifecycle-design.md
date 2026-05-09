@@ -105,11 +105,16 @@ The current phrase IDs remain valid, but the transition authority moves into wor
   save when no snapshot rows exist. It deliberately does not overwrite existing
   IR snapshot rows, so user adjustments are preserved.
 - `InspectionRequestLifecycleService` initializes the IR header with a default
-  entity template and workflow, creates the default workflow configuration when
-  the IR task opens or saves, and writes the current request to `WORKFLOW_LINK`.
+  workflow, creates the default workflow configuration when the IR task opens
+  or saves, and writes the current request to `WORKFLOW_LINK`.
+- The IR table structure includes entity-template columns for future alignment,
+  but the current runtime does not write `ENTITY_TEMPLATE_ID` or
+  `ENTITY_TEMPLATE_VERSION` onto the IR header because the generated entity
+  definition does not expose those properties yet.
 - Default lifecycle configuration:
   - Entity Template: `NPH_IR`
   - Workflow: `19940000-0000-0000-0000-000000000001`
+  - Node type: `DEFAULT_LIFECYCLE`
   - Nodes: Draft, Submitted, Under Review, Approved, Executed
 - The next implementation step is exposing submit, review, approve, reject, and
   execute actions as RMB/menu items and replacing the placeholder tree with
