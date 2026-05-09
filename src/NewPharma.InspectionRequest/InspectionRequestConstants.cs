@@ -35,6 +35,7 @@ namespace NewPharma.InspectionRequest
         public const string TableLoginPlanField = "LOGIN_PLAN_FIELD";
         public const string TableLoginPlanTest = "LOGIN_PLAN_TEST";
         public const string TableLoginPlanTestField = "LOGIN_PLAN_TEST_FIELD";
+        public const string TableLoginPlan = "LOGIN_PLAN";
         public const string TableMlpHeader = "MLP_HEADER";
 
         public const string TableIrLoginPlanEntry = "NPH_IR_LP_ENTRY";

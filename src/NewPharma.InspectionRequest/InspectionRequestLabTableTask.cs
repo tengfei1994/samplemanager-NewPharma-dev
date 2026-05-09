@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using Thermo.SampleManager.Library;
 using Thermo.SampleManager.Common.Data;
 using Thermo.SampleManager.Tasks;
@@ -85,6 +86,7 @@ namespace NewPharma.InspectionRequest
                 snapshotService.EnsureSnapshot(request, _snapshotRefreshRequested);
                 new InspectionRequestLifecycleService(EntityManager).LinkCurrentNode(request);
                 EntityManager.Commit();
+                RefreshSnapshotCollections();
                 _snapshotRefreshRequested = false;
             }
         }
@@ -97,6 +99,12 @@ namespace NewPharma.InspectionRequest
                 string.Equals(e.PropertyName, InspectionRequestConstants.FieldLoginPlanVersionProperty, StringComparison.OrdinalIgnoreCase) ||
                 string.Equals(e.PropertyName, InspectionRequestConstants.FieldLoginPlanVersion, StringComparison.OrdinalIgnoreCase))
             {
+                if (sender is IEntity request)
+                {
+                    SyncLoginPlanSelection(request);
+                    Library.Task.StateModified();
+                }
+
                 _snapshotRefreshRequested = true;
             }
         }
@@ -245,12 +253,80 @@ namespace NewPharma.InspectionRequest
 
         private static string ToIdentityText(IEntity entity)
         {
+            string identity = GetFirstString(entity, "Identity", "IDENTITY");
+            if (!string.IsNullOrWhiteSpace(identity))
+            {
+                return identity;
+            }
+
             return entity?.Identity?.ToString() ?? string.Empty;
         }
 
         private static string GenerateRequestId()
         {
             return "NPHIR" + DateTime.Now.ToString("yyyyMMddHHmmss");
+        }
+
+        private void RefreshSnapshotCollections()
+        {
+            TryInvoke(MainForm?.Entity, "Reload");
+
+            foreach (string componentName in new[]
+            {
+                "DataAssignmentEntries",
+                "DataAssignmentFields",
+                "DataAssignmentTests",
+                "DataAssignmentTestFields",
+                "ProductSpecRows"
+            })
+            {
+                object component = TryGetMember(MainForm, componentName);
+                TryInvoke(component, "Reload");
+                TryInvoke(component, "Refresh");
+                TryInvoke(component, "Requery");
+                TryInvoke(component, "Load");
+            }
+        }
+
+        private static object TryGetMember(object target, string memberName)
+        {
+            if (target == null)
+            {
+                return null;
+            }
+
+            const BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+            Type type = target.GetType();
+            return type.GetProperty(memberName, flags)?.GetValue(target) ??
+                   type.GetField(memberName, flags)?.GetValue(target);
+        }
+
+        private static void TryInvoke(object target, string methodName)
+        {
+            if (target == null)
+            {
+                return;
+            }
+
+            MethodInfo method = target.GetType().GetMethod(
+                methodName,
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
+                null,
+                Type.EmptyTypes,
+                null);
+
+            if (method == null)
+            {
+                return;
+            }
+
+            try
+            {
+                method.Invoke(target, null);
+            }
+            catch
+            {
+            }
         }
     }
 }

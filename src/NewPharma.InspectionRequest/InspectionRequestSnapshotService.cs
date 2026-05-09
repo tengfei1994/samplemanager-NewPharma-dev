@@ -30,6 +30,8 @@ namespace NewPharma.InspectionRequest
                 return;
             }
 
+            loginPlanVersion = ResolveLoginPlanVersion(loginPlanId, loginPlanVersion);
+
             if (rebuild)
             {
                 DeleteSnapshotRows(requestId);
@@ -42,6 +44,22 @@ namespace NewPharma.InspectionRequest
             CopyDataAssignment(requestId, loginPlanId, loginPlanVersion);
             CopyProductSpec(requestId, loginPlanId, loginPlanVersion);
             _entityManager.Commit();
+        }
+
+        private string ResolveLoginPlanVersion(string loginPlanId, string loginPlanVersion)
+        {
+            if (!string.IsNullOrWhiteSpace(loginPlanVersion))
+            {
+                return loginPlanVersion;
+            }
+
+            IEntity loginPlan = _entityManager.SelectLatestVersion(
+                InspectionRequestConstants.TableLoginPlan,
+                loginPlanId) as IEntity;
+
+            return loginPlan == null || !loginPlan.IsValid()
+                ? string.Empty
+                : GetString(loginPlan, "VERSION");
         }
 
         private void DeleteSnapshotRows(string requestId)
