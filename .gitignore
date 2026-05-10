@@ -2,6 +2,8 @@ bin/
 obj/
 out/*
 !out/.gitkeep
+tmp-loginplan-form/
+tmp-loginplan-source/
 remote-snapshot/
 remote-logs/
 *.user

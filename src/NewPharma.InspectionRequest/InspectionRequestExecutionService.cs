@@ -119,6 +119,7 @@ internal sealed class InspectionRequestExecutionService
             throw new InvalidOperationException("Inspection Request root context must be LOT_DETAILS or JOB_HEADER.");
         }
 
+        ApplyInspectionRequestAssignments(request, jobs, samples);
         _entityManager.Commit();
 
         return new ExecutionResult
@@ -128,6 +129,116 @@ internal sealed class InspectionRequestExecutionService
             SampleIds = samples.Select(x => ToIdentityText((IEntity)x)).Where(x => x.Length > 0).ToArray(),
             TestIds = Array.Empty<string>()
         };
+    }
+
+    private void ApplyInspectionRequestAssignments(
+        IEntity request,
+        IReadOnlyCollection<JobHeaderInternal> jobs,
+        IReadOnlyCollection<SampleInternal> samples)
+    {
+        string requestId = GetString(request, InspectionRequestConstants.FieldRequestId);
+        if (string.IsNullOrWhiteSpace(requestId))
+        {
+            return;
+        }
+
+        foreach (IEntity entry in SelectRows(InspectionRequestConstants.TableIrLoginPlanEntry, requestId))
+        {
+            string tableName = GetString(entry, "TABLE_NAME");
+            object entryOrderNumber = entry.Get("ORDER_NUMBER");
+            IEntityCollection fields = SelectFields(requestId, entryOrderNumber);
+
+            if (IsSampleTable(tableName))
+            {
+                ApplyFields(samples.Cast<IEntity>(), fields);
+            }
+            else if (IsJobTable(tableName))
+            {
+                ApplyFields(jobs.Cast<IEntity>(), fields);
+            }
+        }
+    }
+
+    private IEntityCollection SelectRows(string tableName, string requestId)
+    {
+        IQuery query = _entityManager.CreateQuery(tableName);
+        query.AddEquals("REQUEST_ID", requestId);
+        return _entityManager.Select(query);
+    }
+
+    private IEntityCollection SelectFields(string requestId, object entryOrderNumber)
+    {
+        IQuery query = _entityManager.CreateQuery(InspectionRequestConstants.TableIrLoginPlanField);
+        query.AddEquals("REQUEST_ID", requestId);
+        query.AddEquals("PARENT_ORDER_NUMBER", entryOrderNumber);
+        return _entityManager.Select(query);
+    }
+
+    private void ApplyFields(IEnumerable<IEntity> targets, IEntityCollection fields)
+    {
+        foreach (IEntity target in targets)
+        {
+            if (!(target?.IsValid() ?? false))
+            {
+                continue;
+            }
+
+            foreach (IEntity field in fields)
+            {
+                string propertyName = GetString(field, "PROPERTY");
+                if (string.IsNullOrWhiteSpace(propertyName))
+                {
+                    continue;
+                }
+
+                target.Set(propertyName, ResolveAssignmentValue(propertyName, field.Get("OVERRIDE_VALUE")));
+            }
+        }
+    }
+
+    private object ResolveAssignmentValue(string propertyName, object rawValue)
+    {
+        string text = rawValue?.ToString() ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return rawValue;
+        }
+
+        string browseEntity = ResolveBrowseEntity(propertyName);
+        if (string.IsNullOrWhiteSpace(browseEntity))
+        {
+            return rawValue;
+        }
+
+        if (string.Equals(browseEntity, "PHRASE:SAMP_TYPE", StringComparison.OrdinalIgnoreCase))
+        {
+            object phrase = _entityManager.SelectPhrase("SAMP_TYPE", text);
+            return phrase ?? rawValue;
+        }
+
+        object entity = _entityManager.Select(browseEntity, new Identity(text));
+        return entity ?? rawValue;
+    }
+
+    private static string ResolveBrowseEntity(string propertyName)
+    {
+        switch (propertyName?.Trim().ToUpperInvariant())
+        {
+            case "PROJECTID":
+                return "PROJECT_INFO";
+            case "PROJECT":
+                return "CUSTOMER_PROJECT";
+            case "PRODUCTLINK":
+                return InspectionRequestConstants.TableMlpHeader;
+            case "SAMPLINGPOINT":
+                return "SAMPLE_POINT";
+            case "SAMPLINGPROCEDURE":
+                return "SAMPLING_PROCEDURE";
+            case "SAMPLETYPE":
+                return "PHRASE:SAMP_TYPE";
+            default:
+                return string.Empty;
+        }
     }
 
     private ExtendedLoginPlan ResolveLoginPlan(string loginPlanId, string loginPlanVersion, bool useLastActiveVersion)
@@ -220,6 +331,18 @@ internal sealed class InspectionRequestExecutionService
     }
 
     private static bool IsJobContext(string tableName)
+    {
+        return string.Equals(tableName, JobHeaderEntityName, StringComparison.OrdinalIgnoreCase) ||
+               string.Equals(tableName, "JOB", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsSampleTable(string tableName)
+    {
+        return string.Equals(tableName, "SAMPLE", StringComparison.OrdinalIgnoreCase) ||
+               string.Equals(tableName, "SAMPLE_DETAILS", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsJobTable(string tableName)
     {
         return string.Equals(tableName, JobHeaderEntityName, StringComparison.OrdinalIgnoreCase) ||
                string.Equals(tableName, "JOB", StringComparison.OrdinalIgnoreCase);

@@ -253,7 +253,7 @@
         </prompt>
       </controls>
     </form>
-    <form name="Page_DataAssignment">
+    <form name="Page_DataAssignment" forceinitialization="true">
       <height>520</height>
       <width>901</width>
       <caption>Data Assignment</caption>
@@ -262,6 +262,12 @@
           <entity>NPH_IR_LP_ENTRY</entity>
           <query>DataAssignmentEntriesQuery</query>
         </dataqueryentitycollection>
+        <dataqueryentity name="DataAssignmentEntry">
+          <entity>NPH_IR_LP_ENTRY</entity>
+          <query>DataAssignmentEntriesQuery</query>
+          <forceunique>false</forceunique>
+          <multiresultitem>First</multiresultitem>
+        </dataqueryentity>
         <dataqueryentitycollection name="DataAssignmentFields">
           <entity>NPH_IR_LP_FIELD</entity>
           <query>DataAssignmentFieldsQuery</query>
@@ -330,263 +336,439 @@
             </entityoperandquery>
           </conditions>
         </dataquery>
-      </components>
+      <entityBrowseDefinition name="ebLoginWorkflow"><entity>WORKFLOW</entity><returnProperty></returnProperty><ShowColumnHeaders>true</ShowColumnHeaders><ExplorerColumns /><ShowAllVersions>Default</ShowAllVersions><ShowRemoved>Default</ShowRemoved></entityBrowseDefinition><entityBrowseDefinition name="ebEntityTemplate"><entity>ENTITY_TEMPLATE</entity><returnProperty></returnProperty><ShowColumnHeaders>true</ShowColumnHeaders><ExplorerColumns /><ShowAllVersions>Default</ShowAllVersions><ShowRemoved>Default</ShowRemoved></entityBrowseDefinition><dataqueryentitycollection name="ecTests"><entity>NPH_IR_LP_TEST</entity><query>DataAssignmentTestsQuery</query></dataqueryentitycollection></components>
       <minimumsize>
         <height>520</height>
         <width>901</width>
       </minimumsize>
       <controls>
-        <panel name="DataAssignmentRootPanel">
+        <panel name="Panel2">
           <location>
-            <x>8</x>
-            <y>8</y>
+            <x>9</x>
+            <y>9</y>
           </location>
-          <height>504</height>
-          <width>885</width>
+          <height>461</height>
+          <width>883</width>
+          <tabindex>5</tabindex>
           <dock>Fill</dock>
-          <caption>Data Assignment</caption>
+          <caption>Panel2</caption>
           <controls>
-            <splitter name="DataAssignmentSplitter">
+            <splitter name="Splitter1">
               <location>
-                <x>220</x>
+                <x>209</x>
               </location>
-              <height>504</height>
+              <height>461</height>
               <width>4</width>
+              <tabindex>9</tabindex>
               <dock>Left</dock>
               <anchor>None</anchor>
-              <position>220</position>
+              <position>209</position>
             </splitter>
-            <panel name="DataAssignmentDetailPanel">
+            <panel name="Panel3">
               <location>
-                <x>220</x>
+                <x>209</x>
               </location>
-              <height>504</height>
-              <width>665</width>
+              <height>461</height>
+              <width>674</width>
+              <tabindex>7</tabindex>
               <dock>Fill</dock>
-              <caption>Data Assignment Details</caption>
+              <caption>Panel3</caption>
+              <minimumsize>
+                <height>382</height>
+                <width>500</width>
+              </minimumsize>
               <controls>
-                <panel name="DataAssignmentEntryHeaderPanel">
+                <tabcontrol name="tcDataGridTabs">
                   <location />
-                  <height>128</height>
-                  <width>665</width>
-                  <dock>Top</dock>
-                  <caption>Entry Header</caption>
-                  <controls>
-                    <prompt name="DataAssignmentEntryName">
-                      <location>
-                        <x>16</x>
-                        <y>8</y>
-                      </location>
-                      <height>21</height>
-                      <width>420</width>
-                      <caption>Name</caption>
-                      <captionwidth>140</captionwidth>
-                      <property>NodeName</property>
-                      <datasource>DataAssignmentEntries</datasource>
-                      <readonly>true</readonly>
-                      <viewname />
-                    </prompt>
-                    <prompt name="DataAssignmentLoginWorkflow">
-                      <location>
-                        <x>16</x>
-                        <y>38</y>
-                      </location>
-                      <height>21</height>
-                      <width>420</width>
-                      <caption>Login Workflow</caption>
-                      <captionwidth>140</captionwidth>
-                      <property>LoginWorkflow</property>
-                      <datasource>DataAssignmentEntries</datasource>
-                      <readonly>true</readonly>
-                      <viewname />
-                    </prompt>
-                    <prompt name="DataAssignmentLastActiveWorkflow">
-                      <location>
-                        <x>456</x>
-                        <y>38</y>
-                      </location>
-                      <height>21</height>
-                      <width>190</width>
-                      <caption>Last Active Version</caption>
-                      <captionwidth>150</captionwidth>
-                      <property>UseLastActiveLoginWorkflow</property>
-                      <datasource>DataAssignmentEntries</datasource>
-                      <readonly>true</readonly>
-                      <viewname />
-                    </prompt>
-                    <prompt name="DataAssignmentEntityTemplate">
-                      <location>
-                        <x>16</x>
-                        <y>68</y>
-                      </location>
-                      <height>21</height>
-                      <width>420</width>
-                      <caption>Entity Template</caption>
-                      <captionwidth>140</captionwidth>
-                      <property>EntityTemplate</property>
-                      <datasource>DataAssignmentEntries</datasource>
-                      <readonly>true</readonly>
-                      <viewname />
-                    </prompt>
-                    <prompt name="DataAssignmentEntryTable">
-                      <location>
-                        <x>456</x>
-                        <y>68</y>
-                      </location>
-                      <height>21</height>
-                      <width>190</width>
-                      <caption>Entity</caption>
-                      <captionwidth>60</captionwidth>
-                      <property>TableName</property>
-                      <datasource>DataAssignmentEntries</datasource>
-                      <readonly>true</readonly>
-                      <viewname />
-                    </prompt>
-                    <prompt name="DataAssignmentLoginCondition">
-                      <location>
-                        <x>16</x>
-                        <y>98</y>
-                      </location>
-                      <height>21</height>
-                      <width>420</width>
-                      <caption>Login Condition</caption>
-                      <captionwidth>140</captionwidth>
-                      <property>LoginCondition</property>
-                      <datasource>DataAssignmentEntries</datasource>
-                      <readonly>true</readonly>
-                      <viewname />
-                    </prompt>
-                    <prompt name="DataAssignmentCountExpression">
-                      <location>
-                        <x>456</x>
-                        <y>98</y>
-                      </location>
-                      <height>21</height>
-                      <width>190</width>
-                      <caption>Count Expression</caption>
-                      <captionwidth>120</captionwidth>
-                      <property>CountExpression</property>
-                      <datasource>DataAssignmentEntries</datasource>
-                      <readonly>true</readonly>
-                      <viewname />
-                    </prompt>
-                  </controls>
-                </panel>
-                <splitter name="DataAssignmentHeaderSplitter">
-                  <location>
-                    <y>128</y>
-                  </location>
-                  <height>5</height>
-                  <width>665</width>
-                  <dock>Top</dock>
-                  <anchor>None</anchor>
-                  <position>128</position>
-                </splitter>
-                <tabcontrol name="DataAssignmentTabs">
-                  <location>
-                    <y>133</y>
-                  </location>
-                  <height>371</height>
-                  <width>665</width>
-                  <dock>None</dock>
-                  <anchor>Top Left Right Bottom</anchor>
-                  <caption>Data Assignment Tabs</caption>
+                  <height>461</height>
+                  <width>674</width>
+                  <tabindex>1</tabindex>
+                  <dock>Fill</dock>
+                  <caption>TabControl1</caption>
                   <pageborderstyle>Default</pageborderstyle>
                   <headerlocation>Bottom</headerlocation>
                   <multiline>false</multiline>
                   <tabpages>
-                    <tabpage name="DataPropertiesTab">
+                    <tabpage name="tpDataProperties">
                       <location>
                         <x>4</x>
                         <y>4</y>
                       </location>
-                      <height>345</height>
-                      <width>657</width>
+                      <height>435</height>
+                      <width>666</width>
                       <visible>false</visible>
                       <caption>Data Properties</caption>
                       <controls>
-                        <datagridcontrol name="DataAssignmentFieldsGrid">
-                          <location />
-                          <height>345</height>
-                          <width>657</width>
+                        <panel name="Panel5">
+                          <location>
+                            <y>146</y>
+                          </location>
+                          <height>289</height>
+                          <width>666</width>
+                          <tabindex>20</tabindex>
                           <dock>Fill</dock>
-                          <showbuttons>true</showbuttons>
-                          <autosizecolumns>true</autosizecolumns>
-                          <MultiSelect>false</MultiSelect>
-                          <showiconcolumn>false</showiconcolumn>
-                          <showindicator>true</showindicator>
-                          <showhorzlines>true</showhorzlines>
-                          <showvertlines>true</showvertlines>
-                          <allowsort>false</allowsort>
-                          <fixedcolumns>0</fixedcolumns>
-                          <gridcolumns>
-                            <GridColumnDefinition name="FieldParentOrder">
-                              <width>90</width>
-                              <caption>Entry</caption>
-                              <readonly>true</readonly>
-                              <datatype>Text</datatype>
-                              <Property>ParentOrderNumber</Property>
-                            </GridColumnDefinition>
-                            <GridColumnDefinition name="FieldProperty">
-                              <width>180</width>
-                              <caption>Property</caption>
-                              <readonly>true</readonly>
-                              <IsGreyBackground>true</IsGreyBackground>
-                              <datatype>Text</datatype>
-                              <Property>Property</Property>
-                            </GridColumnDefinition>
-                            <GridColumnDefinition name="FieldDefaultValue">
-                              <width>180</width>
-                              <caption>Default Value</caption>
-                              <readonly>true</readonly>
-                              <IsGreyBackground>true</IsGreyBackground>
-                              <datatype>Text</datatype>
-                              <Property>Value</Property>
-                            </GridColumnDefinition>
-                            <GridColumnDefinition name="FieldNewValue">
-                              <width>220</width>
-                              <caption>New Value</caption>
+                          <caption>Panel5</caption>
+                          <controls>
+                            <unboundgridcontrol name="udgEntityGrid">
+                              <location />
+                              <height>289</height>
+                              <width>666</width>
+                              <tabindex>1</tabindex>
+                              <dock>Fill</dock>
+                              <showbuttons>true</showbuttons>
+                              <autosizecolumns>true</autosizecolumns>
+                              <MultiSelect>false</MultiSelect>
+                              <showiconcolumn>false</showiconcolumn>
+                              <showindicator>true</showindicator>
+                              <showhorzlines>true</showhorzlines>
+                              <showvertlines>true</showvertlines>
+                              <allowsort>false</allowsort>
+                              <fixedcolumns>0</fixedcolumns>
+                              <gridcolumns>
+                                <GridColumnDefinition name="udgcProperty">
+                                  <location />
+                                  <width>100</width>
+                                  <caption>Property</caption>
+                                  <readonly>true</readonly>
+                                  <IsGreyBackground>true</IsGreyBackground>
+                                  <datatype>Text</datatype>
+                                  <showbutton>false</showbutton>
+                                  <HidePlaceHoldersBlank>false</HidePlaceHoldersBlank>
+                                </GridColumnDefinition>
+                                <GridColumnDefinition name="udgcDefaultValue">
+                                  <location />
+                                  <width>100</width>
+                                  <caption>Default Value</caption>
+                                  <readonly>true</readonly>
+                                  <IsGreyBackground>true</IsGreyBackground>
+                                  <datatype>Text</datatype>
+                                  <showbutton>false</showbutton>
+                                  <HidePlaceHoldersBlank>false</HidePlaceHoldersBlank>
+                                </GridColumnDefinition>
+                                <GridColumnDefinition name="udgcNewValue">
+                                  <location />
+                                  <width>100</width>
+                                  <caption>New Value</caption>
+                                  <readonly>false</readonly>
+                                  <datatype>Text</datatype>
+                                  <showbutton>false</showbutton>
+                                  <HidePlaceHoldersBlank>false</HidePlaceHoldersBlank>
+                                </GridColumnDefinition>
+                              </gridcolumns>
                               <readonly>false</readonly>
-                              <datatype>Text</datatype>
-                              <Property>OverrideValue</Property>
-                            </GridColumnDefinition>
-                          </gridcolumns>
-                          <readonly>false</readonly>
-                          <supportedoperations>Add Delete</supportedoperations>
-                          <defaultview>Horizontal</defaultview>
-                          <alwaysshowsearch>false</alwaysshowsearch>
-                          <searchcolumns>false</searchcolumns>
-                          <datasource>DataAssignmentFields</datasource>
-                        </datagridcontrol>
+                              <supportedoperations>None</supportedoperations>
+                              <defaultview>Horizontal</defaultview>
+                              <alwaysshowsearch>false</alwaysshowsearch>
+                              <searchcolumns>false</searchcolumns>
+                            </unboundgridcontrol>
+                          </controls>
+                        </panel>
+                        <panel name="Panel4">
+                          <location />
+                          <height>146</height>
+                          <width>666</width>
+                          <tabindex>19</tabindex>
+                          <dock>Top</dock>
+                          <caption>Panel4</caption>
+                          <controls>
+                            <datagridcontrol name="DataAssignmentHeaderGrid">
+                              <location />
+                              <height>1</height>
+                              <width>1</width>
+                              <tabindex>0</tabindex>
+                              <visible>false</visible>
+                              <showbuttons>false</showbuttons>
+                              <autosizecolumns>true</autosizecolumns>
+                              <MultiSelect>false</MultiSelect>
+                              <showiconcolumn>false</showiconcolumn>
+                              <showindicator>false</showindicator>
+                              <showhorzlines>true</showhorzlines>
+                              <showvertlines>true</showvertlines>
+                              <allowsort>false</allowsort>
+                              <gridcolumns>
+                                <GridColumnDefinition name="HdrName">
+                                  <width>140</width>
+                                  <caption>Name</caption>
+                                  <readonly>true</readonly>
+                                  <datatype>Text</datatype>
+                                  <Property>NodeName</Property>
+                                </GridColumnDefinition>
+                                <GridColumnDefinition name="HdrWorkflow">
+                                  <width>130</width>
+                                  <caption>Login Workflow</caption>
+                                  <readonly>true</readonly>
+                                  <datatype>Text</datatype>
+                                  <Property>LoginWorkflowId</Property>
+                                </GridColumnDefinition>
+                                <GridColumnDefinition name="HdrTemplate">
+                                  <width>130</width>
+                                  <caption>Entity Template</caption>
+                                  <readonly>true</readonly>
+                                  <datatype>Text</datatype>
+                                  <Property>EntityTemplateId</Property>
+                                </GridColumnDefinition>
+                                <GridColumnDefinition name="HdrEntity">
+                                  <width>90</width>
+                                  <caption>Entity</caption>
+                                  <readonly>true</readonly>
+                                  <datatype>Text</datatype>
+                                  <Property>TableName</Property>
+                                </GridColumnDefinition>
+                                <GridColumnDefinition name="HdrCondition">
+                                  <width>120</width>
+                                  <caption>Login Condition</caption>
+                                  <readonly>true</readonly>
+                                  <datatype>Text</datatype>
+                                  <Property>LoginCondition</Property>
+                                </GridColumnDefinition>
+                                <GridColumnDefinition name="HdrCount">
+                                  <width>90</width>
+                                  <caption>Count</caption>
+                                  <readonly>true</readonly>
+                                  <datatype>Text</datatype>
+                                  <Property>CountExpression</Property>
+                                </GridColumnDefinition>
+                              </gridcolumns>
+                              <readonly>true</readonly>
+                              <supportedoperations>None</supportedoperations>
+                              <defaultview>Horizontal</defaultview>
+                              <alwaysshowsearch>false</alwaysshowsearch>
+                              <searchcolumns>false</searchcolumns>
+                              <datasource>DataAssignmentEntries</datasource>
+                            </datagridcontrol>
+                            <splitter name="Splitter2">
+                              <location>
+                                <x>364</x>
+                              </location>
+                              <height>146</height>
+                              <width>4</width>
+                              <tabindex>33</tabindex>
+                              <dock>Left</dock>
+                              <anchor>None</anchor>
+                              <position>364</position>
+                            </splitter>
+                            <panel name="Panel7">
+                              <location>
+                                <x>364</x>
+                              </location>
+                              <height>146</height>
+                              <width>302</width>
+                              <tabindex>31</tabindex>
+                              <dock>Fill</dock>
+                              <caption>Panel7</caption>
+                              <controls>
+                                <TextEdit name="CountExpressionTextValue">
+                                  <location>
+                                    <x>6</x>
+                                    <y>116</y>
+                                  </location>
+                                  <height>20</height>
+                                  <width>283</width>
+                                  <tabindex>33</tabindex>
+                                  <defaultvalue xsi:type="xsd:string" />
+                                  <readonly>true</readonly>
+                                <enabled>true</enabled></TextEdit>
+                                <TextEdit name="LoginConditionTextValue">
+                                  <location>
+                                    <x>6</x>
+                                    <y>87</y>
+                                  </location>
+                                  <height>20</height>
+                                  <width>283</width>
+                                  <tabindex>32</tabindex>
+                                  <defaultvalue xsi:type="xsd:string" />
+                                  <readonly>true</readonly>
+                                <enabled>true</enabled></TextEdit>
+                                <ButtonEditDefinition name="TestButton">
+                                  <location>
+                                    <x>210</x>
+                                    <y>57</y>
+                                  </location>
+                                  <height>23</height>
+                                  <width>79</width>
+                                  <tabindex>31</tabindex>
+                                  <caption>Test</caption>
+                                  <size>
+                                    <Width>0</Width>
+                                    <Height>0</Height>
+                                  </size>
+                                <readonly>true</readonly><enabled>true</enabled></ButtonEditDefinition>
+                                <PromptEntityBrowseDefinition name="TestEntityBrowsePrompt">
+                                  <location>
+                                    <x>6</x>
+                                    <y>59</y>
+                                  </location>
+                                  <height>20</height>
+                                  <width>184</width>
+                                  <tabindex>30</tabindex>
+                                  <caption>Entity</caption>
+                                  <captionwidth>50</captionwidth>
+                                  <Browse />
+                                  <datasource>DataAssignmentEntry</datasource>
+                                  <property>TableName</property>
+                                <readonly>true</readonly><enabled>true</enabled></PromptEntityBrowseDefinition>
+                              </controls>
+                            </panel>
+                            <panel name="Panel6">
+                              <location />
+                              <height>146</height>
+                              <width>364</width>
+                              <tabindex>30</tabindex>
+                              <dock>Left</dock>
+                              <caption>Panel6</caption>
+                              <controls>
+                                <PromptEntityBrowseDefinition name="ebpEntityTemplate">
+                                  <location>
+                                    <x>3</x>
+                                    <y>60</y>
+                                  </location>
+                                  <height>20</height>
+                                  <width>231</width>
+                                  <tabindex>26</tabindex>
+                                  <anchor>Top Left Right</anchor>
+                                  <caption>Entity Template</caption>
+                                  <Browse>ebEntityTemplate</Browse>
+                                  <datasource>DataAssignmentEntry</datasource>
+                                  <property>EntityTemplateId</property>
+                                <readonly>true</readonly><enabled>true</enabled></PromptEntityBrowseDefinition>
+                                <panel name="DockingPanel">
+                                  <location>
+                                    <y>29</y>
+                                  </location>
+                                  <height>26</height>
+                                  <width>361</width>
+                                  <tabindex>28</tabindex>
+                                  <anchor>Top Left Right</anchor>
+                                  <caption>Panel8</caption>
+                                  <padding>
+                                    <All>-1</All>
+                                    <Bottom>2</Bottom>
+                                    <Left>2</Left>
+                                    <Right>2</Right>
+                                    <Top>2</Top>
+                                  </padding>
+                                  <controls>
+                                    <PromptEntityBrowseDefinition name="ebpLoginWorkflow">
+                                      <location>
+                                        <x>2</x>
+                                        <y>2</y>
+                                      </location>
+                                      <height>22</height>
+                                      <width>231</width>
+                                      <tabindex>30</tabindex>
+                                      <dock>Fill</dock>
+                                      <caption>Login Workflow</caption>
+                                      <Browse>ebLoginWorkflow</Browse>
+                                      <datasource>DataAssignmentEntry</datasource>
+                                      <property>LoginWorkflowId</property>
+                                    <readonly>true</readonly><enabled>true</enabled></PromptEntityBrowseDefinition>
+                                    <CheckEdit name="cfLastActiveVersion">
+                                      <location>
+                                        <x>233</x>
+                                        <y>2</y>
+                                      </location>
+                                      <height>22</height>
+                                      <width>126</width>
+                                      <tabindex>25</tabindex>
+                                      <dock>Right</dock>
+                                      <tooltip>Use last active version of Login Workflow</tooltip>
+                                      <caption>  Last Active Version</caption>
+                                      <defaultvalue xsi:type="xsd:boolean">false</defaultvalue>
+                                      <CheckAlign>Right</CheckAlign>
+                                      <datasource>DataAssignmentEntry</datasource>
+                                      <property>UseLastActiveLoginWorkflow</property>
+                                    <readonly>true</readonly><enabled>true</enabled></CheckEdit>
+                                  </controls>
+                                </panel>
+                                <TextEdit name="expCountExpression">
+                                  <location>
+                                    <x>3</x>
+                                    <y>116</y>
+                                  </location>
+                                  <height>20</height>
+                                  <width>358</width>
+                                  <tabindex>27</tabindex>
+                                  <anchor>Top Left Right</anchor>
+                                  <caption>Count Expression</caption>
+                                  <captionwidth>107</captionwidth>
+                                  <defaultvalue xsi:type="xsd:string" />
+                                  <showbutton>false</showbutton>
+                                  <datasource>DataAssignmentEntry</datasource>
+                                  <property>CountExpression</property>
+                                <readonly>true</readonly><enabled>true</enabled></TextEdit>
+                                <TextEdit name="expLoginCondition">
+                                  <location>
+                                    <x>3</x>
+                                    <y>87</y>
+                                  </location>
+                                  <height>20</height>
+                                  <width>358</width>
+                                  <tabindex>26</tabindex>
+                                  <anchor>Top Left Right</anchor>
+                                  <caption>Login Condition</caption>
+                                  <captionwidth>107</captionwidth>
+                                  <defaultvalue xsi:type="xsd:string" />
+                                  <showbutton>false</showbutton>
+                                  <datasource>DataAssignmentEntry</datasource>
+                                  <property>LoginCondition</property>
+                                <readonly>true</readonly><enabled>true</enabled></TextEdit>
+                                <TextEdit name="teName">
+                                  <location>
+                                    <x>3</x>
+                                    <y>3</y>
+                                  </location>
+                                  <height>20</height>
+                                  <width>230</width>
+                                  <tabindex>20</tabindex>
+                                  <anchor>Top Left Right</anchor>
+                                  <caption>Name</caption>
+                                  <defaultvalue xsi:type="xsd:string">Create Login Plan</defaultvalue>
+                                  <datasource>DataAssignmentEntry</datasource>
+                                  <property>NodeName</property>
+                                <readonly>true</readonly><enabled>true</enabled></TextEdit>
+                              </controls>
+                            </panel>
+                          </controls>
+                        </panel>
                       </controls>
                     </tabpage>
-                    <tabpage name="TestAssignmentTab">
+                    <tabpage name="tpTestAssigment">
                       <location>
                         <x>4</x>
                         <y>4</y>
                       </location>
-                      <height>345</height>
-                      <width>657</width>
+                      <height>435</height>
+                      <width>666</width>
+                      <tabindex>1</tabindex>
                       <visible>false</visible>
                       <caption>Test Assignment</caption>
                       <controls>
-                        <splitter name="TestAssignmentSplitter">
+                        <splitter name="spTestData">
                           <location>
-                            <y>200</y>
+                            <y>179</y>
                           </location>
                           <height>5</height>
-                          <width>657</width>
+                          <width>666</width>
+                          <tabindex>2</tabindex>
                           <dock>Top</dock>
                           <anchor>None</anchor>
-                          <position>200</position>
+                          <position>179</position>
                         </splitter>
-                        <datagridcontrol name="DataAssignmentTestFieldsGrid">
+                            <unboundgridcontrol name="ugdTestData">
                           <location>
-                            <y>205</y>
+                            <y>179</y>
                           </location>
-                          <height>273</height>
-                          <width>657</width>
+                          <height>256</height>
+                          <width>666</width>
+                          <tabindex>1</tabindex>
                           <dock>Fill</dock>
+                          <padding>
+                            <All>-1</All>
+                            <Bottom>0</Bottom>
+                            <Left>0</Left>
+                            <Right>0</Right>
+                            <Top>2</Top>
+                          </padding>
                           <showbuttons>true</showbuttons>
                           <autosizecolumns>true</autosizecolumns>
                           <MultiSelect>false</MultiSelect>
@@ -597,55 +779,46 @@
                           <allowsort>false</allowsort>
                           <fixedcolumns>0</fixedcolumns>
                           <gridcolumns>
-                            <GridColumnDefinition name="TestFieldEntry">
-                              <width>80</width>
-                              <caption>Entry</caption>
-                              <readonly>true</readonly>
-                              <datatype>Text</datatype>
-                              <Property>ParentParentOrderNumber</Property>
-                            </GridColumnDefinition>
-                            <GridColumnDefinition name="TestFieldTest">
-                              <width>80</width>
-                              <caption>Test</caption>
-                              <readonly>true</readonly>
-                              <datatype>Text</datatype>
-                              <Property>ParentOrderNumber</Property>
-                            </GridColumnDefinition>
-                            <GridColumnDefinition name="TestFieldProperty">
-                              <width>180</width>
+                            <GridColumnDefinition name="gdcProperty">
+                              <location />
+                              <width>100</width>
                               <caption>Property</caption>
                               <readonly>true</readonly>
                               <IsGreyBackground>true</IsGreyBackground>
                               <datatype>Text</datatype>
-                              <Property>Property</Property>
+                              <showbutton>false</showbutton>
+                              <HidePlaceHoldersBlank>false</HidePlaceHoldersBlank>
                             </GridColumnDefinition>
-                            <GridColumnDefinition name="TestFieldDefaultValue">
-                              <width>180</width>
+                            <GridColumnDefinition name="gdcDefaultValue">
+                              <location />
+                              <width>100</width>
                               <caption>Default Value</caption>
                               <readonly>true</readonly>
                               <IsGreyBackground>true</IsGreyBackground>
                               <datatype>Text</datatype>
-                              <Property>Value</Property>
+                              <showbutton>false</showbutton>
+                              <HidePlaceHoldersBlank>false</HidePlaceHoldersBlank>
                             </GridColumnDefinition>
-                            <GridColumnDefinition name="TestFieldNewValue">
-                              <width>220</width>
+                            <GridColumnDefinition name="gdcNewValue">
+                              <location />
+                              <width>100</width>
                               <caption>New Value</caption>
                               <readonly>false</readonly>
                               <datatype>Text</datatype>
-                              <Property>OverrideValue</Property>
+                              <showbutton>false</showbutton>
+                              <HidePlaceHoldersBlank>false</HidePlaceHoldersBlank>
                             </GridColumnDefinition>
                           </gridcolumns>
                           <readonly>false</readonly>
-                          <supportedoperations>Add Delete</supportedoperations>
+                          <supportedoperations>None</supportedoperations>
                           <defaultview>Horizontal</defaultview>
                           <alwaysshowsearch>false</alwaysshowsearch>
                           <searchcolumns>false</searchcolumns>
-                          <datasource>DataAssignmentTestFields</datasource>
-                        </datagridcontrol>
-                        <datagridcontrol name="DataAssignmentTestsGrid">
+                            </unboundgridcontrol>
+                        <datagridcontrol name="dgdTests">
                           <location />
-                          <height>200</height>
-                          <width>657</width>
+                          <height>179</height>
+                          <width>666</width>
                           <dock>Top</dock>
                           <showbuttons>true</showbuttons>
                           <autosizecolumns>true</autosizecolumns>
@@ -657,47 +830,55 @@
                           <allowsort>false</allowsort>
                           <fixedcolumns>0</fixedcolumns>
                           <gridcolumns>
-                            <GridColumnDefinition name="TestParentOrder">
-                              <width>80</width>
-                              <caption>Entry</caption>
-                              <readonly>true</readonly>
-                              <datatype>Text</datatype>
-                              <Property>ParentOrderNumber</Property>
-                            </GridColumnDefinition>
-                            <GridColumnDefinition name="TestAnalysis">
-                              <width>160</width>
+                            <GridColumnDefinition name="gdcAnalysis">
+                              <location />
+                              <width>100</width>
                               <caption>Analysis</caption>
                               <readonly>false</readonly>
                               <datatype>Text</datatype>
+                              <showbutton>false</showbutton>
                               <Property>AnalysisIdentity</Property>
+                              <HidePlaceHoldersBlank>false</HidePlaceHoldersBlank>
                             </GridColumnDefinition>
-                            <GridColumnDefinition name="TestComponentList">
-                              <width>160</width>
+                            <GridColumnDefinition name="gdcComponentList">
+                              <location />
+                              <width>100</width>
                               <caption>Component List</caption>
                               <readonly>false</readonly>
                               <datatype>Text</datatype>
+                              <showbutton>false</showbutton>
                               <Property>CompListIdentity</Property>
+                              <HidePlaceHoldersBlank>false</HidePlaceHoldersBlank>
                             </GridColumnDefinition>
-                            <GridColumnDefinition name="TestSchedule">
-                              <width>160</width>
+                            <GridColumnDefinition name="gdcTestSchedule">
+                              <location />
+                              <width>100</width>
                               <caption>Test Schedule</caption>
                               <readonly>false</readonly>
                               <datatype>Text</datatype>
+                              <showbutton>false</showbutton>
                               <Property>TestScheduleId</Property>
+                              <HidePlaceHoldersBlank>false</HidePlaceHoldersBlank>
                             </GridColumnDefinition>
-                            <GridColumnDefinition name="TestPlan">
-                              <width>160</width>
+                            <GridColumnDefinition name="gdcRedTestHeader">
+                              <location />
+                              <width>100</width>
                               <caption>Test Plan</caption>
                               <readonly>false</readonly>
                               <datatype>Text</datatype>
+                              <showbutton>false</showbutton>
                               <Property>RedTestId</Property>
+                              <HidePlaceHoldersBlank>false</HidePlaceHoldersBlank>
                             </GridColumnDefinition>
-                            <GridColumnDefinition name="TestLastActiveVersion">
-                              <width>130</width>
+                            <GridColumnDefinition name="gdcLastActiveVersion">
+                              <location />
+                              <width>100</width>
                               <caption>Last Active Version</caption>
                               <readonly>false</readonly>
                               <datatype>Text</datatype>
+                              <showbutton>false</showbutton>
                               <Property>LastActiveVersion</Property>
+                              <HidePlaceHoldersBlank>false</HidePlaceHoldersBlank>
                             </GridColumnDefinition>
                           </gridcolumns>
                           <readonly>false</readonly>
@@ -713,22 +894,23 @@
                 </tabcontrol>
               </controls>
             </panel>
-            <panel name="DataAssignmentTreePanel">
+            <panel name="Panel1">
               <location />
-              <height>504</height>
-              <width>220</width>
+              <height>461</height>
+              <width>209</width>
+              <tabindex>6</tabindex>
               <dock>Left</dock>
-              <caption>Data Assignment</caption>
+              <caption>Panel1</caption>
               <controls>
-                <simpletreelist name="DataAssignmentTree">
+                <simpletreelist name="stlDataTree">
                   <location />
-                  <height>504</height>
-                  <width>220</width>
+                  <height>461</height>
+                  <width>209</width>
                   <dock>Fill</dock>
-                  <caption>Data Assignment</caption>
+                  <caption>Create Login Plan</caption>
                   <readonly>false</readonly>
                   <treeoperations>None</treeoperations>
-                  <openexpanded>true</openexpanded>
+                  <openexpanded>false</openexpanded>
                   <showroot>true</showroot>
                   <autofocusnewnode>true</autofocusnewnode>
                   <showimages>true</showimages>
