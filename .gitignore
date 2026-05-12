@@ -2,10 +2,11 @@ bin/
 obj/
 out/*
 !out/.gitkeep
-tmp-loginplan-form/
-tmp-loginplan-source/
+tmp-*/
 remote-snapshot/
 remote-logs/
+docs/private/
+$dir/
 *.user
 *.suo
 *.zip
