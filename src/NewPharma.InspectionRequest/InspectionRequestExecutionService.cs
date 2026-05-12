@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using LoginPlan.ObjectModel;
 using Thermo.SampleManager.Common.Data;
+using Thermo.SampleManager.Core.Definition;
 using Thermo.SampleManager.Internal.ObjectModel;
 using Thermo.SampleManager.ObjectModel;
 using Thermo.SampleManager.Server;
@@ -18,10 +19,14 @@ internal sealed class InspectionRequestExecutionService
     private const string JobHeaderEntityName = "JOB_HEADER";
 
     private readonly IEntityManager _entityManager;
+    private readonly Func<string, string, ISchemaField> _findSchemaField;
 
-    public InspectionRequestExecutionService(IEntityManager entityManager)
+    public InspectionRequestExecutionService(
+        IEntityManager entityManager,
+        Func<string, string, ISchemaField> findSchemaField)
     {
         _entityManager = entityManager ?? throw new ArgumentNullException(nameof(entityManager));
+        _findSchemaField = findSchemaField ?? throw new ArgumentNullException(nameof(findSchemaField));
     }
 
     public void Execute(IEntity request)
@@ -66,7 +71,9 @@ internal sealed class InspectionRequestExecutionService
 
     private void MarkExecuting(IEntity request)
     {
-        request.Set(InspectionRequestConstants.FieldStatus, InspectionRequestConstants.StatusExecuting);
+        var lifecycleService = new InspectionRequestLifecycleService(_entityManager);
+        lifecycleService.Initialize(request);
+        lifecycleService.MarkExecuting(request);
         request.Set(InspectionRequestConstants.FieldExecutionStatus, InspectionRequestConstants.ExecutionExecuting);
         request.Set(InspectionRequestConstants.FieldExecutionStartedOn, DateTime.Now);
         request.Set(InspectionRequestConstants.FieldExecutionError, string.Empty);
@@ -191,12 +198,12 @@ internal sealed class InspectionRequestExecutionService
                     continue;
                 }
 
-                target.Set(propertyName, ResolveAssignmentValue(propertyName, field.Get("OVERRIDE_VALUE")));
+                target.Set(propertyName, ResolveAssignmentValue(target, propertyName, field.Get("OVERRIDE_VALUE")));
             }
         }
     }
 
-    private object ResolveAssignmentValue(string propertyName, object rawValue)
+    private object ResolveAssignmentValue(IEntity target, string propertyName, object rawValue)
     {
         string text = rawValue?.ToString() ?? string.Empty;
         if (string.IsNullOrWhiteSpace(text))
@@ -204,40 +211,86 @@ internal sealed class InspectionRequestExecutionService
             return rawValue;
         }
 
-        string browseEntity = ResolveBrowseEntity(propertyName);
-        if (string.IsNullOrWhiteSpace(browseEntity))
+        ISchemaField schemaField = FindSchemaField(target, propertyName);
+        if (schemaField == null)
         {
             return rawValue;
         }
 
-        if (string.Equals(browseEntity, "PHRASE:SAMP_TYPE", StringComparison.OrdinalIgnoreCase))
+        if (schemaField.LinkTable != null)
         {
-            object phrase = _entityManager.SelectPhrase("SAMP_TYPE", text);
+            object entity = SelectLinkedEntity(schemaField, text);
+            return entity ?? rawValue;
+        }
+
+        if (schemaField.PhraseValid)
+        {
+            object phrase = _entityManager.SelectPhrase(schemaField.PhraseType, text);
             return phrase ?? rawValue;
         }
 
-        object entity = _entityManager.Select(browseEntity, new Identity(text));
-        return entity ?? rawValue;
+        if (schemaField.DatabaseType == DataVariableType.DataTypeBoolean)
+        {
+            return string.Equals(text, "T", StringComparison.OrdinalIgnoreCase) ||
+                   string.Equals(text, "TRUE", StringComparison.OrdinalIgnoreCase) ||
+                   string.Equals(text, "1", StringComparison.OrdinalIgnoreCase);
+        }
+
+        if (schemaField.DatabaseType == DataVariableType.DataTypeInteger &&
+            int.TryParse(text, out int integerValue))
+        {
+            return integerValue;
+        }
+
+        if ((schemaField.DatabaseType == DataVariableType.DataTypePackedDecimal ||
+             schemaField.DatabaseType == DataVariableType.DataTypeReal) &&
+            decimal.TryParse(text, out decimal decimalValue))
+        {
+            return decimalValue;
+        }
+
+        if (schemaField.DatabaseType == DataVariableType.DataTypeDate &&
+            DateTime.TryParse(text, out DateTime dateValue))
+        {
+            return dateValue;
+        }
+
+        return rawValue;
     }
 
-    private static string ResolveBrowseEntity(string propertyName)
+    private ISchemaField FindSchemaField(IEntity target, string propertyName)
     {
-        switch (propertyName?.Trim().ToUpperInvariant())
+        string tableName = target?.EntityType;
+        if (string.IsNullOrWhiteSpace(tableName) ||
+            string.IsNullOrWhiteSpace(propertyName))
         {
-            case "PROJECTID":
-                return "PROJECT_INFO";
-            case "PROJECT":
-                return "CUSTOMER_PROJECT";
-            case "PRODUCTLINK":
-                return InspectionRequestConstants.TableMlpHeader;
-            case "SAMPLINGPOINT":
-                return "SAMPLE_POINT";
-            case "SAMPLINGPROCEDURE":
-                return "SAMPLING_PROCEDURE";
-            case "SAMPLETYPE":
-                return "PHRASE:SAMP_TYPE";
-            default:
-                return string.Empty;
+            return null;
+        }
+
+        return _findSchemaField(tableName, propertyName);
+    }
+
+    private IEntity SelectLinkedEntity(ISchemaField schemaField, string value)
+    {
+        if (schemaField?.LinkTable == null || string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        try
+        {
+            string[] ids = value.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            object[] fields = new object[schemaField.LinkTable.KeyFields.Count];
+            for (int i = 0; i < fields.Length && i < ids.Length; i++)
+            {
+                fields[i] = ids[i];
+            }
+
+            return _entityManager.Select(schemaField.LinkTable.Name, new Identity(fields));
+        }
+        catch
+        {
+            return null;
         }
     }
 
@@ -282,23 +335,23 @@ internal sealed class InspectionRequestExecutionService
 
     private void MarkExecuted(IEntity request, ExecutionResult result)
     {
-        request.Set(InspectionRequestConstants.FieldStatus, InspectionRequestConstants.StatusExecuted);
         request.Set(InspectionRequestConstants.FieldExecutionStatus, InspectionRequestConstants.ExecutionExecuted);
         request.Set(InspectionRequestConstants.FieldExecutionCompletedOn, DateTime.Now);
         request.Set(InspectionRequestConstants.FieldGeneratedJobId, result.PrimaryJobId ?? string.Empty);
         request.Set(InspectionRequestConstants.FieldGeneratedObjectSummary, JsonSerializer.Serialize(result));
-        request.Set(InspectionRequestConstants.FieldLifecycleNodeId, InspectionRequestLifecycleService.ExecutedNodeGuid);
-        request.Set(InspectionRequestConstants.FieldLifecycleEvent, "EXECUTED");
-        new InspectionRequestLifecycleService(_entityManager).LinkCurrentNode(request);
-        _entityManager.Commit();
+        var lifecycleService = new InspectionRequestLifecycleService(_entityManager);
+        lifecycleService.Initialize(request);
+        lifecycleService.Move(request, "EXECUTED");
     }
 
     private void MarkFailed(IEntity request, Exception ex)
     {
-        request.Set(InspectionRequestConstants.FieldStatus, InspectionRequestConstants.StatusExecutionFailed);
         request.Set(InspectionRequestConstants.FieldExecutionStatus, InspectionRequestConstants.ExecutionFailed);
         request.Set(InspectionRequestConstants.FieldExecutionCompletedOn, DateTime.Now);
         request.Set(InspectionRequestConstants.FieldExecutionError, ex.ToString());
+        var lifecycleService = new InspectionRequestLifecycleService(_entityManager);
+        lifecycleService.Initialize(request);
+        lifecycleService.MarkExecutionFailed(request);
         _entityManager.Commit();
     }
 

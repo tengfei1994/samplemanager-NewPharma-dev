@@ -3,9 +3,16 @@ namespace NewPharma.InspectionRequest
     internal static class InspectionRequestConstants
     {
         public const string EntityName = "NPH_INSPECTION_REQUEST";
+        public const string WorkflowTypeInspectionRequestCreate = "NPHIR";
+        public const string WorkflowNodeTypeInspectionRequestLogin = "NPHIR_LOGIN";
+        public const string WorkflowNodeTypeCreateInspectionRequest = "CREATE_NPHIR";
 
         public const string FieldRequestId = "REQUEST_ID";
         public const string FieldIdText = "ID_TEXT";
+        public const string FieldName = "NAME";
+        public const string FieldNameProperty = "Name";
+        public const string FieldDescription = "DESCRIPTION";
+        public const string FieldDescriptionProperty = "Description";
         public const string FieldStatus = "STATUS";
         public const string FieldLoginPlan = "LoginPlan";
         public const string FieldLoginPlanId = "LOGIN_PLAN_ID";
@@ -24,12 +31,22 @@ namespace NewPharma.InspectionRequest
         public const string FieldGeneratedObjectSummary = "GENERATED_OBJECT_SUMMARY";
         public const string FieldExecutionError = "EXECUTION_ERROR";
         public const string FieldEsigRequired = "ESIG_REQUIRED";
+        public const string FieldLifecycleWorkflow = "LifecycleWorkflow";
         public const string FieldLifecycleWorkflowId = "LIFECYCLE_WORKFLOW_ID";
+        public const string FieldLifecycleWorkflowIdProperty = "LifecycleWorkflowId";
         public const string FieldLifecycleWorkflowVersion = "LIFECYCLE_WORKFLOW_VERSION";
+        public const string FieldLifecycleWorkflowVersionProperty = "LifecycleWorkflowVersion";
         public const string FieldLifecycleNodeId = "LIFECYCLE_NODE_ID";
         public const string FieldLifecycleEvent = "LIFECYCLE_EVENT";
+        public const string FieldWorkflowNode = "WORKFLOW_NODE";
+        public const string FieldEntityTemplate = "EntityTemplate";
         public const string FieldEntityTemplateId = "ENTITY_TEMPLATE_ID";
+        public const string FieldEntityTemplateIdProperty = "EntityTemplateId";
         public const string FieldEntityTemplateVersion = "ENTITY_TEMPLATE_VERSION";
+        public const string FieldEntityTemplateVersionProperty = "EntityTemplateVersion";
+        public const string FieldApprovalRequired = "APPROVAL_REQD";
+        public const string FieldApprovalStatus = "APPROVAL_STATUS";
+        public const string FieldInspectionPlan = "INSPECTION_PLAN";
 
         public const string TableLoginPlanEntry = "LOGIN_PLAN_ENTRY";
         public const string TableLoginPlanField = "LOGIN_PLAN_FIELD";

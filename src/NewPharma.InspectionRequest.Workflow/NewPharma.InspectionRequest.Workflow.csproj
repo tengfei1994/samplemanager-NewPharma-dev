@@ -6,14 +6,11 @@
     <UseCommonOutputDirectory>true</UseCommonOutputDirectory>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     <OutputType>Library</OutputType>
-    <RootNamespace>NewPharma.InspectionRequest</RootNamespace>
-    <AssemblyName>NewPharma.InspectionRequest</AssemblyName>
+    <RootNamespace>NewPharma.InspectionRequest.Workflow</RootNamespace>
+    <AssemblyName>NewPharma.InspectionRequest.Workflow</AssemblyName>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <AssemblySearchPaths>$(VGSM_EXE);$(VGSM_EXE)\SolutionAssemblies;$(AssemblySearchPaths)</AssemblySearchPaths>
     <NoWarn>1701;1702;CA1416</NoWarn>
-    <UseWPF>true</UseWPF>
     <Platforms>x86</Platforms>
   </PropertyGroup>
 
@@ -21,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\out\NewPharma.InspectionRequest\Debug\</OutputPath>
+    <OutputPath>..\..\out\NewPharma.InspectionRequest.Workflow\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
@@ -30,7 +27,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\out\NewPharma.InspectionRequest\Release\</OutputPath>
+    <OutputPath>..\..\out\NewPharma.InspectionRequest.Workflow\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
@@ -38,7 +35,6 @@
 
   <ItemGroup>
     <Reference Include="Thermo.Framework.Core"><HintPath>Thermo.Framework.Core.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="Thermo.Framework.Core.Message"><HintPath>Thermo.Framework.Core.Message.dll</HintPath><Private>False</Private></Reference>
     <Reference Include="Thermo.Framework.Server"><HintPath>Thermo.Framework.Server.dll</HintPath><Private>False</Private></Reference>
     <Reference Include="Thermo.Framework.Utilities"><HintPath>Thermo.Framework.Utilities.dll</HintPath><Private>False</Private></Reference>
     <Reference Include="Thermo.SampleManager.Common"><HintPath>Thermo.SampleManager.Common.dll</HintPath><Private>False</Private></Reference>
@@ -50,15 +46,6 @@
     <Reference Include="Thermo.SampleManager.Server.ObjectSupport"><HintPath>Thermo.SampleManager.Server.ObjectSupport.dll</HintPath><Private>False</Private></Reference>
     <Reference Include="Thermo.SampleManager.Server.Services"><HintPath>Thermo.SampleManager.Server.Services.dll</HintPath><Private>False</Private></Reference>
     <Reference Include="Thermo.SampleManager.Server.Workflow"><HintPath>Thermo.SampleManager.Server.Workflow.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="Thermo.SampleManager.Tasks"><HintPath>Thermo.SampleManager.Tasks.dll</HintPath><Private>False</Private></Reference>
     <Reference Include="Thermo.SampleManager.Tasks.EntityDefinition"><HintPath>Thermo.SampleManager.Tasks.EntityDefinition.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="LoginPlan.ObjectModel"><HintPath>LoginPlan.ObjectModel.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="LoginPlan.Tasks"><HintPath>LoginPlan.Tasks.dll</HintPath><Private>False</Private></Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
   </ItemGroup>
 </Project>

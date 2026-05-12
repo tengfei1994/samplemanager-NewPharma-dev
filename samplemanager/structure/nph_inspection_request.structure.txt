@@ -87,6 +87,9 @@ table nph_inspection_request
 	field lifecycle_event
 	      datatype text (50);
 
+	field workflow_node
+	      links_to workflow_node . workflow_node_guid;
+
 	field entity_template_id
 	      links_to entity_template . identity as entity_template;
 
@@ -122,11 +125,29 @@ table nph_inspection_request
 	      datatype boolean
 	      used_for has_attachments;
 
+	field description
+	      datatype text (2000);
+
+	field approval_reqd
+	      datatype boolean;
+
+	field approval_status
+	      datatype text (1)
+	      default 'A'
+	      prompt_type choose
+	            choose_type APPR_STAT
+	      used_for approval_status;
+
+	field inspection_plan
+	      links_to inspection_header . identity
+	      used_for inspection;
+
 index nph_ir_id_text_index unique on id_text;
 index nph_ir_status_index on status;
 index nph_ir_login_plan_index on login_plan_id, login_plan_version;
 index nph_ir_execution_status_index on execution_status;
 index nph_ir_lifecycle_index on lifecycle_workflow_id, lifecycle_workflow_version, lifecycle_node_id;
+index nph_ir_workflow_node_index on workflow_node;
 index nph_ir_entity_template_index on entity_template_id, entity_template_version;
 
 table nph_ir_lp_entry

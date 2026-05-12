@@ -43,6 +43,7 @@ Owned snapshot tables:
 The form keeps business tab names aligned with the Login Plan user experience:
 
 - `General`
+- `Entity Template`
 - `Data Assignment`
 - `Product Spec`
 - `Execution`
@@ -50,3 +51,13 @@ The form keeps business tab names aligned with the Login Plan user experience:
 Lifecycle fields on the header link the request to workflow configuration and
 the current workflow node. Phrase values continue to represent readable request
 status and execution status.
+
+The IR header has its own entity template (`NPH_IR`) for IR workflow login and
+lifecycle behavior. The IR form exposes this as a separate `Entity Template`
+tab. The user selects the IR lifecycle workflow first; the entity template is
+then resolved from `WORKFLOW_NODE.ENTITY_TEMPLATE_ID` and shown read-only while
+its `ENTITY_TEMPLATE_PROPERTY` rows remain maintainable.
+Data Assignment does not use that template. It snapshots the entity templates
+from the selected Login Plan entries, then merges any Login Plan field values
+into the request-owned field rows so each IR can be adjusted without changing
+the source Login Plan.

@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using Thermo.SampleManager.Common.Data;
+using Thermo.SampleManager.Core.Definition;
 using Thermo.SampleManager.Library;
 using Thermo.SampleManager.Tasks;
 
@@ -30,7 +32,7 @@ public class InspectionRequestExecutionTask : SampleManagerTask
 
         try
         {
-            var service = new InspectionRequestExecutionService(EntityManager);
+            var service = new InspectionRequestExecutionService(EntityManager, FindSchemaField);
             service.Execute(request);
             Exit(true);
         }
@@ -39,6 +41,23 @@ public class InspectionRequestExecutionTask : SampleManagerTask
             Library.Utils.FlashMessage(ex.Message, "Inspection Request Execution Failed");
             Exit(false);
         }
+    }
+
+    private ISchemaField FindSchemaField(string tableName, string propertyName)
+    {
+        if (string.IsNullOrWhiteSpace(tableName) ||
+            string.IsNullOrWhiteSpace(propertyName) ||
+            !Library.Schema.Tables.Contains(tableName))
+        {
+            return null;
+        }
+
+        ISchemaTable schemaTable = Library.Schema.Tables[tableName];
+        return schemaTable.GetFieldFromProperty(propertyName) ??
+               schemaTable.Fields
+                   .OfType<ISchemaField>()
+                   .FirstOrDefault(field =>
+                       string.Equals(field.Relationship?.Replace("_", string.Empty), propertyName, StringComparison.OrdinalIgnoreCase));
     }
 }
 }

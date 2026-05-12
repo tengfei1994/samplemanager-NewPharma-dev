@@ -5,16 +5,7 @@
       <height>520</height>
       <width>620</width>
       <caption>General</caption>
-      <components>
-        <entityBrowseDefinition name="LoginPlanBrowse">
-          <entity>LOGIN_PLAN</entity>
-          <returnProperty />
-          <ShowColumnHeaders>true</ShowColumnHeaders>
-          <ExplorerColumns />
-          <ShowAllVersions>No</ShowAllVersions>
-          <ShowRemoved>No</ShowRemoved>
-        </entityBrowseDefinition>
-      </components>
+      <components />
       <minimumsize>
         <height>520</height>
         <width>620</width>
@@ -49,143 +40,89 @@
         <line name="LineUnderIdentity">
           <location>
             <x>16</x>
-            <y>64</y>
+            <y>252</y>
           </location>
           <height>12</height>
           <width>564</width>
           <anchor>Top Left Right</anchor>
         </line>
-        <prompt name="IdText">
+        <TextEdit name="GeneralName">
           <location>
             <x>16</x>
-            <y>88</y>
+            <y>64</y>
           </location>
-          <height>21</height>
+          <height>20</height>
           <width>564</width>
           <tabindex>1</tabindex>
           <anchor>Top Left Right</anchor>
-          <caption>Description</caption>
-          <property>IdText</property>
+          <caption>Name</caption>
+          <property>Name</property>
           <propertylength>100</propertylength>
           <mandatory>true</mandatory>
-          <viewname />
-        </prompt>
+          <defaultvalue xsi:type="xsd:string" />
+          <readonly>false</readonly>
+          <IgnoreMaskBlank>true</IgnoreMaskBlank>
+          <showplaceholders>false</showplaceholders>
+          <useregularexpression>false</useregularexpression>
+          <showbutton>false</showbutton>
+        </TextEdit>
+        <TextEdit name="GeneralDescription">
+          <location>
+            <x>16</x>
+            <y>96</y>
+          </location>
+          <height>140</height>
+          <width>564</width>
+          <tabindex>2</tabindex>
+          <anchor>Top Left Right</anchor>
+          <caption>Description</caption>
+          <property>Description</property>
+          <propertylength>2000</propertylength>
+          <defaultvalue xsi:type="xsd:string" />
+          <readonly>false</readonly>
+          <IgnoreMaskBlank>true</IgnoreMaskBlank>
+          <showplaceholders>false</showplaceholders>
+          <useregularexpression>false</useregularexpression>
+          <showbutton>false</showbutton>
+          <multiline>true</multiline>
+        </TextEdit>
         <prompt name="Status">
           <location>
             <x>16</x>
-            <y>118</y>
+            <y>276</y>
           </location>
           <height>21</height>
           <width>280</width>
-          <tabindex>2</tabindex>
+          <tabindex>3</tabindex>
           <caption>Status</caption>
           <property>Status</property>
           <propertylength>10</propertylength>
+          <readonly>true</readonly>
           <viewname />
         </prompt>
         <prompt name="ExecutionStatus">
           <location>
             <x>316</x>
-            <y>118</y>
+            <y>276</y>
           </location>
           <height>21</height>
           <width>264</width>
-          <tabindex>3</tabindex>
+          <tabindex>4</tabindex>
           <anchor>Top Left Right</anchor>
           <caption>Execution Status</caption>
           <property>ExecutionStatus</property>
           <propertylength>10</propertylength>
-          <viewname />
-        </prompt>
-        <PromptEntityBrowseDefinition name="LoginPlan">
-          <location>
-            <x>16</x>
-            <y>150</y>
-          </location>
-          <height>20</height>
-          <width>420</width>
-          <tabindex>4</tabindex>
-          <anchor>Top Left Right</anchor>
-          <caption>Login Plan</caption>
-          <property>LoginPlan</property>
-          <propertylength>30</propertylength>
-          <mandatory>true</mandatory>
-          <Browse>LoginPlanBrowse</Browse>
-        </PromptEntityBrowseDefinition>
-        <prompt name="LoginPlanVersion">
-          <location>
-            <x>456</x>
-            <y>150</y>
-          </location>
-          <height>21</height>
-          <width>124</width>
-          <tabindex>5</tabindex>
-          <anchor>Top Right</anchor>
-          <caption>Version</caption>
-          <property>LoginPlanVersion</property>
-          <propertylength>10</propertylength>
-          <viewname />
-        </prompt>
-        <prompt name="UseLastActiveVersion">
-          <location>
-            <x>16</x>
-            <y>182</y>
-          </location>
-          <height>21</height>
-          <width>280</width>
-          <tabindex>6</tabindex>
-          <caption>Use Last Active Version</caption>
-          <property>UseLastActiveVersion</property>
-          <viewname />
-        </prompt>
-        <prompt name="EsigRequired">
-          <location>
-            <x>316</x>
-            <y>182</y>
-          </location>
-          <height>21</height>
-          <width>264</width>
-          <tabindex>7</tabindex>
-          <anchor>Top Left Right</anchor>
-          <caption>E-signature Required</caption>
-          <property>EsigRequired</property>
-          <viewname />
-        </prompt>
-        <prompt name="RootContextTable">
-          <location>
-            <x>16</x>
-            <y>214</y>
-          </location>
-          <height>21</height>
-          <width>280</width>
-          <tabindex>8</tabindex>
-          <caption>Root Context Table</caption>
-          <property>RootContextTable</property>
-          <propertylength>30</propertylength>
-          <viewname />
-        </prompt>
-        <prompt name="RootContextId">
-          <location>
-            <x>316</x>
-            <y>214</y>
-          </location>
-          <height>21</height>
-          <width>264</width>
-          <tabindex>9</tabindex>
-          <anchor>Top Left Right</anchor>
-          <caption>Root Context ID</caption>
-          <property>RootContextId</property>
-          <propertylength>60</propertylength>
+          <readonly>true</readonly>
           <viewname />
         </prompt>
         <prompt name="RequestedBy">
           <location>
             <x>16</x>
-            <y>246</y>
+            <y>308</y>
           </location>
           <height>21</height>
           <width>280</width>
-          <tabindex>10</tabindex>
+          <tabindex>5</tabindex>
           <caption>Requested By</caption>
           <property>RequestedBy</property>
           <propertylength>10</propertylength>
@@ -195,11 +132,11 @@
         <prompt name="RequestedOn">
           <location>
             <x>316</x>
-            <y>246</y>
+            <y>308</y>
           </location>
           <height>21</height>
           <width>264</width>
-          <tabindex>11</tabindex>
+          <tabindex>6</tabindex>
           <anchor>Top Left Right</anchor>
           <caption>Requested On</caption>
           <property>RequestedOn</property>
@@ -209,11 +146,11 @@
         <prompt name="GeneratedJobId">
           <location>
             <x>16</x>
-            <y>278</y>
+            <y>340</y>
           </location>
           <height>21</height>
           <width>564</width>
-          <tabindex>12</tabindex>
+          <tabindex>7</tabindex>
           <anchor>Top Left Right</anchor>
           <caption>Generated Job</caption>
           <property>GeneratedJobId</property>
@@ -224,11 +161,11 @@
         <prompt name="GeneratedObjectSummary">
           <location>
             <x>16</x>
-            <y>310</y>
+            <y>372</y>
           </location>
-          <height>72</height>
+          <height>52</height>
           <width>564</width>
-          <tabindex>13</tabindex>
+          <tabindex>8</tabindex>
           <anchor>Top Left Right</anchor>
           <caption>Generated Objects</caption>
           <property>GeneratedObjectSummary</property>
@@ -239,11 +176,11 @@
         <prompt name="ExecutionError">
           <location>
             <x>16</x>
-            <y>394</y>
+            <y>436</y>
           </location>
-          <height>72</height>
+          <height>56</height>
           <width>564</width>
-          <tabindex>14</tabindex>
+          <tabindex>9</tabindex>
           <anchor>Top Left Right Bottom</anchor>
           <caption>Execution Error</caption>
           <property>ExecutionError</property>
@@ -251,6 +188,76 @@
           <readonly>true</readonly>
           <viewname />
         </prompt>
+      </controls>
+    </form>
+    <form name="Page_EntityTemplate" forceinitialization="true">
+      <height>520</height>
+      <width>760</width>
+      <caption>Template</caption>
+      <components />
+      <minimumsize>
+        <height>520</height>
+        <width>760</width>
+      </minimumsize>
+      <controls>
+        <panel name="EntityTemplateRuntimePanel">
+          <location>
+            <x>8</x>
+            <y>8</y>
+          </location>
+          <height>504</height>
+          <width>744</width>
+          <dock>Fill</dock>
+          <caption>EntityTemplateRuntimePanel</caption>
+          <controls>
+            <unboundgridcontrol name="TemplateFieldsGrid">
+              <location>
+                <x>9</x>
+                <y>9</y>
+              </location>
+              <height>486</height>
+              <width>726</width>
+              <tabindex>1</tabindex>
+              <dock>Fill</dock>
+              <showbuttons>false</showbuttons>
+              <autosizecolumns>true</autosizecolumns>
+              <MultiSelect>false</MultiSelect>
+              <showiconcolumn>false</showiconcolumn>
+              <showindicator>true</showindicator>
+              <showhorzlines>true</showhorzlines>
+              <showvertlines>true</showvertlines>
+              <allowsort>false</allowsort>
+              <fixedcolumns>0</fixedcolumns>
+              <gridcolumns>
+                <GridColumnDefinition name="TemplateTitle">
+                  <location />
+                  <width>260</width>
+                  <caption>Field</caption>
+                  <readonly>true</readonly>
+                  <IsGreyBackground>true</IsGreyBackground>
+                  <datatype>Text</datatype>
+                  <showbutton>false</showbutton>
+                  <HidePlaceHoldersBlank>false</HidePlaceHoldersBlank>
+                </GridColumnDefinition>
+                <GridColumnDefinition name="TemplateNewValue">
+                  <location />
+                  <width>360</width>
+                  <caption>Value</caption>
+                  <readonly>false</readonly>
+                  <datatype>Text</datatype>
+                  <showbutton>false</showbutton>
+                  <HidePlaceHoldersBlank>false</HidePlaceHoldersBlank>
+                </GridColumnDefinition>
+              </gridcolumns>
+              <readonly>false</readonly>
+              <supportedoperations>None</supportedoperations>
+              <recordwidth>120</recordwidth>
+              <defaultview>Horizontal</defaultview>
+              <alwaysshowsearch>false</alwaysshowsearch>
+              <searchcolumns>false</searchcolumns>
+            </unboundgridcontrol>
+          </controls>
+        </panel>
       </controls>
     </form>
     <form name="Page_DataAssignment" forceinitialization="true">
@@ -336,7 +343,27 @@
             </entityoperandquery>
           </conditions>
         </dataquery>
-      <entityBrowseDefinition name="ebLoginWorkflow"><entity>WORKFLOW</entity><returnProperty></returnProperty><ShowColumnHeaders>true</ShowColumnHeaders><ExplorerColumns /><ShowAllVersions>Default</ShowAllVersions><ShowRemoved>Default</ShowRemoved></entityBrowseDefinition><entityBrowseDefinition name="ebEntityTemplate"><entity>ENTITY_TEMPLATE</entity><returnProperty></returnProperty><ShowColumnHeaders>true</ShowColumnHeaders><ExplorerColumns /><ShowAllVersions>Default</ShowAllVersions><ShowRemoved>Default</ShowRemoved></entityBrowseDefinition><dataqueryentitycollection name="ecTests"><entity>NPH_IR_LP_TEST</entity><query>DataAssignmentTestsQuery</query></dataqueryentitycollection></components>
+        <entityBrowseDefinition name="ebLoginWorkflow">
+          <entity>WORKFLOW</entity>
+          <returnProperty></returnProperty>
+          <ShowColumnHeaders>true</ShowColumnHeaders>
+          <ExplorerColumns />
+          <ShowAllVersions>Default</ShowAllVersions>
+          <ShowRemoved>Default</ShowRemoved>
+        </entityBrowseDefinition>
+        <entityBrowseDefinition name="ebEntityTemplate">
+          <entity>ENTITY_TEMPLATE</entity>
+          <returnProperty></returnProperty>
+          <ShowColumnHeaders>true</ShowColumnHeaders>
+          <ExplorerColumns />
+          <ShowAllVersions>Default</ShowAllVersions>
+          <ShowRemoved>Default</ShowRemoved>
+        </entityBrowseDefinition>
+        <dataqueryentitycollection name="ecTests">
+          <entity>NPH_IR_LP_TEST</entity>
+          <query>DataAssignmentTestsQuery</query>
+        </dataqueryentitycollection>
+      </components>
       <minimumsize>
         <height>520</height>
         <width>901</width>
@@ -567,7 +594,8 @@
                                   <tabindex>33</tabindex>
                                   <defaultvalue xsi:type="xsd:string" />
                                   <readonly>true</readonly>
-                                <enabled>true</enabled></TextEdit>
+                                  <enabled>true</enabled>
+                                </TextEdit>
                                 <TextEdit name="LoginConditionTextValue">
                                   <location>
                                     <x>6</x>
@@ -578,7 +606,8 @@
                                   <tabindex>32</tabindex>
                                   <defaultvalue xsi:type="xsd:string" />
                                   <readonly>true</readonly>
-                                <enabled>true</enabled></TextEdit>
+                                  <enabled>true</enabled>
+                                </TextEdit>
                                 <ButtonEditDefinition name="TestButton">
                                   <location>
                                     <x>210</x>
@@ -592,7 +621,9 @@
                                     <Width>0</Width>
                                     <Height>0</Height>
                                   </size>
-                                <readonly>true</readonly><enabled>true</enabled></ButtonEditDefinition>
+                                  <readonly>true</readonly>
+                                  <enabled>true</enabled>
+                                </ButtonEditDefinition>
                                 <PromptEntityBrowseDefinition name="TestEntityBrowsePrompt">
                                   <location>
                                     <x>6</x>
@@ -606,7 +637,9 @@
                                   <Browse />
                                   <datasource>DataAssignmentEntry</datasource>
                                   <property>TableName</property>
-                                <readonly>true</readonly><enabled>true</enabled></PromptEntityBrowseDefinition>
+                                  <readonly>true</readonly>
+                                  <enabled>true</enabled>
+                                </PromptEntityBrowseDefinition>
                               </controls>
                             </panel>
                             <panel name="Panel6">
@@ -630,7 +663,9 @@
                                   <Browse>ebEntityTemplate</Browse>
                                   <datasource>DataAssignmentEntry</datasource>
                                   <property>EntityTemplateId</property>
-                                <readonly>true</readonly><enabled>true</enabled></PromptEntityBrowseDefinition>
+                                  <readonly>true</readonly>
+                                  <enabled>true</enabled>
+                                </PromptEntityBrowseDefinition>
                                 <panel name="DockingPanel">
                                   <location>
                                     <y>29</y>
@@ -661,7 +696,9 @@
                                       <Browse>ebLoginWorkflow</Browse>
                                       <datasource>DataAssignmentEntry</datasource>
                                       <property>LoginWorkflowId</property>
-                                    <readonly>true</readonly><enabled>true</enabled></PromptEntityBrowseDefinition>
+                                      <readonly>true</readonly>
+                                      <enabled>true</enabled>
+                                    </PromptEntityBrowseDefinition>
                                     <CheckEdit name="cfLastActiveVersion">
                                       <location>
                                         <x>233</x>
@@ -677,7 +714,9 @@
                                       <CheckAlign>Right</CheckAlign>
                                       <datasource>DataAssignmentEntry</datasource>
                                       <property>UseLastActiveLoginWorkflow</property>
-                                    <readonly>true</readonly><enabled>true</enabled></CheckEdit>
+                                      <readonly>true</readonly>
+                                      <enabled>true</enabled>
+                                    </CheckEdit>
                                   </controls>
                                 </panel>
                                 <TextEdit name="expCountExpression">
@@ -695,7 +734,9 @@
                                   <showbutton>false</showbutton>
                                   <datasource>DataAssignmentEntry</datasource>
                                   <property>CountExpression</property>
-                                <readonly>true</readonly><enabled>true</enabled></TextEdit>
+                                  <readonly>true</readonly>
+                                  <enabled>true</enabled>
+                                </TextEdit>
                                 <TextEdit name="expLoginCondition">
                                   <location>
                                     <x>3</x>
@@ -711,7 +752,9 @@
                                   <showbutton>false</showbutton>
                                   <datasource>DataAssignmentEntry</datasource>
                                   <property>LoginCondition</property>
-                                <readonly>true</readonly><enabled>true</enabled></TextEdit>
+                                  <readonly>true</readonly>
+                                  <enabled>true</enabled>
+                                </TextEdit>
                                 <TextEdit name="teName">
                                   <location>
                                     <x>3</x>
@@ -725,7 +768,9 @@
                                   <defaultvalue xsi:type="xsd:string">Create Login Plan</defaultvalue>
                                   <datasource>DataAssignmentEntry</datasource>
                                   <property>NodeName</property>
-                                <readonly>true</readonly><enabled>true</enabled></TextEdit>
+                                  <readonly>true</readonly>
+                                  <enabled>true</enabled>
+                                </TextEdit>
                               </controls>
                             </panel>
                           </controls>
@@ -754,7 +799,7 @@
                           <anchor>None</anchor>
                           <position>179</position>
                         </splitter>
-                            <unboundgridcontrol name="ugdTestData">
+                        <unboundgridcontrol name="ugdTestData">
                           <location>
                             <y>179</y>
                           </location>
@@ -814,7 +859,7 @@
                           <defaultview>Horizontal</defaultview>
                           <alwaysshowsearch>false</alwaysshowsearch>
                           <searchcolumns>false</searchcolumns>
-                            </unboundgridcontrol>
+                        </unboundgridcontrol>
                         <datagridcontrol name="dgdTests">
                           <location />
                           <height>179</height>
@@ -1013,6 +1058,293 @@
           <searchcolumns>false</searchcolumns>
           <datasource>ProductSpecRows</datasource>
         </datagridcontrol>
+      </controls>
+    </form>
+    <form name="Page_Inspection">
+      <caption>Inspection</caption>
+      <components>
+        <dataqueryentitycollection name="InspectionEntries">
+          <entity>INSPECTOR</entity>
+          <query />
+        </dataqueryentitycollection>
+        <dataqueryentitycollection name="InspectionPendingEntries">
+          <entity>INSPECTOR</entity>
+          <query />
+        </dataqueryentitycollection>
+        <browsephrase name="InspectionPhraseBrowse">
+          <phraseType>INSP_TYPE</phraseType>
+        </browsephrase>
+        <entityBrowseDefinition name="InspectionEntityBrowse">
+          <entity>INSPECTION_HEADER</entity>
+          <returnProperty />
+          <ShowColumnHeaders>true</ShowColumnHeaders>
+          <ExplorerColumns />
+          <ShowAllVersions>Default</ShowAllVersions>
+          <ShowRemoved>Default</ShowRemoved>
+        </entityBrowseDefinition>
+        <entityBrowseDefinition name="EntityBrowse1">
+          <entity>INSPECTION_HEADER</entity>
+          <returnProperty />
+          <ShowColumnHeaders>true</ShowColumnHeaders>
+          <ExplorerColumns />
+          <ShowAllVersions>Default</ShowAllVersions>
+          <ShowRemoved>Default</ShowRemoved>
+        </entityBrowseDefinition>
+      </components>
+      <controls>
+        <panel name="InsHistoryPanel">
+          <location>
+            <x>9</x>
+            <y>69</y>
+          </location>
+          <height>322</height>
+          <width>382</width>
+          <tabindex>2</tabindex>
+          <dock>Fill</dock>
+          <caption>Panel4</caption>
+          <controls>
+            <panel name="InsCompletedPanel">
+              <location>
+                <y>144</y>
+              </location>
+              <height>178</height>
+              <width>382</width>
+              <tabindex>2</tabindex>
+              <dock>Fill</dock>
+              <caption>Panel5</caption>
+              <controls>
+                <gridcontrol name="InsInspectorGrid">
+                  <location>
+                    <y>23</y>
+                  </location>
+                  <height>155</height>
+                  <width>382</width>
+                  <tabindex>1</tabindex>
+                  <dock>Fill</dock>
+                  <datasource>InspectionEntries</datasource>
+                  <allowcolumnreorder>true</allowcolumnreorder>
+                  <readonly>true</readonly>
+                  <showiconcolumn>true</showiconcolumn>
+                  <gridcolumns>
+                    <gridcolumn name="ApprovalUser">
+                      <location />
+                      <width>75</width>
+                      <caption>Inspector</caption>
+                      <Property>ApprovalUser</Property>
+                    </gridcolumn>
+                    <gridcolumn name="ApprovalDate">
+                      <location />
+                      <width>75</width>
+                      <caption>Date</caption>
+                      <Property>ApprovalDate</Property>
+                    </gridcolumn>
+                    <gridcolumn name="InspectionText">
+                      <location />
+                      <width>75</width>
+                      <caption>Comments</caption>
+                      <Property>InspectionText</Property>
+                    </gridcolumn>
+                    <gridcolumn name="StatusLong">
+                      <location />
+                      <width>75</width>
+                      <caption>Status</caption>
+                      <Property>StatusLong</Property>
+                    </gridcolumn>
+                  </gridcolumns>
+                  <customGridbuttons />
+                  <gridbuttons>None</gridbuttons>
+                  <userinterface />
+                  <showindicator>true</showindicator>
+                  <fixedcolumns>0</fixedcolumns>
+                  <autosizecolumns>true</autosizecolumns>
+                  <showfocusedrow>false</showfocusedrow>
+                  <borderwidth>0</borderwidth>
+                  <MultiSelect>false</MultiSelect>
+                  <AllowFill>false</AllowFill>
+                  <allowsort>true</allowsort>
+                </gridcontrol>
+                <line name="InsCompLine">
+                  <location />
+                  <height>23</height>
+                  <width>382</width>
+                  <dock>Top</dock>
+                  <caption>Completed Inspections</caption>
+                </line>
+              </controls>
+            </panel>
+            <splitter name="InsSplit">
+              <location>
+                <y>140</y>
+              </location>
+              <height>4</height>
+              <width>382</width>
+              <tabindex>1</tabindex>
+              <dock>Top</dock>
+              <anchor>None</anchor>
+              <position>140</position>
+            </splitter>
+            <panel name="InsPendingPanel">
+              <location />
+              <height>140</height>
+              <width>382</width>
+              <dock>Top</dock>
+              <caption>Panel6</caption>
+              <controls>
+                <gridcontrol name="InsPendingEntries">
+                  <location>
+                    <y>22</y>
+                  </location>
+                  <height>118</height>
+                  <width>382</width>
+                  <tabindex>1</tabindex>
+                  <dock>Fill</dock>
+                  <datasource>InspectionPendingEntries</datasource>
+                  <allowcolumnreorder>true</allowcolumnreorder>
+                  <readonly>true</readonly>
+                  <showiconcolumn>true</showiconcolumn>
+                  <gridcolumns>
+                    <gridcolumn name="InspectionUserType">
+                      <location />
+                      <width>75</width>
+                      <caption>Type</caption>
+                      <Property>InspectionUserType</Property>
+                    </gridcolumn>
+                    <gridcolumn name="PersonnelId">
+                      <location />
+                      <width>75</width>
+                      <caption>Operator</caption>
+                      <Property>PersonnelId</Property>
+                    </gridcolumn>
+                    <gridcolumn name="RoleId">
+                      <location />
+                      <width>75</width>
+                      <caption>Role</caption>
+                      <Property>RoleId</Property>
+                    </gridcolumn>
+                    <gridcolumn name="StatusLong">
+                      <location />
+                      <width>75</width>
+                      <caption>Status</caption>
+                      <Property>StatusLong</Property>
+                    </gridcolumn>
+                  </gridcolumns>
+                  <customGridbuttons />
+                  <gridbuttons>None</gridbuttons>
+                  <userinterface />
+                  <showindicator>true</showindicator>
+                  <fixedcolumns>0</fixedcolumns>
+                  <autosizecolumns>true</autosizecolumns>
+                  <showfocusedrow>false</showfocusedrow>
+                  <borderwidth>0</borderwidth>
+                  <MultiSelect>false</MultiSelect>
+                  <AllowFill>false</AllowFill>
+                  <allowsort>true</allowsort>
+                </gridcontrol>
+                <line name="InsPendLine">
+                  <location />
+                  <height>22</height>
+                  <width>382</width>
+                  <dock>Top</dock>
+                  <caption>Pending Inspections</caption>
+                </line>
+              </controls>
+            </panel>
+          </controls>
+        </panel>
+        <panel name="BasePanel">
+          <location>
+            <x>9</x>
+            <y>9</y>
+          </location>
+          <height>60</height>
+          <width>382</width>
+          <dock>Top</dock>
+          <caption>Panel1</caption>
+          <controls>
+            <panel name="InsTopSection">
+              <location>
+                <x>3</x>
+                <y>3</y>
+              </location>
+              <height>51</height>
+              <width>376</width>
+              <anchor>Top Left Right</anchor>
+              <caption>Panel1</caption>
+              <controls>
+                <PromptPhraseBrowseDefinition name="InspectionApprovalStatus">
+                  <location>
+                    <x>3</x>
+                    <y>28</y>
+                  </location>
+                  <height>20</height>
+                  <width>370</width>
+                  <tabindex>1</tabindex>
+                  <anchor>Top Left Right</anchor>
+                  <caption>Approval Status</caption>
+                  <propertylength>0</propertylength>
+                  <readonly>true</readonly>
+                  <Browse>InspectionPhraseBrowse</Browse>
+                  <multiselect>false</multiselect>
+                  <forcevalid>true</forcevalid>
+                  <usedescription>true</usedescription>
+                </PromptPhraseBrowseDefinition>
+                <PromptEntityBrowseDefinition name="InspectionInspectionPlan">
+                  <location>
+                    <x>3</x>
+                    <y>2</y>
+                  </location>
+                  <height>20</height>
+                  <width>370</width>
+                  <anchor>Top Left Right</anchor>
+                  <caption>Inspection Plan</caption>
+                  <propertylength>0</propertylength>
+                  <readonly>false</readonly>
+                  <Browse>InspectionEntityBrowse</Browse>
+                  <forcevalid>true</forcevalid>
+                </PromptEntityBrowseDefinition>
+              </controls>
+            </panel>
+            <panel name="InsTopSectionReadOnly">
+              <location>
+                <x>3</x>
+                <y>3</y>
+              </location>
+              <height>51</height>
+              <width>316</width>
+              <tabindex>2</tabindex>
+              <caption>Panel1</caption>
+              <controls>
+                <PromptEntityBrowseDefinition name="InspectionInspectionPlanReadOnly">
+                  <location>
+                    <x>3</x>
+                    <y>3</y>
+                  </location>
+                  <height>20</height>
+                  <width>310</width>
+                  <tabindex>2</tabindex>
+                  <caption>Inspection Plan</caption>
+                  <propertylength>0</propertylength>
+                  <readonly>false</readonly>
+                  <Browse>EntityBrowse1</Browse>
+                  <forcevalid>true</forcevalid>
+                </PromptEntityBrowseDefinition>
+                <TextEdit name="InspectionApprovalStatusReadOnly">
+                  <location>
+                    <x>3</x>
+                    <y>28</y>
+                  </location>
+                  <height>20</height>
+                  <width>310</width>
+                  <tabindex>1</tabindex>
+                  <caption>Approval Status</caption>
+                  <propertylength>0</propertylength>
+                  <defaultvalue xsi:type="xsd:string" />
+                  <readonly>true</readonly>
+                </TextEdit>
+              </controls>
+            </panel>
+          </controls>
+        </panel>
       </controls>
     </form>
   </forms>

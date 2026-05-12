@@ -14,11 +14,11 @@ namespace NewPharma.InspectionRequest
             _entityManager = entityManager ?? throw new ArgumentNullException(nameof(entityManager));
         }
 
-        public void EnsureSnapshot(IEntity request, bool rebuild)
+        public bool EnsureSnapshot(IEntity request, bool rebuild)
         {
             if (request == null)
             {
-                return;
+                return false;
             }
 
             string requestId = GetString(request, InspectionRequestConstants.FieldRequestId);
@@ -27,7 +27,7 @@ namespace NewPharma.InspectionRequest
 
             if (string.IsNullOrWhiteSpace(requestId) || string.IsNullOrWhiteSpace(loginPlanId))
             {
-                return;
+                return false;
             }
 
             loginPlanVersion = ResolveLoginPlanVersion(loginPlanId, loginPlanVersion);
@@ -41,12 +41,12 @@ namespace NewPharma.InspectionRequest
             }
             else if (hasSnapshotRows)
             {
-                return;
+                return false;
             }
 
             CopyDataAssignment(requestId, loginPlanId, loginPlanVersion);
             CopyProductSpec(requestId, loginPlanId, loginPlanVersion);
-            _entityManager.Commit();
+            return true;
         }
 
         private string ResolveLoginPlanVersion(string loginPlanId, string loginPlanVersion)
@@ -72,7 +72,6 @@ namespace NewPharma.InspectionRequest
             DeleteRows(InspectionRequestConstants.TableIrLoginPlanField, requestId);
             DeleteRows(InspectionRequestConstants.TableIrLoginPlanEntry, requestId);
             DeleteRows(InspectionRequestConstants.TableIrProduct, requestId);
-            _entityManager.Commit();
         }
 
         private void DeleteRows(string tableName, string requestId)
@@ -150,8 +149,15 @@ namespace NewPharma.InspectionRequest
                 targetEntry.Set("REMOVEFLAG", false);
                 _entityManager.Transaction.Add(targetEntry);
 
-                CopyEntryFields(requestId, loginPlanId, sourceEntry, orderNumber);
-                CopyEntityTemplateFields(requestId, sourceEntry, orderNumber);
+                if (string.IsNullOrWhiteSpace(GetString(sourceEntry, "ENTITY_TEMPLATE_ID")))
+                {
+                    CopyEntryFields(requestId, loginPlanId, sourceEntry, orderNumber);
+                }
+                else
+                {
+                    CopyEntityTemplateFields(requestId, loginPlanId, sourceEntry, orderNumber);
+                }
+
                 CopyEntryTests(requestId, loginPlanId, sourceEntry, orderNumber);
             }
         }
@@ -177,7 +183,7 @@ namespace NewPharma.InspectionRequest
             }
         }
 
-        private void CopyEntityTemplateFields(string requestId, IEntity sourceEntry, object parentOrderNumber)
+        private void CopyEntityTemplateFields(string requestId, string loginPlanId, IEntity sourceEntry, object parentOrderNumber)
         {
             string entityTemplateId = GetString(sourceEntry, "ENTITY_TEMPLATE_ID");
             string entityTemplateVersion = GetString(sourceEntry, "ENTITY_TEMPLATE_VERSION");
@@ -201,31 +207,40 @@ namespace NewPharma.InspectionRequest
             foreach (IEntity templateProperty in _entityManager.Select(propertyQuery))
             {
                 string propertyName = GetString(templateProperty, "PROPERTY_NAME");
-                if (string.IsNullOrWhiteSpace(propertyName) ||
-                    SnapshotFieldExists(requestId, parentOrderNumber, propertyName))
+                if (string.IsNullOrWhiteSpace(propertyName))
                 {
                     continue;
                 }
+
+                object value = ResolveLoginPlanFieldValue(loginPlanId, sourceEntry, parentOrderNumber, propertyName)
+                    ?? NormalizeTemplateValue(GetValue(templateProperty, "DEFAULT_VALUE"));
 
                 IEntity targetField = _entityManager.CreateEntity(InspectionRequestConstants.TableIrLoginPlanField);
                 targetField.Set("REQUEST_ID", requestId);
                 targetField.Set("PARENT_ORDER_NUMBER", parentOrderNumber);
                 targetField.Set("ORDER_NUMBER", GetValue(templateProperty, "ORDER_NUM"));
                 targetField.Set("PROPERTY", propertyName);
-                targetField.Set("VALUE", NormalizeTemplateValue(GetValue(templateProperty, "DEFAULT_VALUE")));
-                targetField.Set("OVERRIDE_VALUE", NormalizeTemplateValue(GetValue(templateProperty, "DEFAULT_VALUE")));
+                targetField.Set("VALUE", value);
+                targetField.Set("OVERRIDE_VALUE", value);
                 targetField.Set("MODIFIABLE", true);
                 _entityManager.Transaction.Add(targetField);
             }
         }
 
-        private bool SnapshotFieldExists(string requestId, object parentOrderNumber, string propertyName)
+        private object ResolveLoginPlanFieldValue(string loginPlanId, IEntity sourceEntry, object parentOrderNumber, string propertyName)
         {
-            IQuery query = _entityManager.CreateQuery(InspectionRequestConstants.TableIrLoginPlanField);
-            query.AddEquals("REQUEST_ID", requestId);
+            IQuery query = _entityManager.CreateQuery(InspectionRequestConstants.TableLoginPlanField);
+            query.AddEquals("IDENTITY", loginPlanId);
+            query.AddEquals("VERSION", GetValue(sourceEntry, "VERSION"));
             query.AddEquals("PARENT_ORDER_NUMBER", parentOrderNumber);
             query.AddEquals("PROPERTY", propertyName);
-            return _entityManager.Select(query).Count > 0;
+
+            foreach (IEntity sourceField in _entityManager.Select(query))
+            {
+                return GetValue(sourceField, "VALUE");
+            }
+
+            return null;
         }
 
         private string ResolveEntityTemplateVersion(string entityTemplateId)

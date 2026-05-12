@@ -45,6 +45,12 @@
 - `NPH_INSPECTION_REQUEST.xml` now contains `Data Assignment` and `Product Spec`
   pages. The pages use explicit Form Designer data collection components to
   avoid null grid data sources.
+- The form now also contains an `Entity Template` page for the IR header
+  template. The page selects the IR lifecycle workflow first, then resolves the
+  header template from `WORKFLOW_NODE.ENTITY_TEMPLATE_ID`. Runtime configuration
+  seeds `NPH_IR` version `         1` with template properties for request
+  number, login plan, last-active-version flag, e-signature flag, and root
+  context fields.
 - The old `NPH_INSPECTION_REQUEST.binform` cache was removed after form changes
   so the client can recompile from XML.
 

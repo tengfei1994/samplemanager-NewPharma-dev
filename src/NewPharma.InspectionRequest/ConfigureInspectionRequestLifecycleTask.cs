@@ -22,17 +22,28 @@ namespace NewPharma.InspectionRequest
 
         protected override void SetupTask()
         {
-            IEntity request = Context?.SelectedItems?.Count > 0
-                ? Context.SelectedItems[0] as IEntity
-                : null;
-
-            if (request == null || !request.IsValid())
+            try
             {
-                throw new InvalidOperationException("Select one Inspection Request before running this lifecycle action.");
-            }
+                IEntity request = Context?.SelectedItems?.Count > 0
+                    ? Context.SelectedItems[0] as IEntity
+                    : null;
 
-            new InspectionRequestLifecycleService(EntityManager).Move(request, Action);
-            Exit(true);
+                if (request == null || !request.IsValid())
+                {
+                    throw new InvalidOperationException("Select one Inspection Request before running this lifecycle action.");
+                }
+
+                var lifecycleService = new InspectionRequestLifecycleService(EntityManager);
+                lifecycleService.Initialize(request);
+                lifecycleService.Move(request, Action);
+                Library.Utils.FlashMessage($"Inspection Request lifecycle action completed: {Action}.", "Inspection Request");
+                Exit(true);
+            }
+            catch (Exception ex)
+            {
+                Library.Utils.FlashMessage(ex.Message, "Inspection Request Lifecycle");
+                Exit(false);
+            }
         }
     }
 
